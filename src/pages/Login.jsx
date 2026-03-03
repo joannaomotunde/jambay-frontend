@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/auth'
+import { useAuth } from '../context/AuthContext'
 import '../App.css'
 
 function Login() {
@@ -12,6 +13,7 @@ function Login() {
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -39,8 +41,7 @@ function Login() {
     try {
       setLoading(true)
       const data = await loginUser(formData)
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('user', JSON.stringify(data.user))
+      login(data.user, data.token)
       navigate('/dashboard')
     } catch (err) {
       setServerError(err.response?.data?.message || 'Login failed, please try again')
