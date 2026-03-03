@@ -1,35 +1,27 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { registerUser } from '../services/auth'
+import { useNavigate, useLocation, Navigate } from 'react-router-dom'
+import { resetPassword } from '../services/auth'
 import '../App.css'
 
-function Register() {
+function ResetPassword() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
     password: '',
     confirmPassword: '',
-    role: 'attendee',
   })
-
   const [errors, setErrors] = useState({})
-  const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
+  const email = location.state?.email
 
- const handleChange = (e) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
     setServerError('')
   }
 
   const validate = () => {
     const newErrors = {}
-    if (!formData.name) newErrors.name = 'Full name is required'
-    if (!formData.email) {
-      newErrors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email format is invalid'
-    }
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
@@ -53,51 +45,32 @@ function Register() {
     setServerError('')
     try {
       setLoading(true)
-      await registerUser({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      })
-      navigate('/verify-otp', { state: { email: formData.email } })
+      await resetPassword({ email, password: formData.password })
+      navigate('/')
     } catch (err) {
-      setServerError(err.response?.data?.message || 'Registration failed, please try again')
+      setServerError(err.response?.data?.message || 'Password reset failed, please try again')
     } finally {
       setLoading(false)
     }
   }
 
+  if (!email) {
+    return <Navigate to="/forgot-password" replace />
+  }
+
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2 className="auth-title">Create an account</h2>
+        <h2 className="auth-title">Reset Password</h2>
+        <p className="auth-subtitle">Enter your new password below.</p>
 
         {serverError && <p className="server-error">{serverError}</p>}
 
         <input
           className="auth-input"
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        {errors.name && <p className="field-error">{errors.name}</p>}
-
-        <input
-          className="auth-input"
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <p className="field-error">{errors.email}</p>}
-
-        <input
-          className="auth-input"
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="New Password"
           value={formData.password}
           onChange={handleChange}
         />
@@ -107,22 +80,22 @@ function Register() {
           className="auth-input"
           type="password"
           name="confirmPassword"
-          placeholder="Confirm Password"
+          placeholder="Confirm New Password"
           value={formData.confirmPassword}
           onChange={handleChange}
         />
         {errors.confirmPassword && <p className="field-error">{errors.confirmPassword}</p>}
 
-       <button className="auth-button" onClick={handleSubmit} disabled={loading || !!serverError}>
-        {loading ? 'Creating account...' : 'Sign Up'}
-      </button>
+        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Resetting...' : 'Reset Password'}
+        </button>
 
         <p className="auth-link-text">
-          Already have an account? <a href="/">Log in</a>
+          Remember your password? <a href="/">Log in</a>
         </p>
       </div>
     </div>
   )
 }
 
-export default Register
+export default ResetPassword

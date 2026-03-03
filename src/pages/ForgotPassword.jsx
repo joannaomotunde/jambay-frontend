@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { requestOTP } from '../services/auth'
 import '../App.css'
 
 function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState({})
-  const [submitted, setSubmitted] = useState(false)
+  const [serverError, setServerError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const validate = () => {
     const newErrors = {}
@@ -23,7 +27,16 @@ function ForgotPassword() {
       return
     }
     setErrors({})
-    setSubmitted(true)
+    setServerError('')
+    try {
+      setLoading(true)
+      await requestOTP({ email })
+      navigate('/verify-otp', { state: { email, isPasswordReset: true } })
+    } catch (err) {
+      setServerError(err.response?.data?.message || 'Failed to send OTP, please try again')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -31,29 +44,23 @@ function ForgotPassword() {
       <div className="auth-card">
         <h2 className="auth-title">Forgot Password</h2>
         <p className="auth-subtitle">
-          Enter your email address and we'll send you a link to reset your password.
+          Enter your email and we'll send you an OTP to reset your password.
         </p>
 
-        {submitted ? (
-          <div className="success-box">
-            ✅ Reset link sent! Check your email.
-          </div>
-        ) : (
-          <>
-            <input
-              className="auth-input"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {errors.email && <p className="field-error">{errors.email}</p>}
+        {serverError && <p className="server-error">{serverError}</p>}
 
-            <button className="auth-button" onClick={handleSubmit}>
-              Send Reset Link
-            </button>
-          </>
-        )}
+        <input
+          className="auth-input"
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {errors.email && <p className="field-error">{errors.email}</p>}
+
+        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Sending...' : 'Send OTP'}
+        </button>
 
         <p className="auth-link-text">
           Remember your password? <a href="/">Log in</a>
