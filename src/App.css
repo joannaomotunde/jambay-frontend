@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* CONTAINER */
+.auth-container {
+  min-height: 100vh;
+  background-color: #4ECDC4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CARD */
+.auth-card {
+  background-color: #4ECDC4;
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* TITLE */
+.auth-title {
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* SUBTITLE */
+.auth-subtitle {
+  color: white;
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* INPUT */
+.auth-input {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+}
+
+/* OTP INPUT */
+.otp-input {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  font-size: 20px;
+  outline: none;
+  text-align: center;
+  letter-spacing: 8px;
+  width: 100%;
+}
+
+/* BUTTON */
+.auth-button {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background-color: #F7C948;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.auth-button:hover {
+  background-color: #e6b800;
+}
+
+.auth-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* LINKS */
+.auth-link-text {
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}
+
+.auth-link-text a {
+  color: white;
+  font-weight: bold;
+}
+
+/* ERROR MESSAGES */
+.field-error {
+  color: #ff4444;
+  font-size: 12px;
+  margin-top: -8px;
+  background-color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.server-error {
+  color: #ff4444;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* SUCCESS BOX */
+.success-box {
+  background-color: white;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  color: #4ECDC4;
+  font-weight: bold;
+}

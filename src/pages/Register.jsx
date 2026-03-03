@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../services/auth'
+import '../App.css'
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -22,27 +23,22 @@ function Register() {
 
   const validate = () => {
     const newErrors = {}
-
     if (!formData.name) newErrors.name = 'Full name is required'
-
     if (!formData.email) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email format is invalid'
     }
-
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
     }
-
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password'
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match'
     }
-
     return newErrors
   }
 
@@ -54,7 +50,6 @@ function Register() {
     }
     setErrors({})
     setServerError('')
-
     try {
       setLoading(true)
       await registerUser({
@@ -71,127 +66,62 @@ function Register() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Create an account</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Create an account</h2>
 
-        {serverError && <p style={styles.serverError}>{serverError}</p>}
+        {serverError && <p className="server-error">{serverError}</p>}
 
         <input
-          style={styles.input}
+          className="auth-input"
           type="text"
           name="name"
           placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
         />
-        {errors.name && <p style={styles.error}>{errors.name}</p>}
+        {errors.name && <p className="field-error">{errors.name}</p>}
 
         <input
-          style={styles.input}
+          className="auth-input"
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
         />
-        {errors.email && <p style={styles.error}>{errors.email}</p>}
+        {errors.email && <p className="field-error">{errors.email}</p>}
 
         <input
-          style={styles.input}
+          className="auth-input"
           type="password"
           name="password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
         />
-        {errors.password && <p style={styles.error}>{errors.password}</p>}
+        {errors.password && <p className="field-error">{errors.password}</p>}
 
         <input
-          style={styles.input}
+          className="auth-input"
           type="password"
           name="confirmPassword"
           placeholder="Confirm Password"
           value={formData.confirmPassword}
           onChange={handleChange}
         />
-        {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className="field-error">{errors.confirmPassword}</p>}
 
-        <button style={styles.button} onClick={handleSubmit} disabled={loading}>
+        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
           {loading ? 'Creating account...' : 'Sign Up'}
         </button>
 
-        <p style={styles.loginText}>
+        <p className="auth-link-text">
           Already have an account? <a href="/">Log in</a>
         </p>
       </div>
     </div>
   )
-}
-
-const styles = {
-  container: {
-    minHeight: '100vh',
-    backgroundColor: '#4ECDC4',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  card: {
-    backgroundColor: '#4ECDC4',
-    padding: '40px 30px',
-    borderRadius: '20px',
-    width: '100%',
-    maxWidth: '360px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  title: {
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: '10px',
-  },
-  input: {
-    padding: '14px',
-    borderRadius: '10px',
-    border: 'none',
-    backgroundColor: 'white',
-    fontSize: '14px',
-    outline: 'none',
-  },
-  button: {
-    padding: '14px',
-    borderRadius: '10px',
-    border: 'none',
-    backgroundColor: '#F7C948',
-    color: 'white',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    marginTop: '10px',
-  },
-  loginText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: '13px',
-  },
-  error: {
-    color: '#ff4444',
-    fontSize: '12px',
-    marginTop: '-8px',
-    backgroundColor: 'white',
-    padding: '4px 8px',
-    borderRadius: '5px',
-  },
-  serverError: {
-    color: '#ff4444',
-    backgroundColor: 'white',
-    padding: '10px',
-    borderRadius: '8px',
-    textAlign: 'center',
-    fontSize: '13px',
-  },
 }
 
 export default Register
