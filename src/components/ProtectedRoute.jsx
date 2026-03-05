@@ -4,6 +4,10 @@ import { useAuth } from '../context/AuthContext'
 function ProtectedRoute({ children }) {
   const { token } = useAuth()
 
+  if (token === undefined) {
+    return null
+  }
+
   if (!token) {
     return <Navigate to="/" replace />
   }
