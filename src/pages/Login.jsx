@@ -2,16 +2,15 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/auth'
 import { useAuth } from '../context/AuthContext'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import '../App.css'
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+  const [formData, setFormData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
   const { login } = useAuth()
 
@@ -32,10 +31,7 @@ function Login() {
 
   const handleSubmit = async () => {
     const newErrors = validate()
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
     setErrors({})
     setServerError('')
     try {
@@ -57,37 +53,31 @@ function Login() {
 
         {serverError && <p className="server-error">{serverError}</p>}
 
-        <input
-          className="auth-input"
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <input className="auth-input" type="email" name="email" placeholder="Email"
+          value={formData.email} onChange={handleChange} />
         {errors.email && <p className="field-error">{errors.email}</p>}
 
-        <input
-          className="auth-input"
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <div className="password-wrapper">
+          <input
+            className="auth-input"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         {errors.password && <p className="field-error">{errors.password}</p>}
 
         <button className="auth-button" onClick={handleSubmit} disabled={loading}>
           {loading ? 'Logging in...' : 'Log In'}
         </button>
 
-        <p className="auth-link-text">
-          <a href="/forgot-password">Forgot password?</a>
-        </p>
-
-        <p className="auth-link-text">
-          Don't have an account? <a href="/register">Sign up</a>
-        </p>
+        <p className="auth-link-text"><a href="/forgot-password">Forgot password?</a></p>
+        <p className="auth-link-text">Don't have an account? <a href="/register">Sign up</a></p>
       </div>
     </div>
   )

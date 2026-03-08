@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
-import { verifyOTP, verifyResetOTP } from '../services/auth'
+import { verifyOTP } from '../services/auth'
 import '../App.css'
 
 function VerifyOTP() {
@@ -24,7 +24,7 @@ function VerifyOTP() {
     try {
       setLoading(true)
       if (isPasswordReset) {
-        await verifyResetOTP({ email, otp })
+        // Just navigate with email + otp, let reset-password handle validation
         navigate('/reset-password', { state: { email, otp } })
       } else {
         await verifyOTP({ email, otp })
@@ -50,7 +50,10 @@ function VerifyOTP() {
           type="text"
           placeholder="Enter OTP"
           value={otp}
-          onChange={(e) => setOtp(e.target.value)}
+          onChange={(e) => {
+            setOtp(e.target.value)
+            setError('')
+          }}
           maxLength={6}
         />
         {error && <p className="field-error">{error}</p>}

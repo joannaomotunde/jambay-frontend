@@ -1,23 +1,21 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../services/auth'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import '../App.css'
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    role: 'attendee',
+    name: '', email: '', password: '', confirmPassword: '', role: 'attendee',
   })
-
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const navigate = useNavigate()
 
- const handleChange = (e) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
     setServerError('')
   }
@@ -45,19 +43,12 @@ function Register() {
 
   const handleSubmit = async () => {
     const newErrors = validate()
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
     setErrors({})
     setServerError('')
     try {
       setLoading(true)
-      await registerUser({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      })
+      await registerUser({ name: formData.name, email: formData.email, password: formData.password })
       navigate('/verify-otp', { state: { email: formData.email } })
     } catch (err) {
       setServerError(err.response?.data?.message || 'Registration failed, please try again')
@@ -73,53 +64,49 @@ function Register() {
 
         {serverError && <p className="server-error">{serverError}</p>}
 
-        <input
-          className="auth-input"
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+        <input className="auth-input" type="text" name="name" placeholder="Full Name"
+          value={formData.name} onChange={handleChange} />
         {errors.name && <p className="field-error">{errors.name}</p>}
 
-        <input
-          className="auth-input"
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <input className="auth-input" type="email" name="email" placeholder="Email"
+          value={formData.email} onChange={handleChange} />
         {errors.email && <p className="field-error">{errors.email}</p>}
 
-        <input
-          className="auth-input"
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <div className="password-wrapper">
+          <input
+            className="auth-input"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         {errors.password && <p className="field-error">{errors.password}</p>}
 
-        <input
-          className="auth-input"
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
+        <div className="password-wrapper">
+          <input
+            className="auth-input"
+            type={showConfirmPassword ? 'text' : 'password'}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+          <span className="password-toggle" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         {errors.confirmPassword && <p className="field-error">{errors.confirmPassword}</p>}
 
-       <button className="auth-button" onClick={handleSubmit} disabled={loading || !!serverError}>
-        {loading ? 'Creating account...' : 'Sign Up'}
-      </button>
+        <button className="auth-button" onClick={handleSubmit} disabled={loading || !!serverError}>
+          {loading ? 'Creating account...' : 'Sign Up'}
+        </button>
 
-        <p className="auth-link-text">
-          Already have an account? <a href="/">Log in</a>
-        </p>
+        <p className="auth-link-text">Already have an account? <a href="/">Log in</a></p>
       </div>
     </div>
   )
