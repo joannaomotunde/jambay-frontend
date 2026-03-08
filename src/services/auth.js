@@ -43,10 +43,14 @@ export const requestOTP = async (data) => {
 }
 
 export const resetPassword = async (data) => {
-  const response = await API.post('/reset-password', data)
+  const response = await API.patch('/reset-password', data)
   return response.data
 }
 export const updateProfile = async (data) => {
   const response = await API.patch('/update-profile', data)
+  return response.data
+}
+export const verifyResetOTP = async (data) => {
+  const response = await API.post('/verify-reset-otp', data)
   return response.data
 }

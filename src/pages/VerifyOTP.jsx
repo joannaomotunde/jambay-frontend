@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
-import { verifyOTP } from '../services/auth'
+import { verifyOTP, verifyResetOTP } from '../services/auth'
 import '../App.css'
 
 function VerifyOTP() {
@@ -23,10 +23,11 @@ function VerifyOTP() {
     }
     try {
       setLoading(true)
-      await verifyOTP({ email, otp })
       if (isPasswordReset) {
-        navigate('/reset-password', { state: { email } })
+        await verifyResetOTP({ email, otp })
+        navigate('/reset-password', { state: { email, otp } })
       } else {
+        await verifyOTP({ email, otp })
         navigate('/')
       }
     } catch (err) {
