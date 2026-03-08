@@ -1,41 +1,41 @@
-import { useState } from 'react'
-import { useNavigate, useLocation, Navigate } from 'react-router-dom'
-import { verifyOTP } from '../services/auth'
-import '../App.css'
+import { useState } from "react";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { verifyOTP, verifyResetOTP } from "../services/auth";
+import "../App.css";
 
 function VerifyOTP() {
-  const [otp, setOtp] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-  const location = useLocation()
-  const email = location.state?.email
-  const isPasswordReset = location.state?.isPasswordReset
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email;
+  const isPasswordReset = location.state?.isPasswordReset;
 
   if (!email) {
-    return <Navigate to="/register" replace />
+    return <Navigate to="/register" replace />;
   }
 
   const handleSubmit = async () => {
     if (!otp) {
-      setError('Please enter the OTP')
-      return
+      setError("Please enter the OTP");
+      return;
     }
     try {
-      setLoading(true)
+      setLoading(true);
       if (isPasswordReset) {
-        // Just navigate with email + otp, let reset-password handle validation
-        navigate('/reset-password', { state: { email, otp } })
+        await verifyResetOTP({ email, otp });
+        navigate("/reset-password", { state: { email } });
       } else {
-        await verifyOTP({ email, otp })
-        navigate('/')
+        await verifyOTP({ email, otp });
+        navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid OTP, please try again')
+      setError(err.response?.data?.message || "Invalid OTP, please try again");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
@@ -51,15 +51,19 @@ function VerifyOTP() {
           placeholder="Enter OTP"
           value={otp}
           onChange={(e) => {
-            setOtp(e.target.value)
-            setError('')
+            setOtp(e.target.value);
+            setError("");
           }}
           maxLength={6}
         />
         {error && <p className="field-error">{error}</p>}
 
-        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Verifying...' : 'Verify OTP'}
+        <button
+          className="auth-button"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? "Verifying..." : "Verify OTP"}
         </button>
 
         <p className="auth-link-text">
@@ -67,7 +71,7 @@ function VerifyOTP() {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default VerifyOTP
+export default VerifyOTP;

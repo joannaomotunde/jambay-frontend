@@ -6,9 +6,11 @@ import Dashboard from './pages/Dashboard'
 import VerifyOTP from './pages/VerifyOTP'
 import ProtectedRoute from './components/ProtectedRoute'
 import ResetPassword from './pages/ResetPassword'
-
-
 import Profile from './pages/Profile'
+import Ticketing from './pages/Ticketing'
+import Concessions from './pages/Concessions'
+import Loyalty from './pages/Loyalty'
+import OperatorDashboard from './pages/OperatorDashboard'
 
 function App() {
   return (
@@ -35,6 +37,10 @@ function App() {
         </ProtectedRoute>
           }
         />
+        <Route path="/events" element={<ProtectedRoute><Ticketing /></ProtectedRoute>} />
+        <Route path="/concessions" element={<ProtectedRoute><Concessions /></ProtectedRoute>} />
+        <Route path="/loyalty" element={<ProtectedRoute><Loyalty /></ProtectedRoute>} />
+        <Route path="/operator" element={<ProtectedRoute><OperatorDashboard /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )
