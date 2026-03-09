@@ -11,6 +11,7 @@ function Login() {
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   const navigate = useNavigate()
   const { login } = useAuth()
 
@@ -48,12 +49,17 @@ function Login() {
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
+      <div className="auth-form-wrapper">
+
+        {/* Back arrow */}
+        <button className="back-button" onClick={() => navigate('/')}>‹</button>
+
         <h2 className="auth-title">Welcome, please log in</h2>
 
         {serverError && <p className="server-error">{serverError}</p>}
 
-        <input className="auth-input" type="email" name="email" placeholder="Email"
+        <input className="auth-input" type="text" name="email"
+          placeholder="Username, ID, Email"
           value={formData.email} onChange={handleChange} />
         {errors.email && <p className="field-error">{errors.email}</p>}
 
@@ -72,12 +78,27 @@ function Login() {
         </div>
         {errors.password && <p className="field-error">{errors.password}</p>}
 
+        {/* Remember me + Forgot password */}
+        <div className="login-options">
+          <label className="remember-me">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+            />
+            Remember me
+          </label>
+          <a href="/forgot-password" className="forgot-link">Forgot password?</a>
+        </div>
+
         <button className="auth-button" onClick={handleSubmit} disabled={loading}>
           {loading ? 'Logging in...' : 'Log In'}
         </button>
 
-        <p className="auth-link-text"><a href="/forgot-password">Forgot password?</a></p>
-        <p className="auth-link-text">Don't have an account? <a href="/register">Sign up</a></p>
+        <p className="auth-link-text">
+  Don't have an account yet? <a href="/register" className="signup-link">Sign Up</a>
+</p>
+
       </div>
     </div>
   )

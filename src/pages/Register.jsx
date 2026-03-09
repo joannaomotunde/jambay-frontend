@@ -6,13 +6,12 @@ import '../App.css'
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: '', email: '', password: '', confirmPassword: '', role: 'attendee',
+    firstName: '', lastName: '', email: '', phone: '', password: '', role: 'attendee',
   })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -22,21 +21,20 @@ function Register() {
 
   const validate = () => {
     const newErrors = {}
-    if (!formData.name) newErrors.name = 'Full name is required'
+    if (!formData.firstName) newErrors.firstName = 'First name is required'
+    if (!formData.lastName) newErrors.lastName = 'Last name is required'
     if (!formData.email) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email format is invalid'
     }
+    if (formData.phone && !/^\+?[0-9]{7,15}$/.test(formData.phone)) {
+      newErrors.phone = 'Enter a valid phone number e.g. +2348012345678'
+    }
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
-    }
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password'
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match'
     }
     return newErrors
   }
@@ -48,7 +46,12 @@ function Register() {
     setServerError('')
     try {
       setLoading(true)
-      await registerUser({ name: formData.name, email: formData.email, password: formData.password })
+      await registerUser({
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
+      })
       navigate('/verify-otp', { state: { email: formData.email } })
     } catch (err) {
       setServerError(err.response?.data?.message || 'Registration failed, please try again')
@@ -58,26 +61,46 @@ function Register() {
   }
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
+    <div className="auth-container register-container">
+      <div className="auth-form-wrapper">
+
+        <button className="back-button" onClick={() => navigate('/login')}>‹</button>
+
         <h2 className="auth-title">Create an account</h2>
 
         {serverError && <p className="server-error">{serverError}</p>}
 
-        <input className="auth-input" type="text" name="name" placeholder="Full Name"
-          value={formData.name} onChange={handleChange} />
-        {errors.name && <p className="field-error">{errors.name}</p>}
+        <label className="input-label">First Name</label>
+        <input className="auth-input" type="text" name="firstName"
+          placeholder="First..."
+          value={formData.firstName} onChange={handleChange} />
+        {errors.firstName && <p className="field-error">{errors.firstName}</p>}
 
-        <input className="auth-input" type="email" name="email" placeholder="Email"
+        <label className="input-label">Last Name</label>
+        <input className="auth-input" type="text" name="lastName"
+          placeholder="Last..."
+          value={formData.lastName} onChange={handleChange} />
+        {errors.lastName && <p className="field-error">{errors.lastName}</p>}
+
+        <label className="input-label">Email Address</label>
+        <input className="auth-input" type="email" name="email"
+          placeholder="eg. address@email.abc"
           value={formData.email} onChange={handleChange} />
         {errors.email && <p className="field-error">{errors.email}</p>}
 
+        <label className="input-label">Phone number</label>
+        <input className="auth-input" type="tel" name="phone"
+          placeholder="Phone number"
+          value={formData.phone} onChange={handleChange} />
+        {errors.phone && <p className="field-error">{errors.phone}</p>}
+
+        <label className="input-label">Password</label>
         <div className="password-wrapper">
           <input
             className="auth-input"
             type={showPassword ? 'text' : 'password'}
             name="password"
-            placeholder="Password"
+            placeholder="Enter password..."
             value={formData.password}
             onChange={handleChange}
           />
@@ -87,26 +110,14 @@ function Register() {
         </div>
         {errors.password && <p className="field-error">{errors.password}</p>}
 
-        <div className="password-wrapper">
-          <input
-            className="auth-input"
-            type={showConfirmPassword ? 'text' : 'password'}
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          <span className="password-toggle" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-        </div>
-        {errors.confirmPassword && <p className="field-error">{errors.confirmPassword}</p>}
+        <p className="auth-link-text">
+          Already have an account? <a href="/login" className="signup-link">Log in</a>
+        </p>
 
-        <button className="auth-button" onClick={handleSubmit} disabled={loading || !!serverError}>
+        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
           {loading ? 'Creating account...' : 'Sign Up'}
         </button>
 
-        <p className="auth-link-text">Already have an account? <a href="/">Log in</a></p>
       </div>
     </div>
   )
