@@ -51,9 +51,7 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/loyalty" element={
-          <ProtectedRoute>
             <Loyalty />
-          </ProtectedRoute>
         } />
         <Route path="/operator" element={
           <ProtectedRoute>
