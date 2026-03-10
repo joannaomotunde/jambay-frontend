@@ -11,36 +11,55 @@ import Ticketing from './pages/Ticketing'
 import Concessions from './pages/Concessions'
 import Loyalty from './pages/Loyalty'
 import OperatorDashboard from './pages/OperatorDashboard'
+import NotAuthorized from './pages/NotAuthorized'
+import Onboarding from './pages/Onboarding'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        {/* First page users see */}
+        <Route path="/" element={<Onboarding />} />
+
+        {/* Auth routes */}
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
-         path="/profile"
-         element={
-         <ProtectedRoute>
-         <Profile />
-        </ProtectedRoute>
-          }
-        />
-        <Route path="/events" element={<ProtectedRoute><Ticketing /></ProtectedRoute>} />
-        <Route path="/concessions" element={<ProtectedRoute><Concessions /></ProtectedRoute>} />
-        <Route path="/loyalty" element={<ProtectedRoute><Loyalty /></ProtectedRoute>} />
-        <Route path="/operator" element={<ProtectedRoute><OperatorDashboard /></ProtectedRoute>} />
+        <Route path="/403" element={<NotAuthorized />} />
+
+        {/* Protected routes */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/events" element={
+          <ProtectedRoute>
+            <Ticketing />
+          </ProtectedRoute>
+        } />
+        <Route path="/concessions" element={
+          <ProtectedRoute>
+            <Concessions />
+          </ProtectedRoute>
+        } />
+        <Route path="/loyalty" element={
+          <ProtectedRoute>
+            <Loyalty />
+          </ProtectedRoute>
+        } />
+        <Route path="/operator" element={
+          <ProtectedRoute>
+            <OperatorDashboard />
+          </ProtectedRoute>
+        } />
       </Routes>
     </BrowserRouter>
   )

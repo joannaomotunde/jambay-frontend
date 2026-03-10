@@ -9,9 +9,29 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const storedToken = localStorage.getItem('token')
     const storedUser = localStorage.getItem('user')
+
     if (storedToken && storedUser) {
-      setToken(storedToken)
-      setUser(JSON.parse(storedUser))
+      // Check if token is expired
+      try {
+        const payload = JSON.parse(atob(storedToken.split('.')[1]))
+        const isExpired = payload.exp * 1000 < Date.now()
+
+        if (isExpired) {
+          // Clear everything and force re-login
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+          setToken(null)
+          setUser(null)
+        } else {
+          setToken(storedToken)
+          setUser(JSON.parse(storedUser))
+        }
+      } catch {
+        // Invalid token — clear and force re-login
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        setToken(null)
+      }
     } else {
       setToken(null)
     }

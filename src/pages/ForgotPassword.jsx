@@ -41,30 +41,37 @@ function ForgotPassword() {
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
-        <h2 className="auth-title">Forgot Password</h2>
+      <div className="auth-form-wrapper">
+
+        {/* Back button */}
+        <button className="back-button" onClick={() => navigate('/login')}>‹</button>
+
+        <h2 className="auth-title">Forget Password</h2>
         <p className="auth-subtitle">
-          Enter your email and we'll send you an OTP to reset your password.
+          Provide the email address linked with your account to reset your password.
         </p>
 
         {serverError && <p className="server-error">{serverError}</p>}
 
+        <label className="input-label">Email Address</label>
         <input
           className="auth-input"
           type="email"
-          placeholder="Enter your email"
+          placeholder="john123@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+        <p className="input-helper">Please enter your registered email</p>
         {errors.email && <p className="field-error">{errors.email}</p>}
 
         <button className="auth-button" onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Sending...' : 'Send OTP'}
+          {loading ? 'Sending...' : 'Request Password Reset Link'}
         </button>
 
-        <p className="auth-link-text">
-          Remember your password? <a href="/">Log in</a>
-        </p>
+        <button className="cancel-button" onClick={() => navigate('/login')}>
+          Cancel
+        </button>
+
       </div>
     </div>
   )

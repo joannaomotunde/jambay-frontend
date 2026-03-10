@@ -5,18 +5,95 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* CONTAINER */
-.auth-container {
+/* ONBOARDING */
+.onboarding-container {
   min-height: 100vh;
-  background-color: #4ECDC4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 30px 40px;
+  transition: background 0.5s ease;
+}
+
+.onboarding-slide-1 {
+  background: linear-gradient(to bottom, #1a9e8f, #4ECDC4);
+}
+
+.onboarding-slide-2 {
+  background: linear-gradient(to bottom, #ffffff, #4ECDC4);
+}
+
+.onboarding-logo-area {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.onboarding-bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.onboarding-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.onboarding-dot {
+  height: 8px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.onboarding-dot.active {
+  width: 20px;
+  background-color: #F7C948;
+}
+
+.onboarding-dot.inactive {
+  width: 8px;
+}
+
+.onboarding-button {
+  background-color: #F7C948;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.onboarding-button:hover {
+  background-color: #e6b800;
+}
+/* CONTAINER */
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #1a9e8f, #4ECDC4, #ffffff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  width: 100%;
+}
+
 /* CARD */
 .auth-card {
-  background-color: #4ECDC4;
+  background-color: transparent;
   padding: 40px 30px;
   border-radius: 20px;
   width: 100%;
@@ -25,7 +102,6 @@
   flex-direction: column;
   gap: 12px;
 }
-
 /* TITLE */
 .auth-title {
   color: white;
@@ -68,7 +144,7 @@
 /* BUTTON */
 .auth-button {
   padding: 14px;
-  border-radius: 10px;
+  border-radius: 30px;
   border: none;
   background-color: #F7C948;
   color: white;
@@ -98,6 +174,16 @@
 .auth-link-text a {
   color: white;
   font-weight: bold;
+  text-decoration: none;
+}
+/* FORM WRAPPER */
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 30px 0;
 }
 
 /* ERROR MESSAGES */
@@ -146,4 +232,264 @@
   cursor: pointer;
   font-size: 1rem;
   user-select: none;
+}
+/* BACK BUTTON */
+.back-button {
+  background-color: #F7C948;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+}
+
+/* LOGIN OPTIONS */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: white;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.forgot-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+.signup-link {
+  color: #ff4444;
+  font-weight: bold;
+}
+/* REGISTER TOP ROW */
+.register-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.admin-login-btn {
+  background-color: #F7C948;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-login-btn:hover {
+  background-color: #e6b800;
+}
+
+/* SOCIAL LOGIN */
+.social-label {
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.social-btn {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.social-btn:hover {
+  opacity: 0.8;
+}
+/* REGISTER TOP ROW */
+.register-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.admin-login-btn {
+  background-color: #F7C948;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-login-btn:hover {
+  background-color: #e6b800;
+}
+
+/* SOCIAL LOGIN */
+.social-label {
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.social-btn {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.social-btn:hover {
+  opacity: 0.8;
+}
+/* INPUT LABEL */
+.input-label {
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: -6px;
+}
+/* REGISTER SPECIFIC */
+.register-container {
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding-top: 30px;
+}
+/* INPUT HELPER TEXT */
+.input-helper {
+  color: white;
+  font-size: 12px;
+  margin-top: -6px;
+  opacity: 0.85;
+}
+
+/* CANCEL BUTTON */
+.cancel-button {
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background-color: #FF4444;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cancel-button:hover {
+  background-color: #cc0000;
+}
+/* OTP BOXES */
+.otp-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.otp-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  outline: none;
+  color: #1E293B;
+}
+
+.otp-box:focus {
+  border: 2px solid #F7C948;
+}
+
+/* TIMER */
+.otp-timer {
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* RESEND BUTTON */
+.resend-button {
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background-color: #166534;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.resend-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resend-button:hover:not(:disabled) {
+  background-color: #14532d;
+}
+/* PASSWORD RULES */
+.password-rules {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.password-rules p {
+  color: white;
+  font-size: 12px;
+}
+
+/* SUCCESS SCREEN */
+.success-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  min-height: 60vh;
 }
