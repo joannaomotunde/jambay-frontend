@@ -11,13 +11,11 @@ export function AuthProvider({ children }) {
     const storedUser = localStorage.getItem('user')
 
     if (storedToken && storedUser) {
-      // Check if token is expired
       try {
         const payload = JSON.parse(atob(storedToken.split('.')[1]))
         const isExpired = payload.exp * 1000 < Date.now()
 
         if (isExpired) {
-          // Clear everything and force re-login
           localStorage.removeItem('token')
           localStorage.removeItem('user')
           setToken(null)
@@ -27,7 +25,6 @@ export function AuthProvider({ children }) {
           setUser(JSON.parse(storedUser))
         }
       } catch {
-        // Invalid token — clear and force re-login
         localStorage.removeItem('token')
         localStorage.removeItem('user')
         setToken(null)
@@ -38,10 +35,15 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = (userData, userToken) => {
-    setUser(userData)
+    // Save role from response — role is either 'user' or 'admin'
+    const userWithRole = {
+      ...userData,
+      role: userData.role || 'user' // default to 'user' if role is missing
+    }
+    setUser(userWithRole)
     setToken(userToken)
     localStorage.setItem('token', userToken)
-    localStorage.setItem('user', JSON.stringify(userData))
+    localStorage.setItem('user', JSON.stringify(userWithRole))
   }
 
   const logout = () => {
@@ -51,8 +53,11 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('user')
   }
 
+  // Helper to check if current user is admin
+  const isAdmin = user?.role === 'admin'
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAdmin }}>
       {children}
     </AuthContext.Provider>
   )

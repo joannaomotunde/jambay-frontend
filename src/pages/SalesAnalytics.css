@@ -40,6 +40,7 @@
 .sa-stats-row {
   display: flex;
   gap: 8px;
+  width: 100%;
 }
 
 .sa-stat-card {
@@ -50,6 +51,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .sa-stat-label {
@@ -58,9 +60,10 @@
 }
 
 .sa-stat-value {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   color: #1E293B;
+  word-break: break-word;
 }
 
 .sa-stat-change {
@@ -95,10 +98,12 @@
 .sa-charts-row {
   display: flex;
   gap: 8px;
+  width: 100%;
 }
 
 .sa-half {
   flex: 1;
+  min-width: 0;
 }
 
 /* TABLE */

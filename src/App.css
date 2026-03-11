@@ -79,6 +79,7 @@
 .onboarding-button:hover {
   background-color: #e6b800;
 }
+
 /* CONTAINER */
 .auth-container {
   min-height: 100vh;
@@ -91,17 +92,6 @@
   width: 100%;
 }
 
-/* CARD */
-.auth-card {
-  background-color: transparent;
-  padding: 40px 30px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 360px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
 /* TITLE */
 .auth-title {
   color: white;
@@ -125,19 +115,6 @@
   background-color: white;
   font-size: 14px;
   outline: none;
-  width: 100%;
-}
-
-/* OTP INPUT */
-.otp-input {
-  padding: 14px;
-  border-radius: 10px;
-  border: none;
-  background-color: white;
-  font-size: 20px;
-  outline: none;
-  text-align: center;
-  letter-spacing: 8px;
   width: 100%;
 }
 
@@ -176,6 +153,7 @@
   font-weight: bold;
   text-decoration: none;
 }
+
 /* FORM WRAPPER */
 .auth-form-wrapper {
   width: 100%;
@@ -205,15 +183,7 @@
   font-size: 13px;
 }
 
-/* SUCCESS BOX */
-.success-box {
-  background-color: white;
-  padding: 14px;
-  border-radius: 10px;
-  text-align: center;
-  color: #4ECDC4;
-  font-weight: bold;
-}
+/* PASSWORD WRAPPER */
 .password-wrapper {
   position: relative;
   width: 100%;
@@ -233,6 +203,7 @@
   font-size: 1rem;
   user-select: none;
 }
+
 /* BACK BUTTON */
 .back-button {
   background-color: #F7C948;
@@ -271,10 +242,12 @@
   font-weight: bold;
   text-decoration: none;
 }
+
 .signup-link {
   color: #ff4444;
   font-weight: bold;
 }
+
 /* REGISTER TOP ROW */
 .register-top-row {
   display: flex;
@@ -298,85 +271,6 @@
   background-color: #e6b800;
 }
 
-/* SOCIAL LOGIN */
-.social-label {
-  text-align: center;
-  color: white;
-  font-size: 13px;
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.social-btn {
-  background-color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.social-btn:hover {
-  opacity: 0.8;
-}
-/* REGISTER TOP ROW */
-.register-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.admin-login-btn {
-  background-color: #F7C948;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 16px;
-  color: white;
-  font-size: 13px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.admin-login-btn:hover {
-  background-color: #e6b800;
-}
-
-/* SOCIAL LOGIN */
-.social-label {
-  text-align: center;
-  color: white;
-  font-size: 13px;
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.social-btn {
-  background-color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.social-btn:hover {
-  opacity: 0.8;
-}
 /* INPUT LABEL */
 .input-label {
   color: white;
@@ -384,12 +278,14 @@
   font-weight: bold;
   margin-bottom: -6px;
 }
+
 /* REGISTER SPECIFIC */
 .register-container {
   justify-content: flex-start;
   overflow-y: auto;
   padding-top: 30px;
 }
+
 /* INPUT HELPER TEXT */
 .input-helper {
   color: white;
@@ -414,6 +310,7 @@
 .cancel-button:hover {
   background-color: #cc0000;
 }
+
 /* OTP BOXES */
 .otp-boxes {
   display: flex;
@@ -468,6 +365,7 @@
 .resend-button:hover:not(:disabled) {
   background-color: #14532d;
 }
+
 /* PASSWORD RULES */
 .password-rules {
   background-color: rgba(255, 255, 255, 0.2);

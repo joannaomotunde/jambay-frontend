@@ -14,6 +14,8 @@ import OperatorDashboard from './pages/OperatorDashboard'
 import NotAuthorized from './pages/NotAuthorized'
 import Onboarding from './pages/Onboarding'
 import SalesAnalytics from './pages/SalesAnalytics'
+import FraudAlert from './pages/FraudAlert'
+import Attendance from './pages/Attendance'
 
 function App() {
   return (
@@ -57,13 +59,23 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/operator" element={
-          <ProtectedRoute>
-            <OperatorDashboard />
-          </ProtectedRoute>
-        } />
+  <ProtectedRoute allowedRoles={['admin']}>
+    <OperatorDashboard />
+  </ProtectedRoute>
+} />
         <Route path="/analytics" element={
   <ProtectedRoute>
     <SalesAnalytics />
+  </ProtectedRoute>
+} />
+<Route path="/fraud-alert" element={
+  <ProtectedRoute>
+    <FraudAlert />
+  </ProtectedRoute>
+} />
+<Route path="/attendance" element={
+  <ProtectedRoute>
+    <Attendance />
   </ProtectedRoute>
 } />
       </Routes>

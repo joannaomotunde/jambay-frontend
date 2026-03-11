@@ -9,6 +9,7 @@ const OperatorDashboard = () => {
   const navigate = useNavigate()
   const [activeNav, setActiveNav] = useState('dashboard')
   const [activeTab, setActiveTab] = useState('Card')
+  const [showEventsMenu, setShowEventsMenu] = useState(false)
 
   const stats = {
     totalTicketSales: 30000,
@@ -147,21 +148,38 @@ const OperatorDashboard = () => {
             <div className="op-nav-icon"><MdDashboard size={22} /></div>
             <p>Dashboard</p>
           </button>
-          <button className={`op-nav-btn ${activeNav === 'events' ? 'active' : ''}`}
-            onClick={() => setActiveNav('events')}>
-            <div className="op-nav-icon"><MdEvent size={22} /></div>
-            <p>Events</p>
-          </button>
+
+          {/* Events button with popup */}
+          <div style={{ position: 'relative' }}>
+            {showEventsMenu && (
+              <div className="op-events-popup">
+                <button className="op-popup-item" onClick={() => { navigate('/attendance'); setShowEventsMenu(false) }}>
+                  📊 Attendance
+                </button>
+                <button className="op-popup-item" onClick={() => { navigate('/fraud-alert'); setShowEventsMenu(false) }}>
+                  🚨 Fraud Alert
+                </button>
+              </div>
+            )}
+            <button className={`op-nav-btn ${activeNav === 'events' ? 'active' : ''}`}
+              onClick={() => { setActiveNav('events'); setShowEventsMenu(!showEventsMenu) }}>
+              <div className="op-nav-icon"><MdEvent size={22} /></div>
+              <p>Events</p>
+            </button>
+          </div>
+
           <button className={`op-nav-btn ${activeNav === 'orders' ? 'active' : ''}`}
             onClick={() => setActiveNav('orders')}>
             <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
             <p>Orders</p>
           </button>
+
           <button className={`op-nav-btn ${activeNav === 'analytics' ? 'active' : ''}`}
-  onClick={() => { setActiveNav('analytics'); navigate('/analytics') }}>
-  <div className="op-nav-icon"><MdBarChart size={22} /></div>
-  <p>Analytics</p>
-</button>
+            onClick={() => { setActiveNav('analytics'); navigate('/analytics') }}>
+            <div className="op-nav-icon"><MdBarChart size={22} /></div>
+            <p>Analytics</p>
+          </button>
+
           <button className={`op-nav-btn ${activeNav === 'settings' ? 'active' : ''}`}
             onClick={() => { setActiveNav('settings'); handleLogout() }}>
             <div className="op-nav-icon"><MdSettings size={22} /></div>

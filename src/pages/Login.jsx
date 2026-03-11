@@ -39,7 +39,12 @@ function Login() {
       setLoading(true)
       const data = await loginUser(formData)
       login(data.user, data.token)
-      navigate('/dashboard')
+      // Redirect based on role
+      if (data.user?.role === 'admin') {
+        navigate('/operator')
+      } else {
+        navigate('/dashboard')
+      }
     } catch (err) {
       setServerError(err.response?.data?.message || 'Login failed, please try again')
     } finally {
@@ -96,8 +101,8 @@ function Login() {
         </button>
 
         <p className="auth-link-text">
-  Don't have an account yet? <a href="/register" className="signup-link">Sign Up</a>
-</p>
+          Don't have an account yet? <a href="/register" className="signup-link">Sign Up</a>
+        </p>
 
       </div>
     </div>
