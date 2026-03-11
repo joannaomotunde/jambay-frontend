@@ -13,6 +13,7 @@ import Loyalty from './pages/Loyalty'
 import OperatorDashboard from './pages/OperatorDashboard'
 import NotAuthorized from './pages/NotAuthorized'
 import Onboarding from './pages/Onboarding'
+import SalesAnalytics from './pages/SalesAnalytics'
 
 function App() {
   return (
@@ -60,6 +61,11 @@ function App() {
             <OperatorDashboard />
           </ProtectedRoute>
         } />
+        <Route path="/analytics" element={
+  <ProtectedRoute>
+    <SalesAnalytics />
+  </ProtectedRoute>
+} />
       </Routes>
     </BrowserRouter>
   )
