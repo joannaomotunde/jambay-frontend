@@ -19,6 +19,7 @@ const Concessions = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [cart, setCart] = useState([])
   const [showCart, setShowCart] = useState(false)
+  const [checkoutStep, setCheckoutStep] = useState(null)
 
   const filteredItems = selectedCategory === 'All'
     ? menuItems
@@ -188,6 +189,7 @@ const Concessions = () => {
 
               {/* Checkout Button */}
               <button
+                onClick={() => {setCheckoutStep('checkout'); setShowCart(false)}}
                 style={{ width: '100%', marginTop: '16px', background: '#f5a623', border: 'none', borderRadius: '10px', padding: '14px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer' }}
               >
                 Proceed to Checkout →
@@ -196,6 +198,95 @@ const Concessions = () => {
             )}
         </div>
       )}
+      {/* Checkout Screen */}
+{checkoutStep === 'checkout' && (
+  <div style={{ border: '2px solid #f5a623', borderRadius: '16px', padding: '20px', background: '#fffdf7', marginTop: '20px' }}>
+    <h2 style={{ marginTop: 0 }}>🧾 Checkout</h2>
+
+    {/* Order Summary */}
+    <div style={{ marginBottom: '20px' }}>
+      <h3 style={{ color: '#555', marginBottom: '10px' }}>Order Summary</h3>
+      {cart.map(item => (
+        <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee' }}>
+          <span>{item.name} × {item.qty}</span>
+          <span style={{ fontWeight: 'bold', color: '#f5a623' }}>
+            {item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}
+          </span>
+        </div>
+      ))}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontWeight: 'bold', fontSize: '18px' }}>
+        <span>Total:</span>
+        <span style={{ color: '#f5a623' }}>₦{grandTotal.toLocaleString()}</span>
+      </div>
+    </div>
+
+    {/* Pickup Details */}
+    <div style={{ background: '#fff3e0', borderRadius: '12px', padding: '16px', marginBottom: '20px' }}>
+      <h3 style={{ margin: '0 0 10px', color: '#e65100' }}>📍 Pickup Details</h3>
+      <p style={{ margin: '4px 0' }}>📌 <strong>Location:</strong> Concessions Stand A — Gate 3</p>
+      <p style={{ margin: '4px 0' }}>⏱ <strong>Estimated Time:</strong> 10-15 minutes after confirmation</p>
+      <p style={{ margin: '4px 0' }}>🎟 <strong>Show your QR code</strong> at the stand to collect your order</p>
+    </div>
+
+    {/* Action Buttons */}
+    <div style={{ display: 'flex', gap: '10px' }}>
+      <button
+        onClick={() => setCheckoutStep(null)}
+        style={{ flex: 1, padding: '12px', borderRadius: '10px', border: '2px solid #f5a623', background: 'white', cursor: 'pointer', fontWeight: 'bold', color: '#f5a623' }}
+      >
+        ← Back to Cart
+      </button>
+      <button
+        onClick={() => setCheckoutStep('confirmation')}
+        style={{ flex: 2, padding: '12px', borderRadius: '10px', border: 'none', background: '#f5a623', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
+      >
+        Confirm Order ✓
+      </button>
+    </div>
+  </div>
+)}
+
+{/* Order Confirmation Screen */}
+{checkoutStep === 'confirmation' && (
+  <div style={{ border: '2px solid #4caf50', borderRadius: '16px', padding: '30px', background: '#f9fff9', marginTop: '20px', textAlign: 'center' }}>
+    <div style={{ fontSize: '60px', marginBottom: '10px' }}>🎉</div>
+    <h2 style={{ color: '#4caf50', marginBottom: '5px' }}>Order Confirmed!</h2>
+    <p style={{ color: '#666', marginBottom: '20px' }}>Your order has been placed successfully</p>
+
+    {/* Order Details */}
+    <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', marginBottom: '20px', textAlign: 'left' }}>
+      <h3 style={{ margin: '0 0 10px' }}>🧾 Order Receipt</h3>
+      {cart.map(item => (
+        <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #eee' }}>
+          <span>{item.name} × {item.qty}</span>
+          <span style={{ color: '#f5a623', fontWeight: 'bold' }}>
+            {item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}
+          </span>
+        </div>
+      ))}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontWeight: 'bold', fontSize: '16px' }}>
+        <span>Total Paid:</span>
+        <span style={{ color: '#f5a623' }}>₦{grandTotal.toLocaleString()}</span>
+      </div>
+    </div>
+
+    {/* Pickup Info */}
+    <div style={{ background: '#fff3e0', borderRadius: '12px', padding: '16px', marginBottom: '20px', textAlign: 'left' }}>
+      <h3 style={{ margin: '0 0 10px', color: '#e65100' }}>📍 Collect Your Order</h3>
+      <p style={{ margin: '4px 0' }}>📌 <strong>Location:</strong> Concessions Stand A — Gate 3</p>
+      <p style={{ margin: '4px 0' }}>⏱ <strong>Ready in:</strong> 10-15 minutes</p>
+      <p style={{ margin: '4px 0' }}>🎟 <strong>Show your QR code</strong> at the stand</p>
+    </div>
+
+    {/* New Order Button */}
+    <button
+      onClick={() => { setCheckoutStep(null); setCart([]); setShowCart(false) }}
+      style={{ width: '100%', padding: '14px', borderRadius: '10px', border: 'none', background: '#f5a623', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
+    >
+      🛍 Place Another Order
+    </button>
+  </div>
+)}
 
     </div>
   )
