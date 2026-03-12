@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Dashboard.css'
 import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
+import './EventsBrowse.css'
 
 function Dashboard() {
   const { user, logout } = useAuth()
@@ -284,22 +285,22 @@ function Dashboard() {
             <div className="db-nav-icon-circle"><MdHome size={22} /></div>
             <p>Home</p>
           </button>
-          <button className="db-nav-btn">
-            <div className="db-nav-icon-circle"><MdEvent size={22} /></div>
-            <p>Events</p>
-          </button>
-          <button className="db-nav-btn" onClick={() => navigate('/events')}>
+          <button className="db-nav-btn" onClick={() => navigate('/events-browse')}>
+  <div className="db-nav-icon-circle"><MdEvent size={22} /></div>
+  <p>Events</p>
+</button>
+          <button className="db-nav-btn" onClick={() => navigate('/search')}>
             <div className="db-nav-icon-circle"><MdSearch size={22} /></div>
             <p>Search</p>
           </button>
-          <button className="db-nav-btn">
-            <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
-            <p>Profile</p>
-          </button>
-          <button className="db-nav-btn" onClick={handleLogout}>
-            <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
-            <p>Settings</p>
-          </button>
+          <button className="db-nav-btn" onClick={() => navigate('/profile')}>
+  <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
+  <p>Profile</p>
+</button>
+          <button className="db-nav-btn" onClick={() => navigate('/settings')}>
+  <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
+  <p>Settings</p>
+</button>
         </div>
 
       </div>

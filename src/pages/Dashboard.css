@@ -46,10 +46,10 @@
 }
 
 .db-filter-pill {
-  background-color: white;
-  border: none;
+   background-color: white;
+  border: 2px solid #c9a800;
   border-radius: 20px;
-  padding: 6px 10px;
+  padding: 5px 12px;
   font-size: 11px;
   font-weight: 600;
   color: #1E293B;
@@ -60,11 +60,7 @@
 
 .db-filter-pill.active {
   background-color: white;
-  color: #1E293B;
-}
-
-.db-filter-pill:hover {
-  opacity: 0.85;
+  border: 3px solid #1E293B;
 }
 
 /* SEARCH ROW */
@@ -86,7 +82,7 @@
 }
 
 .db-search-icon {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .db-search-label {
@@ -98,7 +94,6 @@
 .db-search-sub {
   font-size: 9px;
   color: #64748B;
-  word-break: break-word;
 }
 
 /* SECTION */
@@ -315,4 +310,15 @@
 .db-nav-btn.active .db-nav-icon-circle {
   background-color: #1a9e8f;
   color: white;
+}
+.db-nav-icon-circle {
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4ECDC4;
+  pointer-events: none;
 }

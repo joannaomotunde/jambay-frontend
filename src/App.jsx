@@ -16,15 +16,16 @@ import Onboarding from './pages/Onboarding'
 import SalesAnalytics from './pages/SalesAnalytics'
 import FraudAlert from './pages/FraudAlert'
 import Attendance from './pages/Attendance'
-
+import EventsBrowse from './pages/EventsBrowse'
+import SearchScreen from './pages/SearchScreen'
+import EditProfile from './pages/EditProfile'
+import Settings from './pages/Settings'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* First page users see */}
         <Route path="/" element={<Onboarding />} />
 
-        {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
@@ -32,51 +33,44 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/403" element={<NotAuthorized />} />
 
-        {/* Protected routes */}
         <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
+          <ProtectedRoute><Dashboard /></ProtectedRoute>
         } />
         <Route path="/profile" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
+          <ProtectedRoute><Profile /></ProtectedRoute>
         } />
         <Route path="/events" element={
-          <ProtectedRoute>
-            <Ticketing />
-          </ProtectedRoute>
+          <ProtectedRoute><Ticketing /></ProtectedRoute>
+        } />
+        <Route path="/events-browse" element={
+          <ProtectedRoute><EventsBrowse /></ProtectedRoute>
         } />
         <Route path="/concessions" element={
-          <ProtectedRoute>
-            <Concessions />
-          </ProtectedRoute>
+          <ProtectedRoute><Concessions /></ProtectedRoute>
         } />
         <Route path="/loyalty" element={
-          <ProtectedRoute>
-            <Loyalty />
-          </ProtectedRoute>
+          <ProtectedRoute><Loyalty /></ProtectedRoute>
         } />
         <Route path="/operator" element={
-  <ProtectedRoute allowedRoles={['admin']}>
-    <OperatorDashboard />
-  </ProtectedRoute>
-} />
+          <ProtectedRoute allowedRoles={['admin']}><OperatorDashboard /></ProtectedRoute>
+        } />
         <Route path="/analytics" element={
-  <ProtectedRoute>
-    <SalesAnalytics />
-  </ProtectedRoute>
+          <ProtectedRoute><SalesAnalytics /></ProtectedRoute>
+        } />
+        <Route path="/fraud-alert" element={
+          <ProtectedRoute><FraudAlert /></ProtectedRoute>
+        } />
+        <Route path="/attendance" element={
+          <ProtectedRoute><Attendance /></ProtectedRoute>
+        } />
+        <Route path="/search" element={
+  <ProtectedRoute><SearchScreen /></ProtectedRoute>
 } />
-<Route path="/fraud-alert" element={
-  <ProtectedRoute>
-    <FraudAlert />
-  </ProtectedRoute>
+<Route path="/profile/edit" element={
+  <ProtectedRoute><EditProfile /></ProtectedRoute>
 } />
-<Route path="/attendance" element={
-  <ProtectedRoute>
-    <Attendance />
-  </ProtectedRoute>
+<Route path="/settings" element={
+  <ProtectedRoute><Settings /></ProtectedRoute>
 } />
       </Routes>
     </BrowserRouter>

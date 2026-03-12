@@ -1,0 +1,112 @@
+.pf-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 100px 16px;
+  box-sizing: border-box;
+}
+
+/* ACCOUNT ROW */
+.pf-account-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pf-account-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+
+.pf-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* USER CARD */
+.pf-user-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.pf-user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e0f7f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pf-user-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.pf-user-email {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.pf-edit-btn {
+  margin-top: 6px;
+  background: none;
+  border: none;
+  color: #FF4444;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* MENU */
+.pf-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pf-menu-item {
+  background: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pf-menu-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1E293B;
+}
+
+.pf-menu-arrow {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

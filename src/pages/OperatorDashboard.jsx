@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import './OperatorDashboard.css'
 import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 const OperatorDashboard = () => {
   const { user, logout } = useAuth()
@@ -32,6 +33,18 @@ const OperatorDashboard = () => {
     { event: 'Carnival', customer: 'Amina S.', tickets: 4, total: '$150', date: '3 min ago' },
     { event: 'Tech Summit', customer: 'Debbie F.', tickets: 5, total: '$250', date: '2 min ago' },
     { event: 'Burna Concert', customer: 'Oche K.', tickets: 2, total: '$120', date: '3 min ago' },
+  ]
+
+  const salesData = [
+    { month: 'Jan', sales: 650000 },
+    { month: 'Feb', sales: 750000 },
+    { month: 'Mar', sales: 500000 },
+    { month: 'Apr', sales: 520000 },
+    { month: 'May', sales: 600000 },
+    { month: 'Jun', sales: 200000 },
+    { month: 'Jul', sales: 480000 },
+    { month: 'Aug', sales: 720000 },
+    { month: 'Sep', sales: 700000 },
   ]
 
   const handleLogout = () => {
@@ -85,7 +98,23 @@ const OperatorDashboard = () => {
         {/* Ticket Sales Performance */}
         <div className="op-panel">
           <p className="op-panel-title">Current Ticket Sales Performance</p>
-          <div className="op-chart-placeholder" />
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={salesData}>
+              <XAxis dataKey="month" tick={{ fontSize: 10 }} />
+              <YAxis
+                tick={{ fontSize: 10 }}
+                tickFormatter={v => `$${v / 1000}k`}
+              />
+              <Tooltip formatter={v => `$${v.toLocaleString()}`} />
+              <Line
+                type="monotone"
+                dataKey="sales"
+                stroke="#4ECDC4"
+                strokeWidth={2}
+                dot={{ fill: '#4ECDC4', r: 4 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
 
         {/* Live Event Overview */}
@@ -149,7 +178,6 @@ const OperatorDashboard = () => {
             <p>Dashboard</p>
           </button>
 
-          {/* Events button with popup */}
           <div style={{ position: 'relative' }}>
             {showEventsMenu && (
               <div className="op-events-popup">

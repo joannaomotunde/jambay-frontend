@@ -29,6 +29,14 @@ const Attendance = () => {
     { time: '10PM', checkedIn: 250, notCheckedIn: 20 },
   ]
 
+  const attendees = [
+    { name: 'Idara', ticket: 'VIP', status: 'Checked In', time: '5:15pm', action: 'in' },
+    { name: 'James', ticket: 'General', status: 'Checked In', time: '6:20pm', action: 'in' },
+    { name: 'Shuqrat', ticket: 'VIP', status: 'Checked In', time: '7:10pm', action: 'in' },
+    { name: 'Samuel', ticket: 'General', status: 'Absent', time: '', action: 'out' },
+    { name: 'David', ticket: 'VIP', status: 'Checked In', time: '8:11pm', action: 'in' },
+  ]
+
   return (
     <div className="auth-container">
       <div className="at-wrapper">
@@ -97,6 +105,46 @@ const Attendance = () => {
           <div className="at-search">
             <input type="text" placeholder="Search..." className="at-search-input" />
             <button className="at-search-btn">🔍</button>
+          </div>
+        </div>
+
+        {/* Attendee List */}
+        <div className="at-panel">
+          <p className="at-panel-title">Attendee List</p>
+          <div className="at-table-wrapper">
+            <table className="at-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Ticket Type</th>
+                  <th>Status</th>
+                  <th>Checked In Time</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {attendees.map((row, i) => (
+                  <tr key={i}>
+                    <td>{row.name}</td>
+                    <td>{row.ticket}</td>
+                    <td>{row.status}</td>
+                    <td>{row.time}</td>
+                    <td>
+                      <span className={`at-action-badge ${row.action === 'in' ? 'at-badge-in' : 'at-badge-out'}`}>
+                        {row.action === 'in' ? 'In' : 'Not In'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="at-pagination">
+            <button className="at-page-btn">‹</button>
+            <p className="at-page-text">1 / 30</p>
+            <button className="at-page-btn">›</button>
           </div>
         </div>
 

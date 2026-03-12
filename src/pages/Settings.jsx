@@ -2,60 +2,52 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
 import { MdChevronRight } from 'react-icons/md'
-import './Profile.css'
+import './Settings.css'
 import './Dashboard.css'
 
-function Profile() {
-  const { user } = useAuth()
+function Settings() {
+  const { logout } = useAuth()
   const navigate = useNavigate()
 
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
+
   const menuItems = [
-    { id: 1, label: 'My Tickets' },
-    { id: 2, label: 'Favorites' },
-    { id: 3, label: 'Loyalty Points & Merchs' },
-    { id: 4, label: 'Saved Events' },
-    { id: 5, label: 'My Orders' },
-    { id: 6, label: 'Sell Tickets' },
-    { id: 7, label: 'History' },
-    { id: 8, label: 'Following' },
+    { id: 1, label: 'Notification Settings' },
+    { id: 2, label: 'Payment Settings' },
+    { id: 3, label: 'Support' },
+    { id: 4, label: 'Legal' },
+    { id: 5, label: 'Help Center' },
+    { id: 6, label: 'Our Blogs' },
+    { id: 7, label: 'About Us' },
+    { id: 8, label: 'Contact Us' },
+    { id: 9, label: 'Updates' },
   ]
 
   return (
     <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
-      <div className="pf-wrapper">
-
-        {/* Account Title */}
-        <div className="pf-account-row">
-          <p className="pf-account-label">Account Info</p>
-          <div className="pf-avatar">
-            <MdPerson size={28} color="#4ECDC4" />
-          </div>
-        </div>
-
-        {/* User Info Card */}
-        <div className="pf-user-card">
-          <div className="pf-user-avatar">
-            <MdPerson size={36} color="#4ECDC4" />
-          </div>
-          <div className="pf-user-info">
-            <p className="pf-user-name">{user?.name || 'John Anderson'}</p>
-            <p className="pf-user-email">{user?.email || 'john.anderson@email.com'}</p>
-            <button className="pf-edit-btn" onClick={() => navigate('/profile/edit')}>
-              Edit Profile
-            </button>
-          </div>
-        </div>
+      <div className="st-wrapper">
 
         {/* Menu Items */}
-        <div className="pf-menu">
+        <div className="st-menu">
           {menuItems.map(item => (
-            <div key={item.id} className="pf-menu-item">
-              <p className="pf-menu-label">{item.label}</p>
-              <div className="pf-menu-arrow">
+            <div key={item.id} className="st-menu-item">
+              <p className="st-menu-label">{item.label}</p>
+              <div className="st-menu-arrow">
                 <MdChevronRight size={20} color="#1E293B" />
               </div>
             </div>
           ))}
+
+          {/* Log Out */}
+          <div className="st-menu-item" onClick={handleLogout}>
+            <p className="st-menu-label st-logout-label">Log Out</p>
+            <div className="st-menu-arrow">
+              <MdChevronRight size={20} color="#1E293B" />
+            </div>
+          </div>
         </div>
 
         {/* Bottom Nav */}
@@ -72,11 +64,11 @@ function Profile() {
             <div className="db-nav-icon-circle"><MdSearch size={22} /></div>
             <p>Search</p>
           </button>
-          <button className="db-nav-btn active">
+          <button className="db-nav-btn" onClick={() => navigate('/profile')}>
             <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
             <p>Profile</p>
           </button>
-          <button className="db-nav-btn" onClick={() => navigate('/settings')}>
+          <button className="db-nav-btn active">
             <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
             <p>Settings</p>
           </button>
@@ -87,4 +79,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default Settings
