@@ -10,6 +10,8 @@ import Profile from './pages/Profile'
 import Ticketing from './pages/Ticketing'
 import Concessions from './pages/Concessions'
 import Loyalty from './pages/Loyalty'
+import Checkout from './pages/Checkout'
+import { WalletProvider } from './context/WalletContext'
 import OperatorDashboard from './pages/OperatorDashboard'
 import NotAuthorized from './pages/NotAuthorized'
 import Onboarding from './pages/Onboarding'
@@ -51,8 +53,15 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/loyalty" element={
+          <WalletProvider>
+
             <Loyalty />
+            <Checkout />
+            
+          </WalletProvider>
+
         } />
+        
         <Route path="/operator" element={
           <ProtectedRoute>
             <OperatorDashboard />

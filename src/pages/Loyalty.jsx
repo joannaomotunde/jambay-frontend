@@ -1,14 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { WalletContext } from "../context/WalletContext";
 
 function Loyalty() {
-  const balance = 1200;
-
-  const transactions = [
-    { id: 1, type: "Earned", points: 200, date: "10 Mar 2026" },
-    { id: 2, type: "Redeemed", points: -100, date: "8 Mar 2026" },
-    { id: 3, type: "Earned", points: 500, date: "5 Mar 2026" }
-  ];
-
+  const { balance, transactions } = useContext(WalletContext);
+  
   return (
     <div style={{ padding: "30px", fontFamily: "Arial" }}>
       <h1 style={{ marginBottom: "20px" }}>Points Wallet</h1>
