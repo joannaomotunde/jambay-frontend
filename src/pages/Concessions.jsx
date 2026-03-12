@@ -1,6 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 
-const menuItems = [
+const categories = ['All', 'Food', 'Drinks', 'Merchandise']
+
+const Concessions = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [cart, setCart] = useState([])
+  const [showCart, setShowCart] = useState(false)
+
+  const [menuItems, setMenuItems] = useState([
   { id: 1, name: 'Burger', category: 'Food', price: 2500, description: 'Juicy beef burger with fries' },
   { id: 2, name: 'Pizza Slice', category: 'Food', price: 1800, description: 'Cheesy pepperoni pizza' },
   { id: 3, name: 'Hot Dog', category: 'Food', price: 1200, description: 'Classic hot dog with mustard' },
@@ -11,14 +19,41 @@ const menuItems = [
   { id: 8, name: 'Juice', category: 'Drinks', price: 800, description: 'Fresh chilled juice' },
   { id: 9, name: 'Jersey', category: 'Merchandise', price: 5000, description: 'Official event jersey' },
   { id: 10, name: 'Cap', category: 'Merchandise', price: 2000, description: 'Branded event cap' },
-]
+])
+  
+  const { token } = useAuth()
 
-const categories = ['All', 'Food', 'Drinks', 'Merchandise']
+// Fetch menu from API when page loads
+useEffect(() => {
+  const fetchMenu = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/v1/shop/products`,
+        {
+          headers: {
+            'id': token
+          }
+        }
+      )
+      const data = await response.json()
+      if (Array.isArray(data)) {
+        setMenuItems(data.map(item => ({
+          id: item._id,
+          name: item.name,
+          category: item.category || 'Food',
+          price: item.price,
+          description: item.description,
+          stock: item.stock
+        })))
+      }
+    } catch (error) {
+      console.error('Failed to fetch menu:', error)
+    }
+  }
 
-const Concessions = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [cart, setCart] = useState([])
-  const [showCart, setShowCart] = useState(false)
+  if (token) fetchMenu()
+}, [token])
+
   const [checkoutStep, setCheckoutStep] = useState(null)
 
   const filteredItems = selectedCategory === 'All'
