@@ -1,0 +1,513 @@
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+}
+.page-container {
+  background-color: #00c8b3;
+  max-width: 440px;
+}
+.header {
+  max-width: 416px;
+  margin: 0 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.header img {
+  margin: 1rem 1rem 0 1rem;
+}
+.top-icons {
+  display: flex;
+  justify-content: space-between;
+}
+.arrow {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  width: 50px;
+  height: 36px;
+  border-radius: 30px;
+  background-color: #cca300;
+}
+.right {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 30px;
+  right: 20px;
+}
+.heart {
+  background-color: #cca300;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  padding: 10px;
+}
+.official {
+  position: absolute;
+  bottom: 15px;
+  width: 368px;
+  height: 41px;
+  border: 1px solid #555555;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #555555;
+}
+.official img {
+  width: 24px;
+  height: 24px;
+}
+.official p {
+  font-size: 20px;
+}
+.york {
+  text-align: center;
+  padding: 5px 0;
+}
+
+/* .event-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #19b4a7;
+  border-radius: 20px;
+
+  padding: 12px;
+  margin: 12px 10px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+}
+
+.event-card-image {
+  width: 95px;
+  height: 70px;
+  object-fit: cover;
+
+  border-radius: 10px;
+}
+
+.event-card-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.event-card-section {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.event-card-row {
+  margin: 2px 0 6px 0;
+  font-size: 14px;
+  color: #0b3d3a;
+}
+
+.event-card-rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating-box {
+  background: #1f7a3f;
+  color: white;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.rating-text {
+  font-size: 13px;
+}
+
+.event-card-price {
+  text-align: right;
+}
+
+.event-card-price h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.event-card-price p {
+  font-size: 12px;
+  margin: 0;
+} */
+
+/* body { */
+/* width: 100%; */
+/* margin: 0;
+  font-family: Arial, Helvetica, sans-serif; */
+/* background: linear-gradient(to bottom, #0bb39c, #cfd6d7); */
+/* display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.mobile-container {
+  background-color: white;
+  width: 416px;
+  margin: 0 auto;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding: 0 12px;
+  /* min-height: 100vh; */
+}
+
+.banner-container {
+  padding: 10px;
+}
+
+.banner-img {
+  width: 100%;
+  border-radius: 18px;
+}
+
+.team-title {
+  text-align: center;
+  margin-top: 5px;
+  font-weight: 700;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 3px solid #ccc;
+  margin: 10px 0;
+}
+
+.tabs span {
+  padding: 10px;
+  color: #777;
+}
+
+.tabs .active {
+  border-bottom: 4px solid black;
+  font-weight: 600;
+  color: black;
+}
+
+.filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 2px solid rgb(92, 86, 86);
+}
+
+.filter-btn {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #999;
+  background: white;
+}
+
+.event-row {
+  display: flex;
+  padding: 12px;
+  align-items: center;
+}
+
+.event-date {
+  width: 60px;
+  text-align: center;
+}
+
+.event-date h2 {
+  margin: 0;
+}
+
+.event-date p {
+  margin: 0;
+  color: #666;
+}
+
+.event-card {
+  flex: 1;
+  background: #f2f2f2;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.event-tag {
+  font-size: 12px;
+  color: #777;
+  font-weight: 600;
+}
+
+.event-card h4 {
+  margin: 5px 0;
+}
+
+.event-info {
+  font-size: 13px;
+  color: #555;
+}
+
+.month-header {
+  padding: 10px 15px;
+}
+
+.confirm-btn {
+  width: 90%;
+  margin: 20px auto;
+  display: block;
+  padding: 15px;
+  border: none;
+  background: #2cff00;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.bottom-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: #e5e5e5;
+  padding: 12px 0;
+  border-radius: 25px 25px 0 0;
+}
+
+/* SEATMAP */
+.ticket-page {
+  width: 375px;
+
+  margin: auto;
+
+  background: linear-gradient(#16b9a9, #c7dede);
+
+  min-height: 100vh;
+
+  font-family: Arial;
+}
+
+/* HEADER */
+
+.event-header {
+  background: white;
+
+  border-radius: 30px;
+
+  padding: 10px;
+
+  margin: 15px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.event-title {
+  font-weight: bold;
+
+  font-size: 18px;
+}
+
+.event-date {
+  color: green;
+
+  margin-top: 4px;
+}
+
+.event-location {
+  background: #d9d9d9;
+
+  border-radius: 20px;
+
+  padding: 5px;
+
+  font-size: 13px;
+
+  margin-top: 6px;
+}
+
+/* FILTER BAR */
+
+.filter-bar {
+  display: flex;
+
+  gap: 8px;
+
+  padding: 0 10px;
+}
+
+.filter-btn {
+  border-radius: 20px;
+
+  background: #d9d9d9;
+
+  border: 1px solid black;
+
+  padding: 6px 10px;
+
+  font-size: 13px;
+}
+
+/* ARENA */
+
+.arena-container {
+  padding: 10px;
+}
+
+.arena-container img {
+  width: 100%;
+
+  border-radius: 25px;
+}
+
+/* LISTINGS */
+
+.listing-container {
+  background: #d1d1d1;
+
+  margin: 10px;
+
+  border-radius: 12px;
+
+  padding: 10px;
+}
+
+.listing-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+.listing-card {
+  display: flex;
+
+  align-items: center;
+
+  background: #14b7a6;
+
+  border-radius: 25px;
+
+  padding: 10px;
+
+  margin-bottom: 12px;
+
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.seat-img {
+  width: 95px;
+
+  height: 70px;
+
+  border-radius: 12px;
+
+  object-fit: cover;
+
+  margin-right: 10px;
+}
+
+.seat-info {
+  flex: 1;
+}
+
+.seat-info h3 {
+  margin: 0;
+}
+
+.seat-info p {
+  margin: 4px 0;
+}
+
+.rating {
+  background: #dcdcdc;
+
+  border-radius: 20px;
+
+  padding: 3px 10px;
+
+  font-size: 13px;
+
+  display: inline-block;
+}
+
+.seat-price {
+  text-align: right;
+}
+
+.seat-price p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+/* CONFIRM */
+
+.confirm-btn {
+  display: block;
+
+  margin: 20px auto;
+
+  background: #22ff00;
+
+  border: none;
+
+  padding: 12px 80px;
+
+  border-radius: 30px;
+
+  font-weight: bold;
+}
+
+/* NAVBAR */
+
+/* .bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+width:375px;
+
+display:flex;
+
+justify-content:space-around;
+
+background:#18b6a7;
+
+padding:15px 0;
+
+border-top-left-radius:25px;
+
+border-top-right-radius:25px;
+
+} */
+
+.nav-icon {
+  background: white;
+
+  width: 35px;
+
+  height: 35px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
