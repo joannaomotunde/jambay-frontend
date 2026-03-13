@@ -450,10 +450,7 @@
     height: 50px;
     font-size: 22px;
   }
-
-  .side-panel:empty {
-    display: none;
-  }
+  
 }
 
 /* ===== DESKTOP (1024px and above) ===== */

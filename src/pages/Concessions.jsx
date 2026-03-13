@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import './Concessions.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-regular-svg-icons'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 const categories = ['All', 'Food', 'Drinks', 'Merchandise']
 
@@ -100,14 +103,14 @@ const Concessions = () => {
       {/* Header */}
       <div className="concessions-header">
         <button
-          onClick={() => setShowCart(!showCart)}
-          className={`cart-btn ${showCart ? 'active' : ''}`}
-        >
-          🛒
-        </button>
-        <button className='heart-btn' title='Favourites (coming soon)'>
-          🤍
-        </button>
+        onClick={() => setShowCart(!showCart)}
+        className={`cart-btn ${showCart ? 'active' : ''}`}
+      >
+        <FontAwesomeIcon icon={faCartShopping} />
+      </button>
+       <button className="heart-btn" title="Favourites">
+          <FontAwesomeIcon icon={faHeart} />
+       </button>
       </div>
 
       {/* Title Card */}
