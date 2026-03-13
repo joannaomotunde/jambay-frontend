@@ -15,6 +15,7 @@ import TicketBooking from './pages/TicketBooking'
 import PaymentAuth from './pages/PaymentAuth'
 import PaymentSuccess from './pages/PaymentSuccess'
 import TicketDetail from './pages/TicketDetail'
+import EventDetails from './pages/EventDetails'
 
 function App() {
   return (
@@ -50,6 +51,9 @@ function App() {
         <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
 <Route path="/ticket-detail" element={
   <ProtectedRoute><TicketDetail /></ProtectedRoute>
+} />
+<Route path="/event-details" element={
+  <ProtectedRoute><EventDetails /></ProtectedRoute>
 } />
       </Routes>
     </BrowserRouter>
