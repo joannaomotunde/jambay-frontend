@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import './Concessions.css'
 
 const categories = ['All', 'Food', 'Drinks', 'Merchandise']
 
@@ -7,60 +8,56 @@ const Concessions = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [cart, setCart] = useState([])
   const [showCart, setShowCart] = useState(false)
+  const [checkoutStep, setCheckoutStep] = useState(null)
 
   const [menuItems, setMenuItems] = useState([
-  { id: 1, name: 'Burger', category: 'Food', price: 2500, description: 'Juicy beef burger with fries' },
-  { id: 2, name: 'Pizza Slice', category: 'Food', price: 1800, description: 'Cheesy pepperoni pizza' },
-  { id: 3, name: 'Hot Dog', category: 'Food', price: 1200, description: 'Classic hot dog with mustard' },
-  { id: 4, name: 'Popcorn', category: 'Food', price: 800, description: 'Freshly popped buttered popcorn' },
-  { id: 5, name: 'Fanta', category: 'Drinks', price: 500, description: 'Ice cold 50cl bottle' },
-  { id: 6, name: 'Coke', category: 'Drinks', price: 500, description: 'Ice cold 50cl bottle' },
-  { id: 7, name: 'Water', category: 'Drinks', price: 300, description: 'Pure chilled water' },
-  { id: 8, name: 'Juice', category: 'Drinks', price: 800, description: 'Fresh chilled juice' },
-  { id: 9, name: 'Jersey', category: 'Merchandise', price: 5000, description: 'Official event jersey' },
-  { id: 10, name: 'Cap', category: 'Merchandise', price: 2000, description: 'Branded event cap' },
-])
-  
+    { id: 1, name: 'Burger', category: 'Food', price: 2500, description: 'Juicy beef burger with fries' },
+    { id: 2, name: 'Pizza Slice', category: 'Food', price: 1800, description: 'Cheesy pepperoni pizza' },
+    { id: 3, name: 'Hot Dog', category: 'Food', price: 1200, description: 'Classic hot dog with mustard' },
+    { id: 4, name: 'Popcorn', category: 'Food', price: 800, description: 'Freshly popped buttered popcorn' },
+    { id: 5, name: 'Fanta', category: 'Drinks', price: 500, description: 'Ice cold 50cl bottle' },
+    { id: 6, name: 'Coke', category: 'Drinks', price: 500, description: 'Ice cold 50cl bottle' },
+    { id: 7, name: 'Water', category: 'Drinks', price: 300, description: 'Pure chilled water' },
+    { id: 8, name: 'Juice', category: 'Drinks', price: 800, description: 'Fresh chilled juice' },
+    { id: 9, name: 'Jersey', category: 'Merchandise', price: 5000, description: 'Official event jersey' },
+    { id: 10, name: 'Cap', category: 'Merchandise', price: 2000, description: 'Branded event cap' },
+  ])
+
   const { token } = useAuth()
 
-// Fetch menu from API when page loads
-useEffect(() => {
-  const fetchMenu = async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/shop/products`,
-        {
-          headers: {
-            'id': token
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/v1/shop/products`,
+          {
+            headers: {
+              'id': token
+            }
           }
+        )
+        const data = await response.json()
+        if (Array.isArray(data)) {
+          setMenuItems(data.map(item => ({
+            id: item._id,
+            name: item.name,
+            category: item.category || 'Food',
+            price: item.price,
+            description: item.description,
+            stock: item.stock
+          })))
         }
-      )
-      const data = await response.json()
-      if (Array.isArray(data)) {
-        setMenuItems(data.map(item => ({
-          id: item._id,
-          name: item.name,
-          category: item.category || 'Food',
-          price: item.price,
-          description: item.description,
-          stock: item.stock
-        })))
+      } catch (error) {
+        console.error('Failed to fetch menu:', error)
       }
-    } catch (error) {
-      console.error('Failed to fetch menu:', error)
     }
-  }
-
-  if (token) fetchMenu()
-}, [token])
-
-  const [checkoutStep, setCheckoutStep] = useState(null)
+    if (token) fetchMenu()
+  }, [token])
 
   const filteredItems = selectedCategory === 'All'
     ? menuItems
     : menuItems.filter(item => item.category === selectedCategory)
 
-  // Add item or increase quantity
   const addToCart = (item) => {
     setCart(prev => {
       const existing = prev.find(i => i.id === item.id)
@@ -71,7 +68,6 @@ useEffect(() => {
     })
   }
 
-  // Decrease quantity or remove if qty reaches 0
   const decreaseQty = (itemId) => {
     setCart(prev => {
       const existing = prev.find(i => i.id === itemId)
@@ -82,17 +78,14 @@ useEffect(() => {
     })
   }
 
-  // Remove item completely from cart
   const removeFromCart = (itemId) => {
     setCart(prev => prev.filter(i => i.id !== itemId))
   }
 
-  // For Divine — adds a free item with ₦0 price
   const addFreeItem = (item) => {
     setCart(prev => [...prev, { ...item, qty: 1, price: 0, redeemed: true }])
   }
 
-  // Cart calculations
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
   const grandTotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0)
 
@@ -102,226 +95,176 @@ useEffect(() => {
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '900px', margin: '0 auto' }}>
+    <div className="concessions-page">
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h1 style={{ color: '#333' }}>🍔 Concessions</h1>
-        <div
-  onClick={() => setShowCart(!showCart)}
-  style={{ 
-    background: showCart ? '#d4891a' : '#f5a623', 
-    padding: '8px 16px', 
-    borderRadius: '20px', 
-    fontWeight: 'bold', 
-    cursor: 'pointer',
-    boxShadow: showCart ? 'inset 0 2px 4px rgba(0,0,0,0.2)' : '0 2px 4px rgba(0,0,0,0.1)',
-    transform: showCart ? 'scale(0.97)' : 'scale(1)',
-    transition: 'all 0.2s ease'
-  }}
->
-  🛒 Cart ({cartCount})
-</div>
+      <div className="concessions-header">
+        <button
+          onClick={() => setShowCart(!showCart)}
+          className={`cart-btn ${showCart ? 'active' : ''}`}
+        >
+          🛒
+        </button>
+        <button className='heart-btn' title='Favourites (coming soon)'>
+          🤍
+        </button>
+      </div>
+
+      {/* Title Card */}
+      <div className="concessions-title-card">
+        <h1>Concessions</h1>
+        <p>Add Extras to Your Event and Enhance Your Experience</p>
       </div>
 
       {/* Category Filter */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+      <div className="category-filters">
         {categories.map(cat => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            style={{
-              padding: '8px 16px',
-              borderRadius: '20px',
-              border: 'none',
-              cursor: 'pointer',
-              background: selectedCategory === cat ? '#f5a623' : '#eee',
-              fontWeight: selectedCategory === cat ? 'bold' : 'normal'
-            }}
+            className={`category-btn ${selectedCategory === cat ? 'active' : ''}`}
           >
             {cat}
           </button>
         ))}
       </div>
 
-      {/* Menu Items */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '30px' }}>
-        {filteredItems.map(item => (
-          <div key={item.id} style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '16px', background: '#fff' }}>
-            <h3 style={{ margin: '0 0 4px' }}>{item.name}</h3>
-            <p style={{ color: '#888', fontSize: '14px', margin: '0 0 8px' }}>{item.description}</p>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontWeight: 'bold', color: '#f5a623' }}>₦{item.price.toLocaleString()}</span>
+      {/* Body — splits into 2 panels on desktop */}
+      <div className="concessions-body">
 
-              {/* Show quantity controls if item is in cart, otherwise show + Add */}
-              {getItemQty(item.id) > 0 ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <button
-                    onClick={() => decreaseQty(item.id)}
-                    style={{ background: '#f5a623', border: 'none', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
-                  >
-                    −
-                  </button>
-                  <span style={{ fontWeight: 'bold', minWidth: '20px', textAlign: 'center' }}>
-                    {getItemQty(item.id)}
-                  </span>
-                  <button
-                    onClick={() => addToCart(item)}
-                    style={{ background: '#f5a623', border: 'none', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
-                  >
-                    +
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => addToCart(item)}
-                  style={{ background: '#f5a623', border: 'none', borderRadius: '8px', padding: '6px 14px', cursor: 'pointer', fontWeight: 'bold' }}
-                >
-                  + Add
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Cart Panel */}
-      {showCart && (
-        <div style={{ border: '2px solid #f5a623', borderRadius: '16px', padding: '20px', background: '#fffdf7' }}>
-          <h2 style={{ marginTop: 0 }}>🛒 Your Cart</h2>
-
-          {cart.length === 0 ? (
-            <p style={{ color: '#888', textAlign: 'center' }}>Your cart is empty. Add some items!</p>
-          ) : (
-            <>
-              {cart.map(item => (
-                <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #eee' }}>
-                  <div>
-                    <strong>{item.name}</strong>
-                    {item.redeemed && (
-                      <span style={{ background: '#4caf50', color: '#fff', fontSize: '11px', padding: '2px 6px', borderRadius: '10px', marginLeft: '8px' }}>
-                        FREE
-                      </span>
-                    )}
-                    <div style={{ color: '#888', fontSize: '13px' }}>
-                      ₦{item.price.toLocaleString()} × {item.qty} = ₦{(item.price * item.qty).toLocaleString()}
+        {/* LEFT — Menu Section */}
+        <div className="menu-section">
+          <div className="menu-grid">
+            {filteredItems.map(item => (
+              <div key={item.id} className="menu-card">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <div className="menu-card-footer">
+                  <span className="item-price">₦{item.price.toLocaleString()}</span>
+                  {getItemQty(item.id) > 0 ? (
+                    <div className="qty-controls">
+                      <button className="qty-btn" onClick={() => decreaseQty(item.id)}>−</button>
+                      <span className="qty-number">{getItemQty(item.id)}</span>
+                      <button className="qty-btn" onClick={() => addToCart(item)}>+</button>
                     </div>
+                  ) : (
+                    <button className="add-btn" onClick={() => addToCart(item)}>+ Add</button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT — Side Panel (cart, checkout, confirmation) */}
+        <div className="side-panel">
+
+          {/* Cart Panel */}
+          {showCart && checkoutStep === null && (
+            <div className="cart-panel">
+              <h2>🛒 Your Cart</h2>
+              {cart.length === 0 ? (
+                <p className="empty-cart">Your cart is empty. Add some items!</p>
+              ) : (
+                <>
+                  {cart.map(item => (
+                    <div key={item.id} className="cart-item">
+                      <div className="cart-item-info">
+                        <strong>{item.name}</strong>
+                        {item.redeemed && <span className="free-badge">FREE</span>}
+                        <div className="cart-item-price">
+                          ₦{item.price.toLocaleString()} × {item.qty} = ₦{(item.price * item.qty).toLocaleString()}
+                        </div>
+                      </div>
+                      <button className="remove-btn" onClick={() => removeFromCart(item.id)}>❌</button>
+                    </div>
+                  ))}
+                  <div className="cart-total">
+                    <span>Total:</span>
+                    <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
                   </div>
                   <button
-                    onClick={() => removeFromCart(item.id)}
-                    style={{ background: '#ff4d4d', color: '#fff', border: 'none', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer' }}
+                    className="checkout-btn"
+                    onClick={() => { setCheckoutStep('checkout'); setShowCart(false) }}
                   >
-                    ❌
+                    Proceed to Checkout →
                   </button>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Checkout Screen */}
+          {checkoutStep === 'checkout' && (
+            <div className="checkout-screen">
+              <h2>🧾 Checkout</h2>
+              <h3>Order Summary</h3>
+              {cart.map(item => (
+                <div key={item.id} className="order-summary-item">
+                  <span>{item.name} × {item.qty}</span>
+                  <span>{item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}</span>
                 </div>
               ))}
-
-              {/* Grand Total */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', fontWeight: 'bold', fontSize: '18px' }}>
+              <div className="order-summary-total">
                 <span>Total:</span>
-                <span style={{ color: '#f5a623' }}>₦{grandTotal.toLocaleString()}</span>
+                <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
               </div>
 
-              {/* Checkout Button */}
+              <div className="pickup-details">
+                <h3>📍 Pickup Details</h3>
+                <p>📌 <strong>Location:</strong> Concessions Stand C — Gate 5</p>
+                <p>⏱ <strong>Estimated Time:</strong> 10-15 minutes after confirmation</p>
+                <p>🎟 <strong>Show your QR code</strong> at the stand to collect your order</p>
+              </div>
+              <div className="checkout-actions">
+                <button className="back-btn" onClick={() => { setCheckoutStep(null); setShowCart(true) }}>← Back to Cart</button>
+                <button className="confirm-btn" onClick={() => setCheckoutStep('confirmation')}>Confirm Order ✓</button>
+              </div>
+            </div>
+          )}
+
+          {/* Order Confirmation Screen */}
+          {checkoutStep === 'confirmation' && (
+            <div className="confirmation-screen">
+              <div className="confirmation-icon">🎉</div>
+              <h2>Order Confirmed!</h2>
+              <p>Your order has been placed successfully</p>
+
+              <div className="order-receipt">
+                <h3>🧾 Order Receipt</h3>
+                {cart.map(item => (
+                  <div key={item.id} className="receipt-item">
+                    <span>{item.name} × {item.qty}</span>
+                    <span>{item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}</span>
+                  </div>
+                ))}
+                <div className="receipt-total">
+                  <span>Total Paid:</span>
+                  <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="collect-info">
+                <h3>📍 Collect Your Order</h3>
+                <p>📌 <strong>Location:</strong> Concessions Stand C — Gate 5</p>
+                <p>⏱ <strong>Ready in:</strong> 10-15 minutes</p>
+                <p>🎟 <strong>Show your QR code</strong> at the stand</p>
+              </div>
+
               <button
-                onClick={() => {setCheckoutStep('checkout'); setShowCart(false)}}
-                style={{ width: '100%', marginTop: '16px', background: '#f5a623', border: 'none', borderRadius: '10px', padding: '14px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer' }}
+                className="new-order-btn"
+                onClick={() => { setCheckoutStep(null); setCart([]); setShowCart(false) }}
               >
-                Proceed to Checkout →
+                🛍 Place Another Order
               </button>
-            </>
-            )}
-        </div>
-      )}
-      {/* Checkout Screen */}
-{checkoutStep === 'checkout' && (
-  <div style={{ border: '2px solid #f5a623', borderRadius: '16px', padding: '20px', background: '#fffdf7', marginTop: '20px' }}>
-    <h2 style={{ marginTop: 0 }}>🧾 Checkout</h2>
+            </div>
+          )}
 
-    {/* Order Summary */}
-    <div style={{ marginBottom: '20px' }}>
-      <h3 style={{ color: '#555', marginBottom: '10px' }}>Order Summary</h3>
-      {cart.map(item => (
-        <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee' }}>
-          <span>{item.name} × {item.qty}</span>
-          <span style={{ fontWeight: 'bold', color: '#f5a623' }}>
-            {item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}
-          </span>
         </div>
-      ))}
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontWeight: 'bold', fontSize: '18px' }}>
-        <span>Total:</span>
-        <span style={{ color: '#f5a623' }}>₦{grandTotal.toLocaleString()}</span>
+        {/* closes side-panel */}
+
       </div>
-    </div>
-
-    {/* Pickup Details */}
-    <div style={{ background: '#fff3e0', borderRadius: '12px', padding: '16px', marginBottom: '20px' }}>
-      <h3 style={{ margin: '0 0 10px', color: '#e65100' }}>📍 Pickup Details</h3>
-      <p style={{ margin: '4px 0' }}>📌 <strong>Location:</strong> Concessions Stand A — Gate 3</p>
-      <p style={{ margin: '4px 0' }}>⏱ <strong>Estimated Time:</strong> 10-15 minutes after confirmation</p>
-      <p style={{ margin: '4px 0' }}>🎟 <strong>Show your QR code</strong> at the stand to collect your order</p>
-    </div>
-
-    {/* Action Buttons */}
-    <div style={{ display: 'flex', gap: '10px' }}>
-      <button
-        onClick={() => setCheckoutStep(null)}
-        style={{ flex: 1, padding: '12px', borderRadius: '10px', border: '2px solid #f5a623', background: 'white', cursor: 'pointer', fontWeight: 'bold', color: '#f5a623' }}
-      >
-        ← Back to Cart
-      </button>
-      <button
-        onClick={() => setCheckoutStep('confirmation')}
-        style={{ flex: 2, padding: '12px', borderRadius: '10px', border: 'none', background: '#f5a623', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
-      >
-        Confirm Order ✓
-      </button>
-    </div>
-  </div>
-)}
-
-{/* Order Confirmation Screen */}
-{checkoutStep === 'confirmation' && (
-  <div style={{ border: '2px solid #4caf50', borderRadius: '16px', padding: '30px', background: '#f9fff9', marginTop: '20px', textAlign: 'center' }}>
-    <div style={{ fontSize: '60px', marginBottom: '10px' }}>🎉</div>
-    <h2 style={{ color: '#4caf50', marginBottom: '5px' }}>Order Confirmed!</h2>
-    <p style={{ color: '#666', marginBottom: '20px' }}>Your order has been placed successfully</p>
-
-    {/* Order Details */}
-    <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', marginBottom: '20px', textAlign: 'left' }}>
-      <h3 style={{ margin: '0 0 10px' }}>🧾 Order Receipt</h3>
-      {cart.map(item => (
-        <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #eee' }}>
-          <span>{item.name} × {item.qty}</span>
-          <span style={{ color: '#f5a623', fontWeight: 'bold' }}>
-            {item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}
-          </span>
-        </div>
-      ))}
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontWeight: 'bold', fontSize: '16px' }}>
-        <span>Total Paid:</span>
-        <span style={{ color: '#f5a623' }}>₦{grandTotal.toLocaleString()}</span>
-      </div>
-    </div>
-
-    {/* Pickup Info */}
-    <div style={{ background: '#fff3e0', borderRadius: '12px', padding: '16px', marginBottom: '20px', textAlign: 'left' }}>
-      <h3 style={{ margin: '0 0 10px', color: '#e65100' }}>📍 Collect Your Order</h3>
-      <p style={{ margin: '4px 0' }}>📌 <strong>Location:</strong> Concessions Stand A — Gate 3</p>
-      <p style={{ margin: '4px 0' }}>⏱ <strong>Ready in:</strong> 10-15 minutes</p>
-      <p style={{ margin: '4px 0' }}>🎟 <strong>Show your QR code</strong> at the stand</p>
-    </div>
-
-    {/* New Order Button */}
-    <button
-      onClick={() => { setCheckoutStep(null); setCart([]); setShowCart(false) }}
-      style={{ width: '100%', padding: '14px', borderRadius: '10px', border: 'none', background: '#f5a623', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
-    >
-      🛍 Place Another Order
-    </button>
-  </div>
-)}
+      {/* closes concessions-body */}
 
     </div>
   )

@@ -1,0 +1,519 @@
+/* ===== RESET & BASE ===== */
+* {
+  box-sizing: border-box;
+}
+
+/* ===== MAIN PAGE ===== */
+.concessions-page {
+  min-height: 100vh;
+  background: #00C8B3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  width: 100%;
+}
+
+/* ===== HEADER ===== */
+.concessions-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.cart-btn,
+.heart-btn {
+  background: #F7C948;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+.cart-btn.active {
+  background: #d4a017;
+}
+
+/* ===== TITLE CARD ===== */
+.concessions-title-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.concessions-title-card h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+}
+
+.concessions-title-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #888;
+}
+
+/* ===== CATEGORY FILTERS ===== */
+.category-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-btn {
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.category-btn.active {
+  background: #F7C948;
+  border-color: #F7C948;
+  color: #333;
+}
+
+/* ===== DESKTOP LAYOUT WRAPPER ===== */
+.concessions-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ===== SIDE PANEL — collapses when empty ===== */
+.side-panel:empty {
+  display: none;
+}
+
+/* ===== MENU LIST ===== */
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+}
+
+.menu-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu-card h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: #333;
+  font-weight: 700;
+}
+
+.menu-card p {
+  color: #888;
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+
+.menu-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-price {
+  font-weight: bold;
+  color: #00C8B3;
+  font-size: 15px;
+}
+
+/* ===== ADD / QUANTITY BUTTONS ===== */
+.add-btn {
+  background: #F7C948;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+}
+
+.qty-btn {
+  background: #F7C948;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-number {
+  font-weight: bold;
+  min-width: 36px;
+  text-align: center;
+  background: #333;
+  color: #fff;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* ===== CART PANEL ===== */
+.cart-panel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.cart-panel h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item-info strong {
+  display: block;
+  font-size: 15px;
+}
+
+.cart-item-price {
+  color: #888;
+  font-size: 13px;
+}
+
+.free-badge {
+  background: #4caf50;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+
+.remove-btn {
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.total-amount {
+  color: #00C8B3;
+}
+
+.checkout-btn {
+  width: 100%;
+  margin-top: 16px;
+  background: #4CAF50;
+  border: none;
+  border-radius: 30px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+/* ===== CHECKOUT SCREEN ===== */
+.checkout-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 2px solid #F7C948;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.checkout-screen h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.order-summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ===== PICKUP DETAILS ===== */
+.pickup-details {
+  background: #fff8e1;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.pickup-details h3 {
+  margin: 0 0 10px;
+  color: #F7C948;
+}
+
+.pickup-details p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* ===== CHECKOUT BUTTONS ===== */
+.checkout-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.back-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: #F7C948;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.confirm-btn {
+  flex: 2;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: #F7C948;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== ORDER CONFIRMATION ===== */
+.confirmation-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.confirmation-icon {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.confirmation-screen h2 {
+  color: #4caf50;
+  margin-bottom: 5px;
+}
+
+.confirmation-screen p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.order-receipt {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.receipt-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.collect-info {
+  background: #fff8e1;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.collect-info h3 {
+  margin: 0 0 10px;
+  color: #F7C948;
+}
+
+.collect-info p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.new-order-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: #F7C948;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.empty-cart {
+  color: #888;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ===== TABLET (768px and above) ===== */
+@media (min-width: 768px) {
+  .concessions-page {
+    padding: 24px 32px;
+  }
+
+  .concessions-title-card h1 {
+    font-size: 26px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cart-btn,
+  .heart-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+
+  .side-panel:empty {
+    display: none;
+  }
+}
+
+/* ===== DESKTOP (1024px and above) ===== */
+@media (min-width: 1024px) {
+  .concessions-page {
+    padding: 30px 48px;
+  }
+
+  .concessions-title-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .concessions-title-card p {
+    text-align: right;
+    margin: 0;
+  }
+
+  .category-filters {
+    justify-content: flex-start;
+  }
+
+  .concessions-body {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .menu-section {
+    flex: 3;
+  }
+
+  .side-panel {
+    flex: 2;
+    position: sticky;
+    top: 20px;
+  }
+
+  .side-panel:empty {
+    display: none;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .concessions-title-card h1 {
+    font-size: 28px;
+  }
+}
+
+/* ===== LARGE DESKTOP (1280px and above) ===== */
+@media (min-width: 1280px) {
+  .concessions-page {
+    padding: 30px 80px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
