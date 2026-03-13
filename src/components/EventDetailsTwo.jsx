@@ -1,7 +1,7 @@
 import "../pages/ticketing.css";
 import { Link } from "react-router-dom";
 
-const EventDetails = ({ price }) => {
+const EventDetailsTwo = ({ price }) => {
   const events = [
     {
       date: "26",
@@ -122,4 +122,4 @@ const EventDetails = ({ price }) => {
   );
 };
 
-export default EventDetails;
+export default EventDetailsTwo;

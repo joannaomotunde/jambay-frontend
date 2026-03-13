@@ -8,9 +8,10 @@ import {
   faFileArrowUp,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import EventDetails from "../components/EventDetails";
+
 import { useParams, useNavigate } from "react-router-dom";
 import seatMap from "../components/SeatMap";
+import EventDetailsTwo from "../components/EventDetailsTwo";
 
 const Ticketing = () => {
   const { eventId } = useParams();
@@ -45,7 +46,7 @@ const Ticketing = () => {
         </div>
         <h3 className="york">New York Knicks</h3>
       </header>
-      <EventDetails
+      <EventDetailsTwo
         // image={nba}
         // section="115"
         // row="11"
