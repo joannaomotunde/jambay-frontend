@@ -8,10 +8,14 @@
 /* CONTAINER */
 .auth-container {
   min-height: 100vh;
-  background-color: #4ECDC4;
+  background: linear-gradient(to bottom, #1a9e8f, #4ECDC4, #ffffff);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 30px 20px;
+  width: 100%;
+  overflow-y: auto;
 }
 
 /* CARD */

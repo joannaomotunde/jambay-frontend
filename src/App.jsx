@@ -11,6 +11,10 @@ import Ticketing from './pages/Ticketing'
 import Concessions from './pages/Concessions'
 import Loyalty from './pages/Loyalty'
 import OperatorDashboard from './pages/OperatorDashboard'
+import TicketBooking from './pages/TicketBooking'
+import PaymentAuth from './pages/PaymentAuth'
+import PaymentSuccess from './pages/PaymentSuccess'
+import TicketDetail from './pages/TicketDetail'
 
 function App() {
   return (
@@ -41,6 +45,12 @@ function App() {
         <Route path="/concessions" element={<ProtectedRoute><Concessions /></ProtectedRoute>} />
         <Route path="/loyalty" element={<ProtectedRoute><Loyalty /></ProtectedRoute>} />
         <Route path="/operator" element={<ProtectedRoute><OperatorDashboard /></ProtectedRoute>} />
+        <Route path="/ticket-booking" element={ <ProtectedRoute><TicketBooking /></ProtectedRoute> } />
+        <Route path="/payment-auth" element={ <ProtectedRoute><PaymentAuth /></ProtectedRoute>} />
+        <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
+<Route path="/ticket-detail" element={
+  <ProtectedRoute><TicketDetail /></ProtectedRoute>
+} />
       </Routes>
     </BrowserRouter>
   )
