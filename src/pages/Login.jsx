@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { loginUser } from '../services/auth'
-import { useAuth } from '../context/AuthContext'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import '../App.css'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/auth";
+import { useAuth } from "../context/AuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "../App.css";
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' })
@@ -16,19 +16,19 @@ function Login() {
   const { login } = useAuth()
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const validate = () => {
-    const newErrors = {}
+    const newErrors = {};
     if (!formData.email) {
-      newErrors.email = 'Email is required'
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email format is invalid'
+      newErrors.email = "Email format is invalid";
     }
-    if (!formData.password) newErrors.password = 'Password is required'
-    return newErrors
-  }
+    if (!formData.password) newErrors.password = "Password is required";
+    return newErrors;
+  };
 
   const handleSubmit = async () => {
     const newErrors = validate()
@@ -50,7 +50,21 @@ function Login() {
     } finally {
       setLoading(false)
     }
-  }
+    setErrors({});
+    setServerError("");
+    try {
+      setLoading(true);
+      const data = await loginUser(formData);
+      login(data.user, data.token);
+      navigate("/dashboard");
+    } catch (err) {
+      setServerError(
+        err.response?.data?.message || "Login failed, please try again",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-container">
@@ -71,13 +85,16 @@ function Login() {
         <div className="password-wrapper">
           <input
             className="auth-input"
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
           />
-          <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+          <span
+            className="password-toggle"
+            onClick={() => setShowPassword(!showPassword)}
+          >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
@@ -106,7 +123,7 @@ function Login() {
 
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

@@ -1,17 +1,17 @@
-import { Navigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { token, user } = useAuth()
 
   // Still loading from localStorage
   if (token === undefined) {
-    return null
+    return null;
   }
 
   // No token — redirect to login
   if (!token) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/" replace />;
   }
 
   // Role check — if allowedRoles is specified and user role not included
@@ -22,4 +22,4 @@ function ProtectedRoute({ children, allowedRoles }) {
   return children
 }
 
-export default ProtectedRoute
+export default ProtectedRoute;
