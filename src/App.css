@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* CONTAINER */
@@ -20,7 +20,7 @@
 
 /* CARD */
 .auth-card {
-  background-color: #4ECDC4;
+  background-color: #4ecdc4;
   padding: 40px 30px;
   border-radius: 20px;
   width: 100%;
@@ -74,7 +74,7 @@
   padding: 14px;
   border-radius: 10px;
   border: none;
-  background-color: #F7C948;
+  background-color: #f7c948;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -129,7 +129,7 @@
   padding: 14px;
   border-radius: 10px;
   text-align: center;
-  color: #4ECDC4;
+  color: #4ecdc4;
   font-weight: bold;
 }
 .password-wrapper {
@@ -150,4 +150,181 @@
   cursor: pointer;
   font-size: 1rem;
   user-select: none;
+}
+
+/* DASHBOARD */
+.dashboard-container {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #17d2b8, #0aa6a3);
+  color: black;
+}
+.center {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bg {
+  /* min-width: 200px; */
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 20px;
+}
+.event-cover {
+  display: flex;
+  justify-content: space-between; /* margin-top: 2rem; */
+}
+/* Welcome row */
+
+.welcome-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d4d;
+  color: white;
+  cursor: pointer;
+}
+
+/* Top Menu */
+
+.menu-bar {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background: gold;
+  padding: 8px;
+  border-radius: 25px;
+  margin-bottom: 25px;
+}
+
+.menu-bar button {
+  border: none;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Sections */
+
+.section {
+  margin-bottom: 25px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.section-header span {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.event-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+/* SEATMAP */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 60px); /* 4 seats per row */
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.seat-grid button.seat {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+/* Hover effect for available seats */
+.seat-grid button.seat.available:hover {
+  transform: scale(1.1);
+}
+
+/* Seat states */
+.seat.available {
+  background-color: green;
+}
+
+.seat.sold {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.seat.locked {
+  background-color: orange;
+  cursor: not-allowed;
+}
+
+/* Optional: add selected border */
+.seat.selected {
+  border: 3px solid black;
+}
+
+/* Seat ID + countdown styling */
+.seat span {
+  display: block;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* QRTICKET */
+.qr-ticket-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background: #f8f8f8;
+  border-radius: 15px;
+  max-width: 350px;
+  margin: 20px auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.qr-ticket-container h2 {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.qr-ticket-container p {
+  margin: 2px 0;
+  color: #555;
+}
+
+.qr-box {
+  margin: 20px 0;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-info {
+  margin-top: 10px;
+  width: 100%;
+  background: #eee;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* EVENTCARD */
+.event-card {
+  cursor: pointer;
 }
