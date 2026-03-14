@@ -20,6 +20,12 @@ import EventsBrowse from './pages/EventsBrowse'
 import SearchScreen from './pages/SearchScreen'
 import EditProfile from './pages/EditProfile'
 import Settings from './pages/Settings'
+import SeatBooking from './pages/SeatBooking'
+import EventDetails from './pages/EventDetails'
+import TicketDetail from './pages/TicketDetail'
+import TicketBooking from './pages/TicketBooking'
+import PaymentAuth from './pages/PaymentAuth'
+import PaymentSuccess from './pages/PaymentSuccess'
 function App() {
   return (
     <BrowserRouter>
@@ -72,6 +78,24 @@ function App() {
 <Route path="/settings" element={
   <ProtectedRoute><Settings /></ProtectedRoute>
 } />
+<Route path="/seat-booking" element={
+  <ProtectedRoute><SeatBooking /></ProtectedRoute>
+} />
+<Route path="/event-details" element={
+  <ProtectedRoute><EventDetails /></ProtectedRoute>
+} />
+<Route path="/ticket-detail" element={
+  <ProtectedRoute><TicketDetail /></ProtectedRoute>
+} />
+<Route path="/ticket-booking" element={
+  <ProtectedRoute><TicketBooking /></ProtectedRoute>
+} />
+<Route path="/payment-auth" element={
+  <ProtectedRoute><PaymentAuth /></ProtectedRoute>
+} />
+<Route path="/payment-success" element={
+  <ProtectedRoute><PaymentSuccess /></ProtectedRoute>
+} />
       </Routes>
     </BrowserRouter>
   );
@@ -79,93 +103,3 @@ function App() {
 
 export default App;
 
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Register from "./pages/Register";
-// import Login from "./pages/Login";
-// import ForgotPassword from "./pages/ForgotPassword";
-// import Dashboard from "./pages/Dashboard";
-// import VerifyOTP from "./pages/VerifyOTP";
-// import ProtectedRoute from "./components/ProtectedRoute";
-// import ResetPassword from "./pages/ResetPassword";
-// import Profile from "./pages/Profile";
-// import Ticketing from "./pages/Ticketing";
-// import Concessions from "./pages/Concessions";
-// import Loyalty from "./pages/Loyalty";
-// import OperatorDashboard from "./pages/OperatorDashboard";
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         {/* Auth Routes */}
-//         <Route path="/" element={<Login />} />
-//         <Route path="/register" element={<Register />} />
-//         <Route path="/verify-otp" element={<VerifyOTP />} />
-//         <Route path="/forgot-password" element={<ForgotPassword />} />
-//         <Route path="/reset-password" element={<ResetPassword />} />
-
-//         {/* User Dashboard */}
-//         <Route
-//           path="/dashboard"
-//           element={
-//             <ProtectedRoute>
-//               <Dashboard />
-//             </ProtectedRoute>
-//           }
-//         />
-
-//         {/* Profile */}
-//         <Route
-//           path="/profile"
-//           element={
-//             <ProtectedRoute>
-//               <Profile />
-//             </ProtectedRoute>
-//           }
-//         />
-
-//         {/* Event Ticketing (Seat Selection Page) */}
-//         <Route
-//           path="/event/:eventId"
-//           element={
-//             <ProtectedRoute>
-//               <Ticketing />
-//             </ProtectedRoute>
-//           }
-//         />
-
-//         {/* Concessions */}
-//         <Route
-//           path="/concessions"
-//           element={
-//             <ProtectedRoute>
-//               <Concessions />
-//             </ProtectedRoute>
-//           }
-//         />
-
-//         {/* Loyalty */}
-//         <Route
-//           path="/loyalty"
-//           element={
-//             <ProtectedRoute>
-//               <Loyalty />
-//             </ProtectedRoute>
-//           }
-//         />
-
-//         {/* Operator Dashboard */}
-//         <Route
-//           path="/operator"
-//           element={
-//             <ProtectedRoute>
-//               <OperatorDashboard />
-//             </ProtectedRoute>
-//           }
-//         />
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;

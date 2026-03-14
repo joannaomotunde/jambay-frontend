@@ -4,6 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import './OperatorDashboard.css'
 import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import mjImg from '../assets/images/Rectangle 312.png'
+import titaniqueImg from '../assets/images/Rectangle 313.png'
+import aladdinImg from '../assets/images/Rectangle 160.png'
+import group1 from '../assets/images/Group 1.png'
+import group2 from '../assets/images/Group 2.png'
+import group3 from '../assets/images/Group 3.png'
+import group4 from '../assets/images/Group 4.png'
 
 const OperatorDashboard = () => {
   const { user, logout } = useAuth()
@@ -22,9 +29,9 @@ const OperatorDashboard = () => {
   }
 
   const topEvents = [
-    { id: 1, name: 'City Music Festival' },
-    { id: 2, name: 'Tech Summit 2026' },
-    { id: 3, name: 'Burna Concert' },
+    { id: 1, name: 'MJ The Musical', sold: 85, count: '4,250/5000', img: mjImg, barColor: '#4ECDC4' },
+    { id: 2, name: 'Titanique', sold: 92, count: '11040/13000', img: titaniqueImg, barColor: '#4ECDC4' },
+    { id: 3, name: 'Aladdin 2', sold: 60, count: '1,200/2000', img: aladdinImg, barColor: '#F7C948' },
   ]
 
   const recentSales = [
@@ -56,12 +63,17 @@ const OperatorDashboard = () => {
     <div className="auth-container">
       <div className="op-wrapper">
 
-        {/* Header */}
-        <div className="op-header">
-          <button className="op-menu-btn">≡</button>
-          <h1 className="op-title">JAMBAY</h1>
-          <button className="op-profile-btn">👤</button>
-        </div>
+       {/* Header */}
+<div className="op-header">
+  <div className="op-header-bg">
+    <img src={group1} alt="header" className="op-header-img" />
+    <div className="op-header-overlay">
+      <button className="op-menu-btn">≡</button>
+      <h1 className="op-title">JAMBAY</h1>
+      <button className="op-profile-btn">👤</button>
+    </div>
+  </div>
+</div>
 
         {/* Welcome */}
         <div className="op-welcome">
@@ -134,11 +146,23 @@ const OperatorDashboard = () => {
               </button>
             </div>
           </div>
-          <p className="op-panel-subtitle">Top Event</p>
+          <div className="op-event-cols">
+            <p className="op-panel-subtitle">Top Event</p>
+            <p className="op-panel-subtitle">Status</p>
+          </div>
           {topEvents.map(event => (
             <div key={event.id} className="op-event-item">
-              <div className="op-event-thumb" />
-              <p>{event.name}</p>
+              <img src={event.img} alt={event.name} className="op-event-thumb" />
+              <p className="op-event-name">{event.name}</p>
+              <div className="op-event-status">
+                <p className="op-event-sold">{event.sold}% Sold {event.count}</p>
+                <div className="op-progress-bar">
+                  <div
+                    className="op-progress-fill"
+                    style={{ width: `${event.sold}%`, background: event.barColor }}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>

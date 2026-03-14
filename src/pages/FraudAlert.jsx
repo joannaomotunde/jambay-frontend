@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
 import { MdSmartToy, MdLanguage, MdCreditCard, MdAccountCircle, MdWarning, MdLock } from 'react-icons/md'
 import './FraudAlert.css'
-
+import secureBtn from '../assets/images/Rectangle 342 (2).png'
 const FraudAlert = () => {
   const navigate = useNavigate()
 
@@ -10,7 +10,7 @@ const FraudAlert = () => {
     { icon: <MdSmartToy size={28} />, label: 'Bot Detection:', status: 'CRITICAL', color: '#DC2626' },
     { icon: <MdLanguage size={28} />, label: 'IP Analysis:', status: 'IRREGULAR', color: '#DC2626' },
     { icon: <MdCreditCard size={28} />, label: 'Payment Integrity:', status: 'FAIL', color: '#DC2626' },
-    { icon: <MdAccountCircle size={28} />, label: 'Account Pattern:', status: 'ANOMALOUS', color: '#F7C948' },
+    { icon: <MdAccountCircle size={28} />, label: 'Account Pattern:', status: 'ANOMALOUS', color: '#DC2626' },
   ]
 
   return (
@@ -46,10 +46,17 @@ const FraudAlert = () => {
         {/* Action Section */}
         <div className="fa-action-section">
           <p className="fa-action-title">IMMEDIATE ACTION{'\n'}RECOMMENDED</p>
-          <button className="fa-action-btn">
-            <MdLock size={18} />
-            TAKE SECURE ACTION NOW
-          </button>
+         <div className="fa-action-btn-wrapper">
+  <img
+    src={secureBtn}
+    alt="Take Secure Action Now"
+    className="fa-secure-btn"
+  />
+  <div className="fa-action-btn-content">
+    <MdLock size={18} color="white" />
+    <p>TAKE SECURE ACTION NOW</p>
+  </div>
+</div>
           <p className="fa-action-hint">Tap for details on flagged accounts & fraud types</p>
         </div>
 
@@ -59,10 +66,10 @@ const FraudAlert = () => {
             <div className="op-nav-icon"><MdDashboard size={22} /></div>
             <p>Dashboard</p>
           </button>
-          <button className="op-nav-btn" onClick={() => navigate('/events')}>
-            <div className="op-nav-icon"><MdEvent size={22} /></div>
-            <p>Events</p>
-          </button>
+          <button className="op-nav-btn" onClick={() => navigate('/operator')}>
+  <div className="op-nav-icon"><MdEvent size={22} /></div>
+  <p>Events</p>
+</button>
           <button className="op-nav-btn" onClick={() => navigate('/orders')}>
             <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
             <p>Orders</p>

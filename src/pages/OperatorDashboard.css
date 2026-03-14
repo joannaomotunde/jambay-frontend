@@ -299,3 +299,78 @@
   background-color: #F0FDF4;
   color: #1a9e8f;
 }
+.op-event-cols {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.op-event-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.op-event-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.op-event-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.op-event-status {
+  text-align: right;
+  min-width: 120px;
+}
+
+.op-event-sold {
+  font-size: 11px;
+  color: #64748B;
+  margin-bottom: 4px;
+}
+
+.op-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.op-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.op-header-bg {
+  position: relative;
+  width: 100%;
+}
+
+.op-header-img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.op-header-overlay {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+}
+

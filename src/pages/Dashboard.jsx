@@ -3,28 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Dashboard.css'
 import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-import './EventsBrowse.css'
+
 
 function Dashboard() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState('VIP')
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  const events = [
-    { id: 1, title: "Afrobeats Festival", date: "May 12", location: "Lagos" },
-    { id: 2, title: "Tech Conference", date: "June 5", location: "Abuja" },
-    { id: 3, title: "Comedy Night", date: "July 2", location: "Ibadan" },
-  ];
-
-  // ⭐ CHANGE: function to navigate to seat selection
-  const handleEventClick = (event) => {
-    navigate(`/event/${event.id}`);
-  };
 
   const filters = ['Hotel', 'VIP', 'Gift cards', 'Sell', 'Help']
 
@@ -128,11 +112,11 @@ function Dashboard() {
         <div className="db-section">
           <div className="db-section-header">
             <h3 className="db-section-title">Upcoming Events</h3>
-            <button className="db-view-all">View all &rsaquo;</button>
+            <button className="db-view-all" onClick={() => navigate('/events-browse')}>View all &rsaquo;</button>
           </div>
           <div className="db-scroll-row">
             {upcomingEvents.map(e => (
-              <div key={e.id} className="db-event-card db-event-card-lg">
+              <div key={e.id} className="db-event-card db-event-card-lg" onClick={() => navigate('/event-details')}>
                 <div className="db-event-img-lg">
                   <div className="db-img-placeholder" />
                 </div>
@@ -154,7 +138,7 @@ function Dashboard() {
           </div>
           <div className="db-scroll-row">
             {trendingEvents.map(e => (
-              <div key={e.id} className="db-event-card db-event-card-lg">
+              <div key={e.id} className="db-event-card db-event-card-lg" onClick={() => navigate('/event-details')}>
                 <div className="db-event-img-lg db-img-dark">
                   <div className="db-img-overlay">
                     <p className="db-img-title">{e.title}</p>
@@ -174,7 +158,7 @@ function Dashboard() {
           </div>
           <div className="db-scroll-row">
             {liveEvents.map(e => (
-              <div key={e.id} className="db-event-card db-event-card-lg">
+              <div key={e.id} className="db-event-card db-event-card-lg" onClick={() => navigate('/event-details')}>
                 <div className="db-event-img-lg db-img-dark">
                   <div className="db-img-overlay">
                     <p className="db-img-title">{e.title}</p>
@@ -297,106 +281,26 @@ function Dashboard() {
             <p>Home</p>
           </button>
           <button className="db-nav-btn" onClick={() => navigate('/events-browse')}>
-  <div className="db-nav-icon-circle"><MdEvent size={22} /></div>
-  <p>Events</p>
-</button>
+            <div className="db-nav-icon-circle"><MdEvent size={22} /></div>
+            <p>Events</p>
+          </button>
           <button className="db-nav-btn" onClick={() => navigate('/search')}>
             <div className="db-nav-icon-circle"><MdSearch size={22} /></div>
             <p>Search</p>
           </button>
           <button className="db-nav-btn" onClick={() => navigate('/profile')}>
-  <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
-  <p>Profile</p>
-</button>
+            <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
+            <p>Profile</p>
+          </button>
           <button className="db-nav-btn" onClick={() => navigate('/settings')}>
-  <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
-  <p>Settings</p>
-</button>
+            <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
+            <p>Settings</p>
+          </button>
         </div>
 
-      </div>
-
-      {/* Top Menu */}
-      <div className="menu-bar center">
-        <button>Explore</button>
-        <button>Favorites</button>
-        <button>Wallet</button>
-        <button>Saved</button>
-        <button>My Tickets</button>
-      </div>
-
-      {/* Upcoming Events */}
-      <div className="section center">
-        <div className="section-header">
-          <h3>Upcoming Events</h3>
-        </div>
-        <div className="event-cover">
-          <div className="event-row">
-            {events.map((event) => (
-              <EventCard
-                key={event.id}
-                title={event.title}
-                date={event.date}
-                location={event.location}
-                onClick={() => handleEventClick(event)} // ⭐ CHANGE
-              />
-            ))}
-          </div>
-          <div>
-            <p>View all</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Just for you */}
-      <div className="section center">
-        <div className="section-header">
-          <h3>Just for you</h3>
-        </div>
-
-        <div className="event-cover">
-          <div className="event-row">
-            {events.map((event) => (
-              <EventCard
-                key={event.id}
-                title={event.title}
-                date={event.date}
-                location={event.location}
-                onClick={() => handleEventClick(event)} // ⭐ CHANGE
-              />
-            ))}
-          </div>
-          <div>
-            <p>View all</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Trending events */}
-      <div className="section center">
-        <div className="section-header">
-          <h3>Trending events</h3>
-        </div>
-
-        <div className="event-cover">
-          <div className="event-row">
-            {events.map((event) => (
-              <EventCard
-                key={event.id}
-                title={event.title}
-                date={event.date}
-                location={event.location}
-                onClick={() => handleEventClick(event)} // ⭐ CHANGE
-              />
-            ))}
-          </div>
-          <div>
-            <p>View all</p>
-          </div>
-        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

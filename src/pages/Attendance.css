@@ -10,28 +10,9 @@
 }
 
 /* HEADER */
-.at-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-}
-
-.at-shield {
-  font-size: 24px;
-}
-
-.at-title {
-  font-size: 22px;
-  font-weight: bold;
-  color: white;
-  letter-spacing: 2px;
-}
-
-.at-page-title {
-  font-size: 22px;
-  font-weight: bold;
-  color: white;
+.att-header-img {
+  width: 100%;
+  border-radius: 16px;
 }
 
 /* FILTERS */
@@ -230,4 +211,50 @@
   font-size: 12px;
   font-weight: 600;
   color: #1E293B;
+}
+.at-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.at-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.at-legend-item p {
+  font-size: 12px;
+  color: #1E293B;
+}
+
+.at-legend-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+.at-qr-btn {
+  background: #1a9e8f;
+  border: none;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+.at-qr-inner {
+  background: white;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

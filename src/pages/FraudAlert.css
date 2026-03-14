@@ -19,7 +19,7 @@
 
 /* RISK BANNER */
 .fa-risk-banner {
-  background-color: #DC2626;
+  background-color: #FF0000;
   border-radius: 16px;
   padding: 30px 20px;
   display: flex;
@@ -131,4 +131,34 @@
   font-size: 12px;
   color: #64748B;
   text-align: center;
+}
+.fa-action-btn-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  cursor: pointer;
+}
+
+.fa-secure-btn {
+  width: 100%;
+  border-radius: 999px;
+  display: block;
+}
+
+.fa-action-btn-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.fa-action-btn-content p {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }

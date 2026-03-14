@@ -1,0 +1,163 @@
+.sb-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 100px 16px;
+  box-sizing: border-box;
+  gap: 12px;
+}
+
+/* TOP BAR */
+.sb-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sb-back-btn, .sb-info-btn {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sb-top-center {
+  flex: 1;
+  text-align: center;
+}
+
+.sb-event-name {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+}
+
+.sb-event-date {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  margin-top: 2px;
+}
+
+/* VENUE */
+.sb-venue {
+  background: white;
+  border-radius: 999px;
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.sb-venue-text {
+  font-size: 12px;
+  color: #1E293B;
+}
+
+/* FILTERS */
+.sb-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sb-filter-icon {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sb-filter-pill {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.sb-filter-pill.active {
+  border-color: #1a9e8f;
+  color: #1a9e8f;
+}
+
+/* ARENA */
+.sb-arena {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.sb-arena-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* LISTINGS HEADER */
+.sb-listings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sb-listings-count {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.sb-sort-btn {
+  background: white;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* LISTING CARDS */
+.sb-listing-card {
+  background: #4ECDC4;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.sb-seat-img {
+  width: 90px;
+  height: 65px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sb-seat-info {
+  flex: 1;
+}
+
+.sb-seat-section {
+  font-size:
