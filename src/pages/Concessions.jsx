@@ -1,34 +1,6 @@
-<<<<<<< HEAD
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-
-function Concessions() {
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/shop/products`)
-        console.log('Products:', response.data)
-        setProducts(response.data)
-      } catch (error) {
-        console.log('Error:', error)
-      }
-    }
-    fetchProducts()
-  }, [])
-
-  return (
-    <div>
-      <h2>Concessions Test</h2>
-      {products.map(product => (
-        <div key={product._id}>
-          <p>{product.name} — ₦{product.price}</p>
-        </div>
-      ))}
-=======
-import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 import './Concessions.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
@@ -40,9 +12,11 @@ const Concessions = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [cart, setCart] = useState([])
   const [showCart, setShowCart] = useState(false)
-  const [checkoutStep, setCheckoutStep] = useState(null)
+  const { token } = useAuth()
+  const navigate = useNavigate()
 
-  const [menuItems, setMenuItems] = useState([
+  // Hard-coded menu items
+  const [menuItems] = useState([
     { id: 1, name: 'Burger', category: 'Food', price: 2500, description: 'Juicy beef burger with fries' },
     { id: 2, name: 'Pizza Slice', category: 'Food', price: 1800, description: 'Cheesy pepperoni pizza' },
     { id: 3, name: 'Hot Dog', category: 'Food', price: 1200, description: 'Classic hot dog with mustard' },
@@ -55,41 +29,12 @@ const Concessions = () => {
     { id: 10, name: 'Cap', category: 'Merchandise', price: 2000, description: 'Branded event cap' },
   ])
 
-  const { token } = useAuth()
-
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/v1/shop/products`,
-          {
-            headers: {
-              'id': token
-            }
-          }
-        )
-        const data = await response.json()
-        if (Array.isArray(data)) {
-          setMenuItems(data.map(item => ({
-            id: item._id,
-            name: item.name,
-            category: item.category || 'Food',
-            price: item.price,
-            description: item.description,
-            stock: item.stock
-          })))
-        }
-      } catch (error) {
-        console.error('Failed to fetch menu:', error)
-      }
-    }
-    if (token) fetchMenu()
-  }, [token])
-
+  // Filtered items by category
   const filteredItems = selectedCategory === 'All'
     ? menuItems
     : menuItems.filter(item => item.category === selectedCategory)
 
+  // Cart handlers
   const addToCart = (item) => {
     setCart(prev => {
       const existing = prev.find(i => i.id === item.id)
@@ -103,19 +48,14 @@ const Concessions = () => {
   const decreaseQty = (itemId) => {
     setCart(prev => {
       const existing = prev.find(i => i.id === itemId)
-      if (existing.qty === 1) {
-        return prev.filter(i => i.id !== itemId)
-      }
+      if (!existing) return prev
+      if (existing.qty === 1) return prev.filter(i => i.id !== itemId)
       return prev.map(i => i.id === itemId ? { ...i, qty: i.qty - 1 } : i)
     })
   }
 
   const removeFromCart = (itemId) => {
     setCart(prev => prev.filter(i => i.id !== itemId))
-  }
-
-  const addFreeItem = (item) => {
-    setCart(prev => [...prev, { ...item, qty: 1, price: 0, redeemed: true }])
   }
 
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
@@ -126,20 +66,26 @@ const Concessions = () => {
     return item ? item.qty : 0
   }
 
+  // Navigate to Payment Auth
+  const proceedToCheckout = () => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+    navigate('/payment-auth') // Make sure this route exists
+  }
+
   return (
     <div className="concessions-page">
 
       {/* Header */}
       <div className="concessions-header">
         <button
-        onClick={() => setShowCart(!showCart)}
-        className={`cart-btn ${showCart ? 'active' : ''}`}
-      >
-        <FontAwesomeIcon icon={faCartShopping} />
-      </button>
-       <button className="heart-btn" title="Favourites">
+          onClick={() => setShowCart(!showCart)}
+          className={`cart-btn ${showCart ? 'active' : ''}`}
+        >
+          <FontAwesomeIcon icon={faCartShopping} /> {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+        </button>
+        <button className="heart-btn" title="Favourites">
           <FontAwesomeIcon icon={faHeart} />
-       </button>
+        </button>
       </div>
 
       {/* Title Card */}
@@ -161,10 +107,10 @@ const Concessions = () => {
         ))}
       </div>
 
-      {/* Body — splits into 2 panels on desktop */}
+      {/* Body — Menu and Side Panel */}
       <div className="concessions-body">
 
-        {/* LEFT — Menu Section */}
+        {/* Menu Section */}
         <div className="menu-section">
           <div className="menu-grid">
             {filteredItems.map(item => (
@@ -188,11 +134,9 @@ const Concessions = () => {
           </div>
         </div>
 
-        {/* RIGHT — Side Panel (cart, checkout, confirmation) */}
-        <div className="side-panel">
-
-          {/* Cart Panel */}
-          {showCart && checkoutStep === null && (
+        {/* Side Panel — Cart */}
+        {showCart && (
+          <div className="side-panel">
             <div className="cart-panel">
               <h2>🛒 Your Cart</h2>
               {cart.length === 0 ? (
@@ -203,7 +147,6 @@ const Concessions = () => {
                     <div key={item.id} className="cart-item">
                       <div className="cart-item-info">
                         <strong>{item.name}</strong>
-                        {item.redeemed && <span className="free-badge">FREE</span>}
                         <div className="cart-item-price">
                           ₦{item.price.toLocaleString()} × {item.qty} = ₦{(item.price * item.qty).toLocaleString()}
                         </div>
@@ -215,90 +158,16 @@ const Concessions = () => {
                     <span>Total:</span>
                     <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
                   </div>
-                  <button
-                    className="checkout-btn"
-                    onClick={() => { setCheckoutStep('checkout'); setShowCart(false) }}
-                  >
+                  <button className="checkout-btn" onClick={proceedToCheckout}>
                     Proceed to Checkout →
                   </button>
                 </>
               )}
             </div>
-          )}
-
-          {/* Checkout Screen */}
-          {checkoutStep === 'checkout' && (
-            <div className="checkout-screen">
-              <h2>🧾 Checkout</h2>
-              <h3>Order Summary</h3>
-              {cart.map(item => (
-                <div key={item.id} className="order-summary-item">
-                  <span>{item.name} × {item.qty}</span>
-                  <span>{item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}</span>
-                </div>
-              ))}
-              <div className="order-summary-total">
-                <span>Total:</span>
-                <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
-              </div>
-
-              <div className="pickup-details">
-                <h3>📍 Pickup Details</h3>
-                <p>📌 <strong>Location:</strong> Concessions Stand C — Gate 5</p>
-                <p>⏱ <strong>Estimated Time:</strong> 10-15 minutes after confirmation</p>
-                <p>🎟 <strong>Show your QR code</strong> at the stand to collect your order</p>
-              </div>
-              <div className="checkout-actions">
-                <button className="back-btn" onClick={() => { setCheckoutStep(null); setShowCart(true) }}>← Back to Cart</button>
-                <button className="confirm-btn" onClick={() => setCheckoutStep('confirmation')}>Confirm Order ✓</button>
-              </div>
-            </div>
-          )}
-
-          {/* Order Confirmation Screen */}
-          {checkoutStep === 'confirmation' && (
-            <div className="confirmation-screen">
-              <div className="confirmation-icon">🎉</div>
-              <h2>Order Confirmed!</h2>
-              <p>Your order has been placed successfully</p>
-
-              <div className="order-receipt">
-                <h3>🧾 Order Receipt</h3>
-                {cart.map(item => (
-                  <div key={item.id} className="receipt-item">
-                    <span>{item.name} × {item.qty}</span>
-                    <span>{item.redeemed ? 'FREE' : `₦${(item.price * item.qty).toLocaleString()}`}</span>
-                  </div>
-                ))}
-                <div className="receipt-total">
-                  <span>Total Paid:</span>
-                  <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
-                </div>
-              </div>
-
-              <div className="collect-info">
-                <h3>📍 Collect Your Order</h3>
-                <p>📌 <strong>Location:</strong> Concessions Stand C — Gate 5</p>
-                <p>⏱ <strong>Ready in:</strong> 10-15 minutes</p>
-                <p>🎟 <strong>Show your QR code</strong> at the stand</p>
-              </div>
-
-              <button
-                className="new-order-btn"
-                onClick={() => { setCheckoutStep(null); setCart([]); setShowCart(false) }}
-              >
-                🛍 Place Another Order
-              </button>
-            </div>
-          )}
-
-        </div>
-        {/* closes side-panel */}
+          </div>
+        )}
 
       </div>
-      {/* closes concessions-body */}
-
->>>>>>> feature/concessions
     </div>
   )
 }

@@ -8,9 +8,6 @@ import mjImg from '../assets/images/Rectangle 312.png'
 import titaniqueImg from '../assets/images/Rectangle 313.png'
 import aladdinImg from '../assets/images/Rectangle 160.png'
 import group1 from '../assets/images/Group 1.png'
-import group2 from '../assets/images/Group 2.png'
-import group3 from '../assets/images/Group 3.png'
-import group4 from '../assets/images/Group 4.png'
 
 const OperatorDashboard = () => {
   const { user, logout } = useAuth()
