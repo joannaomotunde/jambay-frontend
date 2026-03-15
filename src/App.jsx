@@ -11,6 +11,8 @@ import Ticketing from './pages/Ticketing'
 import Concessions from './pages/Concessions'
 import Loyalty from './pages/Loyalty'
 import Checkout from './pages/Checkout'
+import Promotions from './pages/Promotions'
+import PromotionDetail from './pages/PromotionDetail'
 import { WalletProvider } from './context/WalletContext'
 import OperatorDashboard from './pages/OperatorDashboard'
 import NotAuthorized from './pages/NotAuthorized'
@@ -19,55 +21,65 @@ import Onboarding from './pages/Onboarding'
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* First page users see */}
-        <Route path="/" element={<Onboarding />} />
 
-        {/* Auth routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/verify-otp" element={<VerifyOTP />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/403" element={<NotAuthorized />} />
+      <WalletProvider>
 
-        {/* Protected routes */}
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-        <Route path="/events" element={
-          <ProtectedRoute>
-            <Ticketing />
-          </ProtectedRoute>
-        } />
-        <Route path="/concessions" element={
-          <ProtectedRoute>
-            <Concessions />
-          </ProtectedRoute>
-        } />
-        <Route path="/loyalty" element={
-          <WalletProvider>
+        <Routes>
 
-            <Loyalty />
-            <Checkout />
-            
-          </WalletProvider>
+          {/* First page users see */}
+          <Route path="/" element={<Onboarding />} />
 
-        } />
-        
-        <Route path="/operator" element={
-          <ProtectedRoute>
-            <OperatorDashboard />
-          </ProtectedRoute>
-        } />
-      </Routes>
+          {/* Auth routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/403" element={<NotAuthorized />} />
+
+          {/* Protected routes */}
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/events" element={
+            <ProtectedRoute>
+              <Ticketing />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/concessions" element={
+            <ProtectedRoute>
+              <Concessions />
+            </ProtectedRoute>
+          } />
+
+          {/* Loyalty system */}
+          <Route path="/loyalty" element={<Loyalty />} />
+          <Route path="/checkout" element={<Checkout />} />
+
+          {/* Promotions */}
+          <Route path="/promotions" element={<Promotions />} />
+          <Route path="/promotion/:id" element={<PromotionDetail />} />
+
+          <Route path="/operator" element={
+            <ProtectedRoute>
+              <OperatorDashboard />
+            </ProtectedRoute>
+          } />
+
+        </Routes>
+
+      </WalletProvider>
+
     </BrowserRouter>
   )
 }
