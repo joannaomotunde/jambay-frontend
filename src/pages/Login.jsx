@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ScreenLayout from "../components/ScreenLayout";
 import "../App.css";
 
 function Login() {
@@ -39,10 +40,9 @@ function Login() {
     setLoading(true);
 
     try {
-      const data = await loginUser(formData); // API must return { user, token }
+      const data = await loginUser(formData);
       login(data.user, data.token);
 
-      // Redirect based on role
       if (data.user?.role === "admin") navigate("/operator");
       else navigate("/dashboard");
     } catch (err) {
@@ -53,58 +53,62 @@ function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="screen-wrapper">
-        <button className="back-button" onClick={() => navigate("/")}>
-          ‹
-        </button>
-        <h2 className="auth-title">Welcome, please log in</h2>
+    <ScreenLayout
+      title="Welcome, please log in"
+      subtitle="Enter your credentials to access your account"
+      backTo="/"
+    >
+      {serverError && <p className="server-error">{serverError}</p>}
 
-        {serverError && <p className="server-error">{serverError}</p>}
+      <input
+        className="auth-input"
+        type="text"
+        name="email"
+        placeholder="Username, ID, Email"
+        value={formData.email}
+        onChange={handleChange}
+      />
+      {errors.email && <p className="field-error">{errors.email}</p>}
 
+      <div className="password-wrapper">
         <input
           className="auth-input"
-          type="text"
-          name="email"
-          placeholder="Username, ID, Email"
-          value={formData.email}
+          type={showPassword ? "text" : "password"}
+          name="password"
+          placeholder="Password"
+          value={formData.password}
           onChange={handleChange}
         />
-        {errors.email && <p className="field-error">{errors.email}</p>}
-
-        <div className="password-wrapper">
-          <input
-            className="auth-input"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-        </div>
-        {errors.password && <p className="field-error">{errors.password}</p>}
-
-        <div className="login-options">
-          <label className="remember-me">
-            <input type="checkbox" /> Remember me
-          </label>
-          <a href="/forgot-password" className="forgot-link">
-            Forgot password?
-          </a>
-        </div>
-
-        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
-          {loading ? "Logging in..." : "Log In"}
-        </button>
-
-        <p className="auth-link-text">
-          Don't have an account yet? <a href="/register">Sign Up</a>
-        </p>
+        <span
+          className="password-toggle"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </span>
       </div>
-    </div>
+      {errors.password && <p className="field-error">{errors.password}</p>}
+
+      <div className="login-options">
+        <label className="remember-me">
+          <input type="checkbox" /> Remember me
+        </label>
+        <a href="/forgot-password" className="forgot-link">
+          Forgot password?
+        </a>
+      </div>
+
+      <button
+        className="auth-button"
+        onClick={handleSubmit}
+        disabled={loading}
+      >
+        {loading ? "Logging in..." : "Log In"}
+      </button>
+
+      <p className="auth-link-text">
+        Don't have an account yet? <a href="/register">Sign Up</a>
+      </p>
+    </ScreenLayout>
   );
 }
 

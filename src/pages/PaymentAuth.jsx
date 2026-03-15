@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings, MdLock, MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
+import { MdLock, MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
+import ScreenLayout from '../components/ScreenLayout'
 import './PaymentAuth.css'
 
 function PaymentAuth() {
@@ -32,8 +33,8 @@ function PaymentAuth() {
   ]
 
   return (
-    <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
-      <div className="pa-wrapper">
+    <ScreenLayout title="Payment Authorization" backTo="/concessions">
+      <div className="pa-wrapper max-w-xl mx-auto w-full px-4 sm:px-6 lg:px-0">
 
         {/* Event Summary Card */}
         <div className="pa-event-card">
@@ -77,20 +78,20 @@ function PaymentAuth() {
           <MdLock size={20} color="#1E293B" style={{ alignSelf: 'center' }} />
 
           <div className="pa-secure-card">
+
             <div className="pa-secure-header">
               <p className="pa-secure-title">Secure Credit Card Payment</p>
               <button className="pa-security-btn">🔒 Security Information</button>
             </div>
 
-            {/* Card Logos */}
-            <div className="pa-card-logos">
+            <div className="pa-card-logos flex flex-wrap gap-2 mb-4">
               <span className="pa-card-logo">AMEX</span>
               <span className="pa-card-logo">MC</span>
               <span className="pa-card-logo">VISA</span>
               <span className="pa-card-logo">DISC</span>
             </div>
 
-            {/* Form */}
+            {/* Form Inputs */}
             <input
               className="pa-input"
               type="text"
@@ -108,9 +109,9 @@ function PaymentAuth() {
               onChange={handleChange}
               maxLength={19}
             />
-            <div className="pa-input-row">
+            <div className="pa-input-row flex flex-col sm:flex-row gap-2">
               <input
-                className="pa-input pa-input-half"
+                className="pa-input pa-input-half flex-1"
                 type="text"
                 name="expiryDate"
                 placeholder="Expiry Date"
@@ -118,7 +119,7 @@ function PaymentAuth() {
                 onChange={handleChange}
               />
               <input
-                className="pa-input pa-input-half"
+                className="pa-input pa-input-half flex-1"
                 type="password"
                 name="cvv"
                 placeholder="CVV2"
@@ -164,7 +165,7 @@ function PaymentAuth() {
           </div>
         </div>
       </div>
-    </div>
+    </ScreenLayout>
   )
 }
 
