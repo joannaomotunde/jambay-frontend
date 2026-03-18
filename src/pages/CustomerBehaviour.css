@@ -1,0 +1,41 @@
+.analytics-container {
+    background: linear-gradient(to bottom, #4ECDC4, #ffffff);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .card {
+    background: #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .section {
+    background: #ddd;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .bar {
+    height: 10px;
+    background: gray;
+    margin-left: 10px;
+  }
