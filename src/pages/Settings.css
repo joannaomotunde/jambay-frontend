@@ -1,0 +1,46 @@
+.st-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 100px 16px;
+  box-sizing: border-box;
+}
+
+/* MENU */
+.st-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.st-menu-item {
+  background: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.st-menu-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1E293B;
+}
+
+.st-logout-label {
+  color: #FF4444;
+  font-weight: 600;
+}
+
+.st-menu-arrow {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

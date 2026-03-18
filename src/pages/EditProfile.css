@@ -1,0 +1,177 @@
+.ep-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 100px 16px;
+  box-sizing: border-box;
+}
+
+/* TOP BAR */
+.ep-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ep-back-btn, .ep-camera-btn {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* USER CARD */
+.ep-user-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.ep-user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e0f7f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ep-user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ep-user-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.ep-user-joined {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 4px;
+}
+
+.ep-user-date {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+/* MENU */
+.ep-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ep-menu-item {
+  background: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ep-menu-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ep-menu-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1E293B;
+}
+
+.ep-menu-arrow {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ep-menu-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ep-action-btn {
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ep-cancel-btn {
+  background: #FF4444;
+}
+
+.ep-save-btn {
+  background: #1a9e8f;
+}
+
+.ep-save-btn:disabled {
+  opacity: 0.6;
+}
+
+/* EDIT FIELD */
+.ep-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ep-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #4ECDC4;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #1E293B;
+  outline: none;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.ep-field-value {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.ep-error {
+  font-size: 11px;
+  color: #FF4444;
+}
+
+/* DELETE */
+.ep-delete-label {
+  color: #FF4444 !important;
+}

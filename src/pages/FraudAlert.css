@@ -1,0 +1,164 @@
+/* FA WRAPPER */
+.fa-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 16px 80px 16px;
+  box-sizing: border-box;
+}
+
+/* TITLE */
+.fa-title {
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* RISK BANNER */
+.fa-risk-banner {
+  background-color: #FF0000;
+  border-radius: 16px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.fa-risk-label {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.fa-avatars {
+  display: flex;
+  gap: -8px;
+}
+
+.fa-avatar {
+  background-color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-left: -8px;
+  border: 2px solid #DC2626;
+}
+
+/* INDICATORS */
+.fa-indicators {
+  background-color: white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.fa-indicator-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.fa-indicator-icon {
+  color: #1E293B;
+}
+
+.fa-indicator-label {
+  font-size: 10px;
+  color: #64748B;
+  text-align: center;
+}
+
+.fa-indicator-status {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ACTION SECTION */
+.fa-action-section {
+  background-color: white;
+  border-radius: 16px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.fa-action-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1E293B;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.4;
+}
+
+.fa-action-btn {
+  background-color: #DC2626;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.fa-action-btn:hover {
+  background-color: #b91c1c;
+}
+
+.fa-action-hint {
+  font-size: 12px;
+  color: #64748B;
+  text-align: center;
+}
+.fa-action-btn-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  cursor: pointer;
+}
+
+.fa-secure-btn {
+  width: 100%;
+  border-radius: 999px;
+  display: block;
+}
+
+.fa-action-btn-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.fa-action-btn-content p {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}

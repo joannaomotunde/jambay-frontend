@@ -1,0 +1,243 @@
+.pa-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 100px 16px;
+  box-sizing: border-box;
+  gap: 12px;
+}
+
+/* EVENT CARD */
+.pa-event-card {
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.pa-event-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1E293B, #374151);
+  flex-shrink: 0;
+}
+
+.pa-event-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.pa-event-date {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 4px;
+}
+
+.pa-event-venue {
+  font-size: 11px;
+  color: #64748B;
+}
+
+.pa-event-seat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.pa-event-seat p {
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a9e8f;
+}
+
+/* ACCORDIONS */
+.pa-accordion {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.pa-accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pa-accordion-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pa-accordion-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.pa-accordion-body {
+  padding: 0 16px 14px 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.pa-accordion-content {
+  font-size: 12px;
+  color: #64748B;
+  padding-top: 10px;
+}
+
+/* PAYMENT SECTION */
+.pa-payment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pa-payment-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.pa-secure-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(0,0,0,0.02) 20px,
+    rgba(0,0,0,0.02) 40px
+  );
+}
+
+.pa-secure-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pa-secure-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.pa-security-btn {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+/* CARD LOGOS */
+.pa-card-logos {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pa-card-logo {
+  background: #f1f5f9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+/* INPUTS */
+.pa-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #1E293B;
+  outline: none;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+.pa-input:focus {
+  border-color: #4ECDC4;
+}
+
+.pa-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.pa-input-half {
+  flex: 1;
+}
+
+.pa-otp-label {
+  font-size: 11px;
+  color: #64748B;
+  text-align: center;
+}
+
+.pa-otp-input {
+  text-align: center;
+  letter-spacing: 4px;
+  font-weight: bold;
+}
+
+/* BUTTONS */
+.pa-pay-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.pa-confirm-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.pa-cancel-btn {
+  background: #DC2626;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}

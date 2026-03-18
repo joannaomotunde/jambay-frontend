@@ -1,0 +1,145 @@
+.ss-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 100px 16px;
+  box-sizing: border-box;
+}
+
+/* LOCATION */
+.ss-location-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.ss-location-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+/* SEARCH BAR */
+.ss-search-bar {
+  background: white;
+  border-radius: 999px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ss-search-input {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: #1E293B;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: transparent;
+}
+
+.ss-search-input::placeholder {
+  color: #94A3B8;
+}
+
+/* FILTER ROW */
+.ss-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ss-filter-row::-webkit-scrollbar { display: none; }
+
+.ss-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.ss-filter-pill {
+  background: white;
+  border: none;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.ss-filter-pill.active {
+  background: #F7C948;
+  color: #1E293B;
+}
+
+/* SECTIONS */
+.ss-section {
+  margin-bottom: 24px;
+}
+
+.ss-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.ss-section-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.ss-section-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+}
+
+.ss-see-all {
+  background: #F7C948;
+  border: none;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* SCROLL ROW */
+.ss-scroll-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ss-scroll-row::-webkit-scrollbar { display: none; }
+
+/* CARDS */
+.ss-card {
+  flex-shrink: 0;
+  width: 120px;
+  cursor: pointer;
+}
+
+.ss-card-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #94A3B8, #CBD5E1);
+}

@@ -1,9 +1,8 @@
-// import rec from "../assets/images/Rec.png";
-import Rect from "../assets/images/Rect.png";
-import Rectan from "../assets/images/Rectan.png";
-import Rectang from "../assets/images/Rectang.png";
-import R from "../assets/images/R.png";
-import Ryt from "../assets/images/Ryt.png";
+import Rect from "../assets/images/Rectangle 386.png";
+import Rectan from "../assets/images/Rectangle 387.png";
+import Rectang from "../assets/images/Rectangle 389.png";
+import R from "../assets/images/Rectangle 391.png";
+import Ryt from "../assets/images/Rectangle 396.png";
 
 const seatMap = {
   1: {

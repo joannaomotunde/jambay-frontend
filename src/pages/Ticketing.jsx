@@ -1,6 +1,6 @@
 import React from "react";
 import boston from "../assets/images/boston.png";
-import nba from "../assets/images/nba.png";
+import nba from "../assets/images/NBA Badge.png";
 import "./ticketing.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
