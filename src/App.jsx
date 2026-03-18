@@ -11,6 +11,7 @@ import Ticketing from "./pages/Ticketing";
 import Concessions from "./pages/Concessions";
 import Loyalty from "./pages/Loyalty";
 import OperatorDashboard from "./pages/OperatorDashboard";
+import Homepage from "./pages/Homepage";
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/homepage"
+          element={
+            <ProtectedRoute>
+              <Homepage />
             </ProtectedRoute>
           }
         />
