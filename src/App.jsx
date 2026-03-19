@@ -13,6 +13,7 @@ import Loyalty from './pages/Loyalty'
 import OperatorDashboard from './pages/OperatorDashboard'
 import NotAuthorized from './pages/NotAuthorized'
 import Onboarding from './pages/Onboarding'
+import SeatSelection from './pages/SeatSelection'
 
 function App() {
   return (
@@ -59,6 +60,11 @@ function App() {
           <ProtectedRoute>
             <OperatorDashboard />
           </ProtectedRoute>
+        } />
+        <Route path="/seat-selection" element={
+          
+            <SeatSelection />
+          
         } />
       </Routes>
     </BrowserRouter>
