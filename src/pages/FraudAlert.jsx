@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
+import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
 import { MdSmartToy, MdLanguage, MdCreditCard, MdAccountCircle, MdWarning, MdLock } from 'react-icons/md'
 import './FraudAlert.css'
 import secureBtn from '../assets/images/Rectangle 342 (2).png'
@@ -78,10 +78,10 @@ const FraudAlert = () => {
             <div className="op-nav-icon"><MdBarChart size={22} /></div>
             <p>Analytics</p>
           </button>
-          <button className="op-nav-btn" onClick={() => navigate('/login')}>
-            <div className="op-nav-icon"><MdSettings size={22} /></div>
-            <p>Settings</p>
-          </button>
+          <button className="db-nav-btn active">
+            <div className="db-nav-icon-circle"><MdAnalytics size={22} /></div>
+            <p>Monitoring</p>
+           </button>
         </div>
 
       </div>

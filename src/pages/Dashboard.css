@@ -21,7 +21,7 @@
   box-sizing: border-box;
 }
 .db-top-wrapper {
-  background: linear-gradient(135deg, #F7C948, #e6b800);
+  background: transparent;
   border-radius: 50px;
   padding: 10px 14px;
   margin-bottom: 10px;
@@ -31,6 +31,30 @@
 }
 .db-top-wrapper:first-of-type {
   padding: 8px 12px;
+}
+.db-border-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+  background: transparent;
+}
+.db-border-wrapper:first-of-type {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border-radius: 30px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  width: fit-content;
+  align-self: center;
+}
+
+.db-border-wrapper:nth-of-type(2) {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 /* FILTER PILLS */
 .db-filters {
@@ -74,11 +98,12 @@
   flex: 1;
   background-color: white;
   border-radius: 12px;
-  padding: 8px 10px;
+  padding: 4px 6px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   cursor: pointer;
+  min-width: 0;
 }
 
 .db-search-icon {
@@ -94,6 +119,21 @@
 .db-search-sub {
   font-size: 9px;
   color: #64748B;
+}
+.db-filters-overlay {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  justify-content: center;
+  /* remove position, top, left, transform */
+}
+
+.db-search-overlay {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  justify-content: space-between;
+  /* remove position, top, left, transform */
 }
 
 /* SECTION */
@@ -111,13 +151,13 @@
 .db-section-title {
   font-size: 16px;
   font-weight: bold;
-  color: white;
+  color: black;
 }
 
 .db-view-all {
   background: none;
   border: none;
-  color: white;
+  color: black;
   font-size: 12px;
   font-weight: bold;
   cursor: pointer;
@@ -182,7 +222,7 @@
 }
 
 .db-img-date {
-  color: rgba(255,255,255,0.8);
+  color: white;
   font-size: 11px;
   margin-top: 2px;
 }
@@ -264,7 +304,7 @@
 .db-cat-title {
   font-size: 11px;
   font-weight: bold;
-  color: white;
+  color: black;
   text-align: center;
 }
 
@@ -292,7 +332,7 @@
 
 .db-nav-btn p {
   font-size: 10px;
-  color: white;
+  color: black;
   font-family: 'Segoe UI', sans-serif;
 }
 

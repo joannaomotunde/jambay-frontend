@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ScreenLayout from "../layout/ScreenLayout"; // Correct path to match your folder
 import '../App.css';
+import vectorLogo from '../assets/images/vector.png'
+import frame15 from '../assets/images/Frame 15.png'
 
 function Onboarding() {
   const navigate = useNavigate();
@@ -25,9 +27,9 @@ function Onboarding() {
       <div className={`onboarding-container ${slides[currentSlide].className}`}>
 
         {/* Logo area */}
-        <div className="onboarding-logo-area">
-          {/* Logo will go here */}
-        </div>
+<div className="onboarding-logo-area">
+  <img src={vectorLogo} alt="Jambay" className="onboarding-logo" />
+</div>
 
         {/* Bottom section */}
         <div className="onboarding-bottom">
@@ -43,9 +45,13 @@ function Onboarding() {
           </div>
 
           {/* Get Started button */}
-          <button className="onboarding-button" onClick={handleNext}>
-            Get Started <span>›</span>
-          </button>
+<img
+  src={frame15}
+  alt="Get Started"
+  className="onboarding-button"
+  onClick={handleNext}
+  style={{ cursor: 'pointer' }}
+/>
 
         </div>
       </div>

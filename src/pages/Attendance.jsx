@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
-import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
+import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
 import './Attendance.css'
 import frame19 from '../assets/images/Frame 19.png'
 
@@ -164,8 +164,13 @@ const Attendance = () => {
             <p className="at-page-text">1 / 30</p>
             <button className="at-page-btn">›</button>
           </div>
+          <div className="at-fraud-btn-wrapper">
+  <button className="at-fraud-btn" onClick={() => navigate('/fraud-alert')}>
+    View Fraud Alerts
+  </button>
+</div>
         </div>
-
+     
         {/* Bottom Navigation */}
         <div className="op-bottom-nav">
           <button className="op-nav-btn" onClick={() => navigate('/operator')}>
@@ -184,12 +189,11 @@ const Attendance = () => {
             <div className="op-nav-icon"><MdBarChart size={22} /></div>
             <p>Analytics</p>
           </button>
-          <button className="op-nav-btn" onClick={() => navigate('/login')}>
-            <div className="op-nav-icon"><MdSettings size={22} /></div>
-            <p>Settings</p>
-          </button>
+          <button className="db-nav-btn active">
+            <div className="db-nav-icon-circle"><MdAnalytics size={22} /></div>
+            <p>Monitoring</p>
+           </button>
         </div>
-
       </div>
     </div>
   )

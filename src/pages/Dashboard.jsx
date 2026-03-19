@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Dashboard.css'
 import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-
+import border1 from '../assets/images/Border 1.jpeg'
+import border2 from '../assets/images/Border 2.jpeg'
 
 function Dashboard() {
   const { user, logout } = useAuth()
@@ -66,47 +67,43 @@ function Dashboard() {
     <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
       <div className="db-wrapper">
 
-        {/* Filter Pills Box */}
-        <div className="db-top-wrapper">
-          <div className="db-filters">
-            {filters.map(f => (
-              <button
-                key={f}
-                className="db-filter-pill"
-                onClick={() => setActiveFilter(f)}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
-        </div>
+{/* First wrapper - filter pills */}
+<div className="db-border-wrapper">
+  <div className="db-filters-overlay">
+    <button className="db-filter-pill active">Hotel</button>
+    <button className="db-filter-pill">VIP</button>
+    <button className="db-filter-pill">Gift cards</button>
+    <button className="db-filter-pill">Sell</button>
+    <button className="db-filter-pill">Help</button>
+  </div>
+</div>
 
-        {/* Search Box */}
-        <div className="db-top-wrapper">
-          <div className="db-search-row">
-            <div className="db-search-item">
-              <span className="db-search-icon">📍</span>
-              <div>
-                <p className="db-search-label">LOCATION</p>
-                <p className="db-search-sub">City or Zip code</p>
-              </div>
-            </div>
-            <div className="db-search-item">
-              <span className="db-search-icon">📅</span>
-              <div>
-                <p className="db-search-label">DATE</p>
-                <p className="db-search-sub">All dates</p>
-              </div>
-            </div>
-            <div className="db-search-item">
-              <span className="db-search-icon">🔍</span>
-              <div>
-                <p className="db-search-label">SEARCH</p>
-                <p className="db-search-sub">venues, artists or events</p>
-              </div>
-            </div>
-          </div>
-        </div>
+{/* Second wrapper - search row */}
+<div className="db-border-wrapper">
+  <div className="db-search-overlay">
+    <div className="db-search-item">
+      <span className="db-search-icon">📍</span>
+      <div>
+        <div className="db-search-label">LOCATION</div>
+        <div className="db-search-sub">City or Zip code</div>
+      </div>
+    </div>
+    <div className="db-search-item">
+      <span className="db-search-icon">📅</span>
+      <div>
+        <div className="db-search-label">DATE</div>
+        <div className="db-search-sub">All dates</div>
+      </div>
+    </div>
+    <div className="db-search-item">
+      <span className="db-search-icon">🔍</span>
+      <div>
+        <div className="db-search-label">SEARCH</div>
+        <div className="db-search-sub">venues, artists or events</div>
+      </div>
+    </div>
+  </div>
+</div>
 
         {/* Upcoming Events */}
         <div className="db-section">
