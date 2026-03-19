@@ -5,6 +5,57 @@ import { HiAdjustments } from 'react-icons/hi'
 import './EventsBrowse.css'
 import './Dashboard.css'
 
+// Upcoming Events
+import eigth from '../assets/images/Eigth.jpeg'
+import ticketsOnSale from '../assets/images/Tickets on sale.png'
+import lostBoys from '../assets/images/Lost boys.png'
+
+// Just for you
+import justForYou1 from '../assets/images/Just for you 1.png'
+import justForYou2 from '../assets/images/Just for you 2.png'
+import justForYou3 from '../assets/images/Just for you 3.png'
+
+// Trending Events
+import third from '../assets/images/Third.jpeg'
+import broadway from '../assets/images/Broadway.jpeg'
+import second from '../assets/images/Second.jpeg'
+
+// Trending Searches
+import tokyo from '../assets/images/Tokyo.jpeg'
+import trendingSearches1 from '../assets/images/Trending searches.jpeg'
+import trendingSearches2 from '../assets/images/Trending searches 2.png'
+
+// Popular Near You
+import rect303 from '../assets/images/Rectangle 303.png'
+import rect304 from '../assets/images/Rectangle 304.png'
+import rect305 from '../assets/images/Rectangle 305.png'
+
+// City
+import lagos from '../assets/images/Lagos.png'
+
+// Concerts
+import rect306 from '../assets/images/Rectangle 306.png'
+import rect307 from '../assets/images/Rectangle 307.png'
+import rect308 from '../assets/images/Rectangle 308.png'
+
+// Sports
+import rect309 from '../assets/images/Rectangle 309.png'
+import rect310 from '../assets/images/Rectangle 310.png'
+import rect311 from '../assets/images/Rectangle 311.png'
+
+// Arts, Theatre & Comedy
+import rect312 from '../assets/images/Rectangle 312.png'
+import rect313 from '../assets/images/Rectangle 313.png'
+import rect314 from '../assets/images/Rectangle 314.png'
+
+// Sponsored
+import rect315 from '../assets/images/Rectangle 315.png'
+import rect316 from '../assets/images/Rectangle 316.png'
+import rect317 from '../assets/images/Rectangle 317.png'
+
+// Discover More
+import rect284 from '../assets/images/Rectangle 284.png'
+
 const BASE_URL = 'https://jambay-backend.onrender.com'
 
 function EventsBrowse() {
@@ -21,9 +72,7 @@ function EventsBrowse() {
       try {
         const token = localStorage.getItem('token')
         const response = await fetch(`${BASE_URL}/api/v1/events/all_events`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+          headers: { 'Authorization': `Bearer ${token}` }
         })
         const data = await response.json()
         setEvents(data.events || [])
@@ -37,60 +86,60 @@ function EventsBrowse() {
     fetchEvents()
   }, [])
 
-  // Static fallbacks for sections without API yet
+  const upcomingFallback = [
+    { id: 1, title: 'Bruno Mars', img: eigth },
+    { id: 2, title: 'Tickets on Sale', img: ticketsOnSale },
+    { id: 3, title: 'Lost Boys', img: lostBoys },
+  ]
+
+  const justForYouFallback = [
+    { id: 1, title: 'Tennis Paradise', img: justForYou1 },
+    { id: 2, title: 'Lion King', img: justForYou2 },
+    { id: 3, title: 'More', img: justForYou3 },
+  ]
+
+  const trendingFallback = [
+    { id: 1, title: 'Winter Adventures', img: third },
+    { id: 2, title: 'Aladdin', img: broadway },
+    { id: 3, title: 'Conan Gray', img: second },
+  ]
+
   const trendingSearches = [
-    { id: 1, title: 'Tokyo 2026' },
-    { id: 2, title: 'Bar Event' },
-    { id: 3, title: 'Winter Sports' },
+    { id: 1, title: 'Tokyo 2026', img: tokyo },
+    { id: 2, title: 'Bar Event', img: trendingSearches1 },
+    { id: 3, title: 'Winter Sports', img: trendingSearches2 },
   ]
 
   const popularNearYou = [
-    { id: 1, title: 'MCS Schedule' },
-    { id: 2, title: 'Sips & Sounds' },
-    { id: 3, title: 'Win a Trip' },
+    { id: 1, title: 'MCS Schedule', img: rect303 },
+    { id: 2, title: 'Sips & Sounds', img: rect304 },
+    { id: 3, title: 'Win a Trip', img: rect305 },
   ]
 
   const concerts = [
-    { id: 1, title: 'Lady Gaga' },
-    { id: 2, title: 'Night Show' },
-    { id: 3, title: 'Zach Bryan' },
+    { id: 1, title: 'Lady Gaga', img: rect306 },
+    { id: 2, title: 'Night Show', img: rect307 },
+    { id: 3, title: 'Zach Bryan', img: rect308 },
   ]
 
   const sports = [
-    { id: 1, title: 'Miami Open' },
-    { id: 2, title: 'Sonoma' },
-    { id: 3, title: 'MLB' },
+    { id: 1, title: 'Miami Open', img: rect309 },
+    { id: 2, title: 'Sonoma', img: rect310 },
+    { id: 3, title: 'MLB', img: rect311 },
   ]
 
   const arts = [
-    { id: 1, title: 'Hamilton' },
-    { id: 2, title: 'Titanique' },
-    { id: 3, title: 'The Great Gatsby' },
+    { id: 1, title: 'Hamilton', img: rect312 },
+    { id: 2, title: 'Titanique', img: rect313 },
+    { id: 3, title: 'The Great Gatsby', img: rect314 },
   ]
 
   const sponsored = [
-    { id: 1, title: 'Sponsored 1' },
-    { id: 2, title: 'SXSW' },
-    { id: 3, title: 'Sponsored 3' },
+    { id: 1, title: 'Sponsored 1', img: rect315 },
+    { id: 2, title: 'SXSW', img: rect316 },
+    { id: 3, title: 'Sponsored 3', img: rect317 },
   ]
 
-  // Event card component — real or placeholder
-  const EventCard = ({ event, isReal }) => (
-    <div
-      className="eb-card"
-      onClick={() => isReal && navigate(`/ticket-detail`, { state: { event } })}
-      style={{ cursor: isReal ? 'pointer' : 'default' }}
-    >
-      {isReal && event.eventImage
-        ? <img src={event.eventImage} alt={event.name} className="eb-card-img" style={{ objectFit: 'cover' }} />
-        : <div className="eb-card-img" />
-      }
-      <p className="eb-card-title">{isReal ? event.name : event.title}</p>
-      {isReal && <p className="eb-card-date">{event.venue}</p>}
-    </div>
-  )
-
-  // Loading state
   const LoadingRow = () => (
     <div className="eb-scroll-row">
       {[1, 2, 3].map(i => (
@@ -121,14 +170,9 @@ function EventsBrowse() {
           </div>
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="eb-error">
-            <p>{error}</p>
-          </div>
-        )}
+        {error && <div className="eb-error"><p>{error}</p></div>}
 
-        {/* Upcoming Events — REAL API DATA */}
+        {/* Upcoming Events — always uses imported images, passes API event on click */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Upcoming Events</h3>
@@ -136,16 +180,22 @@ function EventsBrowse() {
           </div>
           {loading ? <LoadingRow /> : (
             <div className="eb-scroll-row">
-              {events.length > 0
-                ? events.slice(0, 5).map(e => <EventCard key={e._id} event={e} isReal={true} />)
-                : [{ id: 1, title: 'Bruno Mars' }, { id: 2, title: 'Tickets on Sale' }, { id: 3, title: 'Lost Boys' }]
-                    .map(e => <EventCard key={e.id} event={e} isReal={false} />)
-              }
+              {upcomingFallback.map(e => (
+                <div
+                  key={e.id}
+                  className="eb-card"
+                  onClick={() => navigate('/ticket-detail', { state: { event: events[e.id - 1] } })}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
+                  <p className="eb-card-title">{e.title}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Just for you — REAL API DATA */}
+        {/* Just for you — always uses imported images, passes API event on click */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Just for you</h3>
@@ -153,16 +203,22 @@ function EventsBrowse() {
           </div>
           {loading ? <LoadingRow /> : (
             <div className="eb-scroll-row">
-              {events.length > 0
-                ? events.slice(0, 5).map(e => <EventCard key={e._id} event={e} isReal={true} />)
-                : [{ id: 1, title: 'Tennis Paradise' }, { id: 2, title: 'Lion King' }, { id: 3, title: 'More' }]
-                    .map(e => <EventCard key={e.id} event={e} isReal={false} />)
-              }
+              {justForYouFallback.map(e => (
+                <div
+                  key={e.id}
+                  className="eb-card"
+                  onClick={() => navigate('/ticket-detail', { state: { event: events[e.id - 1] } })}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
+                  <p className="eb-card-title">{e.title}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Trending Events — REAL API DATA */}
+        {/* Trending Events — always uses imported images, passes API event on click */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Trending events</h3>
@@ -170,11 +226,17 @@ function EventsBrowse() {
           </div>
           {loading ? <LoadingRow /> : (
             <div className="eb-scroll-row">
-              {events.length > 0
-                ? events.slice(0, 5).map(e => <EventCard key={e._id} event={e} isReal={true} />)
-                : [{ id: 1, title: 'Winter Adventures' }, { id: 2, title: 'Aladdin' }, { id: 3, title: 'Conan Gray' }]
-                    .map(e => <EventCard key={e.id} event={e} isReal={false} />)
-              }
+              {trendingFallback.map(e => (
+                <div
+                  key={e.id}
+                  className="eb-card"
+                  onClick={() => navigate('/ticket-detail', { state: { event: events[e.id - 1] } })}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
+                  <p className="eb-card-title">{e.title}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -188,7 +250,7 @@ function EventsBrowse() {
           <div className="eb-scroll-row">
             {trendingSearches.map(e => (
               <div key={e.id} className="eb-card">
-                <div className="eb-card-img eb-card-dark" />
+                <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
                 <p className="eb-card-title">{e.title}</p>
               </div>
             ))}
@@ -204,7 +266,7 @@ function EventsBrowse() {
           <div className="eb-scroll-row">
             {popularNearYou.map(e => (
               <div key={e.id} className="eb-card">
-                <div className="eb-card-img eb-card-dark" />
+                <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
                 <p className="eb-card-title">{e.title}</p>
               </div>
             ))}
@@ -221,7 +283,9 @@ function EventsBrowse() {
         </div>
 
         {/* City Image */}
-        <div className="eb-city-img" />
+        <div className="eb-city-img">
+          <img src={lagos} alt="Lagos" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} />
+        </div>
 
         {/* Concerts — static */}
         <div className="eb-section">
@@ -232,7 +296,7 @@ function EventsBrowse() {
           <div className="eb-scroll-row">
             {concerts.map(e => (
               <div key={e.id} className="eb-card">
-                <div className="eb-card-img" />
+                <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
                 <p className="eb-card-title">{e.title}</p>
               </div>
             ))}
@@ -248,7 +312,7 @@ function EventsBrowse() {
           <div className="eb-scroll-row">
             {sports.map(e => (
               <div key={e.id} className="eb-card">
-                <div className="eb-card-img" />
+                <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
                 <p className="eb-card-title">{e.title}</p>
               </div>
             ))}
@@ -264,7 +328,7 @@ function EventsBrowse() {
           <div className="eb-scroll-row">
             {arts.map(e => (
               <div key={e.id} className="eb-card">
-                <div className="eb-card-img" />
+                <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
                 <p className="eb-card-title">{e.title}</p>
               </div>
             ))}
@@ -280,7 +344,7 @@ function EventsBrowse() {
           <div className="eb-scroll-row">
             {sponsored.map(e => (
               <div key={e.id} className="eb-card">
-                <div className="eb-card-img" />
+                <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
                 <p className="eb-card-title">{e.title}</p>
               </div>
             ))}
@@ -293,7 +357,9 @@ function EventsBrowse() {
             <h3 className="eb-section-title">Discover more</h3>
             <HiAdjustments size={18} color="white" />
           </div>
-          <div className="eb-discover-banner" />
+          <div className="eb-discover-banner">
+            <img src={rect284} alt="Discover more" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} />
+          </div>
         </div>
 
         {/* Bottom Nav */}

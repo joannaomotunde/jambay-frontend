@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-import { MdChevronRight } from 'react-icons/md'
+import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings, MdChevronRight } from 'react-icons/md'
 import './Profile.css'
 import './Dashboard.css'
 
@@ -21,7 +20,7 @@ function Profile() {
   ]
 
   return (
-    <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
+    <div className="auth-container" style={{ justifyContent: 'flex-start', minHeight: '100vh' }}>
       <div className="pf-wrapper">
 
         {/* Account Title */}
@@ -59,7 +58,7 @@ function Profile() {
         </div>
 
         {/* Bottom Nav */}
-        <div className="db-bottom-nav">
+        <div className="db-bottom-nav" style={{ marginTop: 'auto' }}>
           <button className="db-nav-btn" onClick={() => navigate('/dashboard')}>
             <div className="db-nav-icon-circle"><MdHome size={22} /></div>
             <p>Home</p>

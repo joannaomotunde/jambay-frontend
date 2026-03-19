@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Concessions.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,10 +11,8 @@ const Concessions = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [cart, setCart] = useState([])
   const [showCart, setShowCart] = useState(false)
-  const { token } = useAuth()
   const navigate = useNavigate()
 
-  // Hard-coded menu items
   const [menuItems] = useState([
     { id: 1, name: 'Burger', category: 'Food', price: 2500, description: 'Juicy beef burger with fries' },
     { id: 2, name: 'Pizza Slice', category: 'Food', price: 1800, description: 'Cheesy pepperoni pizza' },
@@ -29,18 +26,14 @@ const Concessions = () => {
     { id: 10, name: 'Cap', category: 'Merchandise', price: 2000, description: 'Branded event cap' },
   ])
 
-  // Filtered items by category
   const filteredItems = selectedCategory === 'All'
     ? menuItems
     : menuItems.filter(item => item.category === selectedCategory)
 
-  // Cart handlers
   const addToCart = (item) => {
     setCart(prev => {
       const existing = prev.find(i => i.id === item.id)
-      if (existing) {
-        return prev.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i)
-      }
+      if (existing) return prev.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i)
       return [...prev, { ...item, qty: 1 }]
     })
   }
@@ -54,22 +47,15 @@ const Concessions = () => {
     })
   }
 
-  const removeFromCart = (itemId) => {
-    setCart(prev => prev.filter(i => i.id !== itemId))
-  }
+  const removeFromCart = (itemId) => setCart(prev => prev.filter(i => i.id !== itemId))
 
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
   const grandTotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0)
+  const getItemQty = (itemId) => cart.find(i => i.id === itemId)?.qty || 0
 
-  const getItemQty = (itemId) => {
-    const item = cart.find(i => i.id === itemId)
-    return item ? item.qty : 0
-  }
-
-  // Navigate to Payment Auth
   const proceedToCheckout = () => {
     localStorage.setItem('cart', JSON.stringify(cart))
-    navigate('/payment-auth') // Make sure this route exists
+    navigate('/payment-auth')
   }
 
   return (
@@ -81,9 +67,10 @@ const Concessions = () => {
           onClick={() => setShowCart(!showCart)}
           className={`cart-btn ${showCart ? 'active' : ''}`}
         >
-          <FontAwesomeIcon icon={faCartShopping} /> {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+          <FontAwesomeIcon icon={faCartShopping} />
+          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </button>
-        <button className="heart-btn" title="Favourites">
+        <button className="heart-btn">
           <FontAwesomeIcon icon={faHeart} />
         </button>
       </div>
@@ -107,67 +94,62 @@ const Concessions = () => {
         ))}
       </div>
 
-      {/* Body — Menu and Side Panel */}
-      <div className="concessions-body">
-
-        {/* Menu Section */}
-        <div className="menu-section">
-          <div className="menu-grid">
-            {filteredItems.map(item => (
-              <div key={item.id} className="menu-card">
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <div className="menu-card-footer">
-                  <span className="item-price">₦{item.price.toLocaleString()}</span>
-                  {getItemQty(item.id) > 0 ? (
-                    <div className="qty-controls">
-                      <button className="qty-btn" onClick={() => decreaseQty(item.id)}>−</button>
-                      <span className="qty-number">{getItemQty(item.id)}</span>
-                      <button className="qty-btn" onClick={() => addToCart(item)}>+</button>
-                    </div>
-                  ) : (
-                    <button className="add-btn" onClick={() => addToCart(item)}>+ Add</button>
-                  )}
+      {/* Menu Grid */}
+      <div className="menu-grid">
+        {filteredItems.map(item => (
+          <div key={item.id} className="menu-card">
+            <h3>{item.name}</h3>
+            <p>{item.description}</p>
+            <div className="menu-card-footer">
+              <span className="item-price">₦{item.price.toLocaleString()}</span>
+              {getItemQty(item.id) > 0 ? (
+                <div className="qty-controls">
+                  <button className="qty-btn" onClick={() => decreaseQty(item.id)}>−</button>
+                  <span className="qty-number">{getItemQty(item.id)}</span>
+                  <button className="qty-btn" onClick={() => addToCart(item)}>+</button>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Side Panel — Cart */}
-        {showCart && (
-          <div className="side-panel">
-            <div className="cart-panel">
-              <h2>🛒 Your Cart</h2>
-              {cart.length === 0 ? (
-                <p className="empty-cart">Your cart is empty. Add some items!</p>
               ) : (
-                <>
-                  {cart.map(item => (
-                    <div key={item.id} className="cart-item">
-                      <div className="cart-item-info">
-                        <strong>{item.name}</strong>
-                        <div className="cart-item-price">
-                          ₦{item.price.toLocaleString()} × {item.qty} = ₦{(item.price * item.qty).toLocaleString()}
-                        </div>
-                      </div>
-                      <button className="remove-btn" onClick={() => removeFromCart(item.id)}>❌</button>
-                    </div>
-                  ))}
-                  <div className="cart-total">
-                    <span>Total:</span>
-                    <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
-                  </div>
-                  <button className="checkout-btn" onClick={proceedToCheckout}>
-                    Proceed to Checkout →
-                  </button>
-                </>
+                <button className="add-btn" onClick={() => addToCart(item)}>+ Add</button>
               )}
             </div>
           </div>
-        )}
-
+        ))}
       </div>
+
+      {/* Cart Bottom Sheet — inside concessions-page so it's scoped to 480px */}
+      {showCart && (
+        <div className="cart-overlay" onClick={() => setShowCart(false)}>
+          <div className="cart-bottom-sheet" onClick={e => e.stopPropagation()}>
+            <div className="cart-sheet-handle" />
+            <h2>🛒 Your Cart</h2>
+            {cart.length === 0 ? (
+              <p className="empty-cart">Your cart is empty. Add some items!</p>
+            ) : (
+              <>
+                {cart.map(item => (
+                  <div key={item.id} className="cart-item">
+                    <div className="cart-item-info">
+                      <strong>{item.name}</strong>
+                      <div className="cart-item-price">
+                        ₦{item.price.toLocaleString()} × {item.qty} = ₦{(item.price * item.qty).toLocaleString()}
+                      </div>
+                    </div>
+                    <button className="remove-btn" onClick={() => removeFromCart(item.id)}>❌</button>
+                  </div>
+                ))}
+                <div className="cart-total">
+                  <span>Total:</span>
+                  <span className="total-amount">₦{grandTotal.toLocaleString()}</span>
+                </div>
+                <button className="checkout-btn" onClick={proceedToCheckout}>
+                  Proceed to Checkout →
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

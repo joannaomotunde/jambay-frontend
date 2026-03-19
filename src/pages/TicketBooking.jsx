@@ -1,124 +1,111 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-import { MdChevronLeft } from 'react-icons/md'
-import './TicketBooking.css'
+import { MdChevronLeft, MdShare, MdKeyboardArrowDown, MdInfo } from 'react-icons/md'
+import './TicketDetail.css'
+import './Dashboard.css'
 
-function TicketBooking() {
+function TicketDetail() {
   const navigate = useNavigate()
-  const [paymentMethod, setPaymentMethod] = useState('Cards')
-
-  const perks = [
-    'Mobile & Offline ticket',
-    'Aerial view',
-    "You'll be seated together",
-    'Can relist, sell if plans change',
-  ]
+  const [quantity, setQuantity] = useState('6 tickets')
+  const [seatNumbers, setSeatNumbers] = useState('4,5,6,7,8,9')
+  const [loyaltyChecked, setLoyaltyChecked] = useState(false)
+  const [showConcessionPopup, setShowConcessionPopup] = useState(false)
 
   return (
     <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
-      <div className="tb-wrapper">
+      <div className="td-wrapper">
 
         {/* Top Bar */}
-        <div className="tb-top-bar">
-          <button className="tb-back-btn" onClick={() => navigate(-1)}>
+        <div className="td-top-bar">
+          <button className="td-back-btn" onClick={() => navigate(-1)}>
             <MdChevronLeft size={20} color="white" />
           </button>
-          <div className="tb-top-right">
-            <button className="tb-icon-btn">🛒</button>
-            <button className="tb-icon-btn">🤍</button>
-          </div>
+          <button className="td-share-btn">
+            <MdShare size={18} color="white" />
+          </button>
         </div>
 
-        {/* Venue Image */}
-        <div className="tb-venue-img">
-          <div className="tb-venue-label">Estimated View</div>
-        </div>
-
-        {/* Section Info */}
-        <div className="tb-section-info">
-          <p className="tb-section-title">Section 115 | Row 15</p>
-          <p className="tb-section-sub">Seats 4 - 9</p>
-          <p className="tb-section-link">Aerial Viewers</p>
-          <p className="tb-section-see">See all tickets in this section</p>
-        </div>
-
-        {/* Perks */}
-        <div className="tb-panel">
-          <p className="tb-panel-title">Perks</p>
-          {perks.map((perk, i) => (
-            <div key={i} className="tb-perk-row">
-              <span className="tb-perk-check">✓</span>
-              <p className="tb-perk-text">{perk}</p>
+        {/* Image Carousel */}
+        <div className="td-carousel">
+          <div className="td-img-main" />
+          <div className="td-img-side">
+            <div className="td-img-small" />
+            <div className="td-img-small td-img-overlay">
+              <span>🔍 View all</span>
             </div>
-          ))}
-        </div>
-
-        {/* Price Breakdown */}
-        <div className="tb-panel">
-          <p className="tb-panel-title">Price Breakdown</p>
-          <div className="tb-price-row">
-            <p className="tb-price-label">Price per ticket</p>
-            <p className="tb-price-value">$170.00+</p>
-          </div>
-          <div className="tb-price-row">
-            <p className="tb-price-label">Fees</p>
-            <p className="tb-price-value">$25.45</p>
-          </div>
-          <div className="tb-price-row">
-            <p className="tb-price-label">Taxes</p>
-            <p className="tb-price-value">$1.55</p>
-          </div>
-          <div className="tb-divider" />
-          <div className="tb-price-row">
-            <p className="tb-price-total-label">per ticket incl. fees</p>
-            <p className="tb-price-total">$1047.00</p>
           </div>
         </div>
 
-        {/* Payment Options */}
-        <div className="tb-panel">
-          <p className="tb-panel-title">You can pay with</p>
-          <div className="tb-payment-tabs">
-            <button
-              className={`tb-payment-tab${paymentMethod === 'Cards' ? ' active' : ''}`}
-              onClick={() => setPaymentMethod('Cards')}
-            >
-              <span>💳</span>
-              <p>Cards</p>
-              <div className="tb-tab-logos">
-                <span>VISA</span><span>MC</span><span>AMEX</span>
-              </div>
-            </button>
-            <button
-              className={`tb-payment-tab${paymentMethod === 'Banks' ? ' active' : ''}`}
-              onClick={() => setPaymentMethod('Banks')}
-            >
-              <span>🏦</span>
-              <p>Banks</p>
-              <div className="tb-tab-logos">
-                <span>GTB</span><span>UBA</span><span>Skrill</span>
-              </div>
-            </button>
-            <button
-              className={`tb-payment-tab${paymentMethod === 'Wallets' ? ' active' : ''}`}
-              onClick={() => setPaymentMethod('Wallets')}
-            >
-              <span>👛</span>
-              <p>Wallets</p>
-              <div className="tb-tab-logos">
-                <span>GPay</span><span>Apple</span><span>PayPal</span>
-              </div>
-            </button>
+        {/* Event Info */}
+        <div className="td-event-info">
+          <p className="td-event-title">New York Knicks at Utah Jazz, Row 2</p>
+          <p className="td-event-price">$197 <span className="td-price-sub">each incl. fees</span></p>
+          <p className="td-affirm">as low as $2/mo or 1.2% APR with <strong>affirm</strong> <span className="td-view-more">view more</span></p>
+        </div>
+
+        {/* Badges */}
+        <div className="td-badges">
+          <div className="td-badge">
+            <span>⚡</span>
+            <div>
+              <p className="td-badge-title">Instant purchase & delivery</p>
+              <p className="td-badge-sub">Mobile tickets</p>
+            </div>
+            <MdInfo size={16} color="#64748B" />
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <button className="tb-proceed-btn" onClick={() => navigate('/payment-auth')}>
-          Proceed to checkout
-        </button>
-        <button className="tb-cart-btn">
-          Add to cart 🛒
+        {/* Official Marketplace */}
+        <div className="td-marketplace">
+          <div className="td-marketplace-left">
+            <p className="td-marketplace-title">Official Ticket Marketplace</p>
+            <p className="td-marketplace-sub">Tickets are reviewed and verified by the NBA</p>
+          </div>
+          <div className="td-nba-logo">NBA</div>
+        </div>
+
+        {/* Quantity Dropdown */}
+        <div className="td-dropdown">
+          <p className="td-dropdown-label">Quantity</p>
+          <div className="td-dropdown-value">
+            <span>{quantity}</span>
+            <MdKeyboardArrowDown size={18} color="#64748B" />
+          </div>
+        </div>
+
+        {/* Seat Numbers Dropdown */}
+        <div className="td-dropdown">
+          <p className="td-dropdown-label">Seat numbers</p>
+          <div className="td-dropdown-value">
+            <span>{seatNumbers}</span>
+            <MdKeyboardArrowDown size={18} color="#64748B" />
+          </div>
+        </div>
+
+        {/* Loyalty Points */}
+        <div className="td-dropdown" onClick={() => setLoyaltyChecked(!loyaltyChecked)}>
+          <p className="td-dropdown-label">Loyalty points</p>
+          <div className={`td-loyalty-check ${loyaltyChecked ? 'checked' : ''}`}>
+            {loyaltyChecked && <span>✓</span>}
+          </div>
+        </div>
+
+        {/* Loyalty Info */}
+        {loyaltyChecked && (
+          <div className="td-loyalty-info">
+            <p className="td-loyalty-info-text">
+              🎁 You have loyalty points available. You will be able to redeem them once the loyalty feature is ready.
+            </p>
+          </div>
+        )}
+
+        {/* Confirm Button */}
+        <button
+          className="td-confirm-btn"
+          onClick={() => setShowConcessionPopup(true)}
+        >
+          Confirm
         </button>
 
         {/* Bottom Nav */}
@@ -145,9 +132,32 @@ function TicketBooking() {
           </button>
         </div>
 
+        {/* Concession Popup — inside td-wrapper, scoped to 480px */}
+        {showConcessionPopup && (
+          <div className="td-popup-overlay" onClick={() => setShowConcessionPopup(false)}>
+            <div className="td-popup" onClick={e => e.stopPropagation()}>
+              <div className="td-popup-handle" />
+              <p className="td-popup-title">🍔 Add Concessions?</p>
+              <p className="td-popup-sub">Would you like to add food & drinks to your order before checkout?</p>
+              <button
+                className="td-popup-yes"
+                onClick={() => navigate('/concessions')}
+              >
+                Yes, Add Concessions
+              </button>
+              <button
+                className="td-popup-skip"
+                onClick={() => navigate('/payment-auth')}
+              >
+                Skip
+              </button>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   )
 }
 
-export default TicketBooking
+export default TicketDetail
