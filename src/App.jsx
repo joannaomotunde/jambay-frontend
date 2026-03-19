@@ -62,9 +62,9 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/seat-selection" element={
-          
+          <ProtectedRoute>
             <SeatSelection />
-          
+          </ProtectedRoute>
         } />
       </Routes>
     </BrowserRouter>
