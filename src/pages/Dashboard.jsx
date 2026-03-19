@@ -3,107 +3,144 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Dashboard.css'
 import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-import border1 from '../assets/images/Border 1.jpeg'
-import border2 from '../assets/images/Border 2.jpeg'
+
+// Upcoming Events
+import first from '../assets/images/First.jpeg'
+
+// Trending Events
+import second from '../assets/images/Second.jpeg'
+
+// Live Events
+import third from '../assets/images/Third.jpeg'
+
+// Featured
+import trendingSearches from '../assets/images/Trending searches.jpeg'
+import fifth from '../assets/images/Fifth.jpeg'
+import sixth from '../assets/images/Sixth.jpeg'
+
+// Festivals
+import seventh from '../assets/images/Seventh.jpeg'
+
+// Popular Categories
+import eighth from '../assets/images/Eigth.jpeg'
+import ticketOnSales from '../assets/images/Tickets on sale.png'
+import lostBoys from '../assets/images/Lost boys.png'
+
+// Sponsored
+import sip from '../assets/images/Sip.jpeg'
+
+// Entertainment Guides
+import broadway from '../assets/images/Broadway.jpeg'
+import nflDeals from '../assets/images/NFL Deals.jpeg'
+import nbaDeals from '../assets/images/BA Deals.jpeg'
+
+// Popular Cities
+import lagos from '../assets/images/Lagos.jpeg'
+import newYork from '../assets/images/Newyork.jpeg'
+import singapore from '../assets/images/Singapore.jpeg'
 
 function Dashboard() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
-  const [activeFilter, setActiveFilter] = useState('VIP')
+  const [activeFilter, setActiveFilter] = useState('Hotel')
 
   const filters = ['Hotel', 'VIP', 'Gift cards', 'Sell', 'Help']
 
   const upcomingEvents = [
-    { id: 1, title: 'New York Knicks vs Utah Jazz', subtitle: 'Row 2', price: '$197', img: null },
-    { id: 2, title: 'Burna Boy Live', subtitle: 'VIP', price: '$250', img: null },
-    { id: 3, title: 'Afrobeats Festival', subtitle: 'General', price: '$80', img: null },
+    { id: 1, title: 'New York Knicks vs Utah Jazz', subtitle: 'Row 2', price: '$197', img: first },
+    { id: 2, title: 'Burna Boy Live', subtitle: 'VIP', price: '$250', img: first },
+    { id: 3, title: 'Afrobeats Festival', subtitle: 'General', price: '$80', img: first },
   ]
 
   const trendingEvents = [
-    { id: 1, title: 'Wishbone World Tour', date: '25 MAJ STOCKHOLM', img: null },
-    { id: 2, title: 'Conan Gray', date: '20 APR LONDON', img: null },
-    { id: 3, title: 'Metro Boomin', date: '15 MAY NEW YORK', img: null },
+    { id: 1, title: 'Wishbone World Tour', date: '25 MAJ STOCKHOLM', img: second },
+    { id: 2, title: 'Conan Gray', date: '20 APR LONDON', img: second },
+    { id: 3, title: 'Metro Boomin', date: '15 MAY NEW YORK', img: second },
   ]
 
   const liveEvents = [
-    { id: 1, title: 'The Winter Paralympics', subtitle: 'In One Year', img: null },
-    { id: 2, title: 'UEFA Champions League', subtitle: 'Live Now', img: null },
+    { id: 1, title: 'The Winter Paralympics', subtitle: 'In One Year', img: third },
+    { id: 2, title: 'UEFA Champions League', subtitle: 'Live Now', img: third },
   ]
 
   const featured = [
-    { id: 1, title: 'Ticket deals', icon: '🎟️' },
-    { id: 2, title: 'Payment Partners', icon: '💳' },
-    { id: 3, title: 'My Tickets', icon: '📱' },
+    { id: 1, title: 'Trending Searches', img: trendingSearches },
+    { id: 2, title: 'Ticket deals', img: fifth },
+    { id: 3, title: 'My Tickets', img: sixth },
   ]
 
   const festivals = [
-    { id: 1, title: 'SXSW 2026', date: 'MARCH 12-18, AUSTIN TEXAS', img: null },
-    { id: 2, title: 'Coachella', date: 'APRIL 11, INDIO CA', img: null },
+    { id: 1, title: 'SXSW 2026', date: 'MARCH 12-18, AUSTIN TEXAS', img: seventh },
+    { id: 2, title: 'Coachella', date: 'APRIL 11, INDIO CA', img: seventh },
   ]
 
   const categories = [
-    { id: 1, title: 'Concerts', img: null },
-    { id: 2, title: 'Sports', img: null },
-    { id: 3, title: 'Theatre', img: null },
+    { id: 1, title: 'Concerts', img: eighth },
+    { id: 2, title: 'Sports', img: ticketOnSales },
+    { id: 3, title: 'Theatre', img: lostBoys },
   ]
 
   const offers = [
-    { id: 1, title: 'Sips & Sounds Music Festival', date: 'MARCH 13-14, 2026 AUDITORIUM SHORES AUSTIN, TEXAS', img: null },
+    { id: 1, title: 'Sips & Sounds Music Festival', date: 'MARCH 13-14, 2026 AUDITORIUM SHORES AUSTIN, TEXAS', img: sip },
   ]
 
   const guides = [
-    { id: 1, title: 'Broadway deals', img: null },
-    { id: 2, title: 'NFL deals', img: null },
-    { id: 3, title: 'NBA deals', img: null },
+    { id: 1, title: 'Broadway deals', img: broadway },
+    { id: 2, title: 'NFL deals', img: nflDeals },
+    { id: 3, title: 'NBA deals', img: nbaDeals },
   ]
 
   const cities = [
-    { id: 1, title: 'Lagos', img: null },
-    { id: 2, title: 'New York', img: null },
-    { id: 3, title: 'Singapore', img: null },
+    { id: 1, title: 'Lagos', img: lagos },
+    { id: 2, title: 'New York', img: newYork },
+    { id: 3, title: 'Singapore', img: singapore },
   ]
 
   return (
     <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
       <div className="db-wrapper">
 
-{/* First wrapper - filter pills */}
-<div className="db-border-wrapper">
-  <div className="db-filters-overlay">
-    <button className="db-filter-pill active">Hotel</button>
-    <button className="db-filter-pill">VIP</button>
-    <button className="db-filter-pill">Gift cards</button>
-    <button className="db-filter-pill">Sell</button>
-    <button className="db-filter-pill">Help</button>
-  </div>
-</div>
+        {/* First wrapper - filter pills */}
+        <div className="db-border-wrapper">
+          <div className="db-filters-overlay">
+            {filters.map(f => (
+              <button
+                key={f}
+                className={`db-filter-pill ${activeFilter === f ? 'active' : ''}`}
+                onClick={() => setActiveFilter(f)}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
 
-{/* Second wrapper - search row */}
-<div className="db-border-wrapper">
-  <div className="db-search-overlay">
-    <div className="db-search-item">
-      <span className="db-search-icon">📍</span>
-      <div>
-        <div className="db-search-label">LOCATION</div>
-        <div className="db-search-sub">City or Zip code</div>
-      </div>
-    </div>
-    <div className="db-search-item">
-      <span className="db-search-icon">📅</span>
-      <div>
-        <div className="db-search-label">DATE</div>
-        <div className="db-search-sub">All dates</div>
-      </div>
-    </div>
-    <div className="db-search-item">
-      <span className="db-search-icon">🔍</span>
-      <div>
-        <div className="db-search-label">SEARCH</div>
-        <div className="db-search-sub">venues, artists or events</div>
-      </div>
-    </div>
-  </div>
-</div>
+        {/* Second wrapper - search row */}
+        <div className="db-border-wrapper">
+          <div className="db-search-overlay">
+            <div className="db-search-item">
+              <span className="db-search-icon">📍</span>
+              <div>
+                <div className="db-search-label">LOCATION</div>
+                <div className="db-search-sub">City or Zip code</div>
+              </div>
+            </div>
+            <div className="db-search-item">
+              <span className="db-search-icon">📅</span>
+              <div>
+                <div className="db-search-label">DATE</div>
+                <div className="db-search-sub">All dates</div>
+              </div>
+            </div>
+            <div className="db-search-item">
+              <span className="db-search-icon">🔍</span>
+              <div>
+                <div className="db-search-label">SEARCH</div>
+                <div className="db-search-sub">venues, artists or events</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Upcoming Events */}
         <div className="db-section">
@@ -115,7 +152,7 @@ function Dashboard() {
             {upcomingEvents.map(e => (
               <div key={e.id} className="db-event-card db-event-card-lg" onClick={() => navigate('/event-details')}>
                 <div className="db-event-img-lg">
-                  <div className="db-img-placeholder" />
+                  <img src={e.img} alt={e.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div className="db-event-info">
                   <p className="db-event-title">{e.title}</p>
@@ -136,7 +173,8 @@ function Dashboard() {
           <div className="db-scroll-row">
             {trendingEvents.map(e => (
               <div key={e.id} className="db-event-card db-event-card-lg" onClick={() => navigate('/event-details')}>
-                <div className="db-event-img-lg db-img-dark">
+                <div className="db-event-img-lg">
+                  <img src={e.img} alt={e.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div className="db-img-overlay">
                     <p className="db-img-title">{e.title}</p>
                     <p className="db-img-date">{e.date}</p>
@@ -156,7 +194,8 @@ function Dashboard() {
           <div className="db-scroll-row">
             {liveEvents.map(e => (
               <div key={e.id} className="db-event-card db-event-card-lg" onClick={() => navigate('/event-details')}>
-                <div className="db-event-img-lg db-img-dark">
+                <div className="db-event-img-lg">
+                  <img src={e.img} alt={e.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div className="db-img-overlay">
                     <p className="db-img-title">{e.title}</p>
                     <p className="db-img-date">{e.subtitle}</p>
@@ -176,7 +215,7 @@ function Dashboard() {
           <div className="db-featured-row">
             {featured.map(f => (
               <div key={f.id} className="db-featured-card">
-                <span className="db-featured-icon">{f.icon}</span>
+                <img src={f.img} alt={f.title} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '10px' }} />
                 <p className="db-featured-title">{f.title}</p>
               </div>
             ))}
@@ -192,7 +231,8 @@ function Dashboard() {
           <div className="db-scroll-row">
             {festivals.map(f => (
               <div key={f.id} className="db-event-card db-event-card-lg">
-                <div className="db-event-img-lg db-img-dark">
+                <div className="db-event-img-lg">
+                  <img src={f.img} alt={f.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div className="db-img-overlay">
                     <p className="db-img-title">{f.title}</p>
                     <p className="db-img-date">{f.date}</p>
@@ -212,7 +252,7 @@ function Dashboard() {
           <div className="db-three-row">
             {categories.map(c => (
               <div key={c.id} className="db-cat-card">
-                <div className="db-cat-img" />
+                <img src={c.img} alt={c.title} className="db-cat-img" style={{ objectFit: 'cover' }} />
                 <p className="db-cat-title">{c.title}</p>
               </div>
             ))}
@@ -227,8 +267,9 @@ function Dashboard() {
           </div>
           <div className="db-scroll-row">
             {offers.map(o => (
-              <div key={o.id} className="db-event-card db-event-card-lg">
-                <div className="db-event-img-lg db-img-dark">
+              <div key={o.id} className="db-event-card" style={{ width: '100%' }}>
+                <div className="db-event-img-lg" style={{ height: '160px' }}>
+                  <img src={o.img} alt={o.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div className="db-img-overlay">
                     <p className="db-img-title">{o.title}</p>
                     <p className="db-img-date">{o.date}</p>
@@ -248,7 +289,7 @@ function Dashboard() {
           <div className="db-three-row">
             {guides.map(g => (
               <div key={g.id} className="db-cat-card">
-                <div className="db-cat-img" />
+                <img src={g.img} alt={g.title} className="db-cat-img" style={{ objectFit: 'cover' }} />
                 <p className="db-cat-title">{g.title}</p>
               </div>
             ))}
@@ -264,7 +305,7 @@ function Dashboard() {
           <div className="db-three-row">
             {cities.map(c => (
               <div key={c.id} className="db-cat-card">
-                <div className="db-cat-img" />
+                <img src={c.img} alt={c.title} className="db-cat-img" style={{ objectFit: 'cover' }} />
                 <p className="db-cat-title">{c.title}</p>
               </div>
             ))}
