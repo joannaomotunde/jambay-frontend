@@ -36,7 +36,6 @@ function EventDetails() {
     fetchEvents()
   }, [])
 
-  // Fallback static events
   const staticEvents = [
     { date: '26', day: 'Thu', tag: 'ROAD OPENER', title: 'vs Utah Jazz', price: '$15', location: 'Salt Lake City, UT' },
     { date: '28', day: 'Sat', tag: 'AWAY', title: 'vs Indiana Pacers', price: '$20', location: 'Indianapolis, IN' },
@@ -52,7 +51,7 @@ function EventDetails() {
   const EventRow = ({ e, isReal }) => (
     <div
       className="ed-event-row"
-      onClick={() => navigate('/ticket-detail', { state: { event: isReal ? e : null } })}
+      onClick={() => navigate('/seat-booking', { state: { event: isReal ? e : event } })}
     >
       <div className="ed-date-col">
         <p className="ed-date-num">{isReal ? new Date(e.date).getDate() : e.date}</p>
@@ -84,12 +83,12 @@ function EventDetails() {
         </div>
 
         {/* Banner Image */}
-       <div className="ed-banner">
-  <img src={bostonImg} alt="banner" className="ed-banner-img" />
-  <div className="ed-official-badge">
-    <span>🏆</span>
-    <p>Official Ticket Marketplace</p>
-  </div>
+        <div className="ed-banner">
+          <img src={bostonImg} alt="banner" className="ed-banner-img" />
+          <div className="ed-official-badge">
+            <span>🏆</span>
+            <p>Official Ticket Marketplace</p>
+          </div>
         </div>
 
         {/* Team Title */}
@@ -114,7 +113,7 @@ function EventDetails() {
           <button className="ed-filter-btn">Home & Away ▾</button>
         </div>
 
-        {/* Event Rows — Real API or static */}
+        {/* Event Rows */}
         {loading ? (
           <div className="ed-loading">Loading events...</div>
         ) : events.length > 0 ? (
@@ -124,7 +123,7 @@ function EventDetails() {
         )}
 
         {/* April Header */}
-        {(events.length === 0 || !loading) && (
+        {!loading && (
           <>
             <p className="ed-month-header">April 2026</p>
             {aprilEvents.map((e, i) => <EventRow key={i} e={e} isReal={false} />)}
@@ -132,7 +131,10 @@ function EventDetails() {
         )}
 
         {/* Confirm Button */}
-        <button className="ed-confirm-btn" onClick={() => navigate('/ticket-detail')}>
+        <button
+          className="ed-confirm-btn"
+          onClick={() => navigate('/seat-booking', { state: { event } })}
+        >
           Confirm
         </button>
 

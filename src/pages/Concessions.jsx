@@ -116,7 +116,7 @@ const Concessions = () => {
         ))}
       </div>
 
-      {/* Cart Bottom Sheet — inside concessions-page so it's scoped to 480px */}
+      {/* Cart Bottom Sheet */}
       {showCart && (
         <div className="cart-overlay" onClick={() => setShowCart(false)}>
           <div className="cart-bottom-sheet" onClick={e => e.stopPropagation()}>

@@ -131,25 +131,25 @@ function TicketDetail() {
           </button>
         </div>
 
-        {/* Concession Popup */}
-        {showConcessionPopup && (
-          <div className="td-popup-overlay" onClick={() => setShowConcessionPopup(false)}>
-            <div className="td-popup" onClick={e => e.stopPropagation()}>
-              <div className="td-popup-handle" />
-              <p className="td-popup-title">🍔 Add Concessions?</p>
-              <p className="td-popup-sub">Would you like to add food & drinks to your order before checkout?</p>
-              <button
-                className="td-popup-yes"
-                onClick={() => navigate('/concessions')}
-              >
-                Yes, Add Concessions
-              </button>
-              <button
-                className="td-popup-skip"
-                onClick={() => navigate('/payment-auth')}
-              >
-                Skip
-              </button>
+       {/* Concession Popup */}
+     {showConcessionPopup && (
+      <div className="td-popup-overlay" onClick={() => setShowConcessionPopup(false)}>
+      <div className="td-popup" onClick={e => e.stopPropagation()}>
+      <div className="td-popup-handle" />
+      <p className="td-popup-title">🍔 Add Concessions?</p>
+      <p className="td-popup-sub">Would you like to add food & drinks to your order before checkout?</p>
+       <button
+        className="td-popup-yes"
+        onClick={() => navigate('/concessions')}
+       >
+        Yes, Add Concessions
+       </button>
+       <button
+        className="td-popup-skip"
+        onClick={() => navigate('/payment-auth')}
+       >
+         Skip
+         </button>
             </div>
           </div>
         )}

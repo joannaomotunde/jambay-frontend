@@ -40,9 +40,12 @@
 }
 
 .sb-event-date {
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255,255,255,0.8);
   margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* VENUE */
@@ -62,9 +65,13 @@
 .sb-filters {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
   align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
 }
+
+.sb-filters::-webkit-scrollbar { display: none; }
 
 .sb-filter-icon {
   background: white;
@@ -77,6 +84,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 14px;
+  flex-shrink: 0;
 }
 
 .sb-filter-pill {
@@ -88,6 +96,8 @@
   font-weight: 600;
   color: #1E293B;
   cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .sb-filter-pill.active {
@@ -138,13 +148,14 @@
 
 /* LISTING CARDS */
 .sb-listing-card {
-  background: #4ECDC4;
+  background: white;
   border-radius: 16px;
   padding: 12px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .sb-seat-img {
@@ -153,13 +164,64 @@
   border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
+  background: linear-gradient(135deg, #94A3B8, #CBD5E1);
 }
 
 .sb-seat-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .sb-seat-section {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.sb-seat-row {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.sb-badge {
+  background: linear-gradient(135deg, #F7C948, #e6b800);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1E293B;
+  width: fit-content;
+}
+
+.sb-seat-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sb-price {
   font-size: 16px;
-  /* other styles */
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.sb-price-sub {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+/* CONFIRM BUTTON */
+.sb-confirm-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
 }
