@@ -27,6 +27,7 @@ import TicketBooking from './pages/TicketBooking'
 import PaymentAuth from './pages/PaymentAuth'
 import PaymentSuccess from './pages/PaymentSuccess'
 import SeatMap from './pages/SeatMap'
+import CustomerBehaviour from './pages/CustomerBehaviour'
 
 function App() {
   return (
@@ -104,6 +105,7 @@ function App() {
           <ProtectedRoute><PaymentSuccess /></ProtectedRoute>
         } />
         <Route path="/seat-map" element={<ProtectedRoute><SeatMap /></ProtectedRoute>} />
+        <Route path="/customer-behaviour" element={<ProtectedRoute><CustomerBehaviour /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

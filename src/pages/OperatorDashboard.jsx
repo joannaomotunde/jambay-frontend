@@ -196,7 +196,7 @@ const OperatorDashboard = () => {
             <p>Orders</p>
           </button>
 
-          <button className={`op-nav-btn ${activeNav === 'analytics' ? 'active' : ''}`} onClick={() => { setActiveNav('analytics'); navigate('/sales-analytics') }}>
+          <button className={`op-nav-btn ${activeNav === 'analytics' ? 'active' : ''}`}onClick={() => { setActiveNav('analytics'); navigate('/customer-behaviour') }}>
             <div className="op-nav-icon"><MdBarChart size={22} /></div>
             <p>Analytics</p>
           </button>
