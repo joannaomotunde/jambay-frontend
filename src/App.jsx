@@ -26,6 +26,7 @@ import TicketDetail from './pages/TicketDetail'
 import TicketBooking from './pages/TicketBooking'
 import PaymentAuth from './pages/PaymentAuth'
 import PaymentSuccess from './pages/PaymentSuccess'
+import SeatMap from './pages/SeatMap'
 
 function App() {
   return (
@@ -102,6 +103,7 @@ function App() {
         <Route path="/payment-success" element={
           <ProtectedRoute><PaymentSuccess /></ProtectedRoute>
         } />
+        <Route path="/seat-map" element={<ProtectedRoute><SeatMap /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

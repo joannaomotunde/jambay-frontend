@@ -56,7 +56,6 @@ function SeatBooking() {
     fetchSeating()
   }, [event])
 
-  // Build listings from real seating or fallback to static
   const listings = seating?.sections
     ? seating.sections.map((section, i) => ({
         id: i + 1,
@@ -131,7 +130,7 @@ function SeatBooking() {
             <div
               key={seat.id}
               className="sb-listing-card"
-              onClick={() => navigate('/ticket-detail', { state: { event, seat } })}
+              onClick={() => navigate('/seat-map', { state: { event, seat } })}
             >
               <img src={seat.img} alt={seat.section} className="sb-seat-img" />
               <div className="sb-seat-info">
@@ -150,7 +149,7 @@ function SeatBooking() {
         {/* Confirm Button */}
         <button
           className="sb-confirm-btn"
-          onClick={() => navigate('/ticket-detail', { state: { event } })}
+          onClick={() => navigate('/seat-map', { state: { event } })}
         >
           Confirm
         </button>
