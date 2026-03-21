@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import './OperatorDashboard.css'
@@ -14,6 +14,19 @@ const OperatorDashboard = () => {
   const navigate = useNavigate()
   const [activeNav, setActiveNav] = useState('dashboard')
   const [activeTab, setActiveTab] = useState('Card')
+
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+const refreshData = () => {
+  setLastRefresh(new Date().toLocaleTimeString())
+}
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    refreshData()
+  }, 5000)
+  return () => clearInterval(interval)
+}, [])
 
   const stats = {
     totalTicketSales: 30000,
@@ -75,7 +88,7 @@ const OperatorDashboard = () => {
         <div className="op-welcome">
           <h2>Welcome back {user?.name}!</h2>
         </div>
-
+        
         {/* Stat Cards */}
         <div className="op-stats-row">
           <div

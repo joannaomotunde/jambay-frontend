@@ -241,3 +241,137 @@
   cursor: pointer;
   width: 100%;
 }
+/* PERKS OVERLAY */
+.pa-perks-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.pa-perks-sheet {
+  background: white;
+  border-radius: 24px 24px 0 0;
+  padding: 20px 20px 40px 20px;
+  width: 100%;
+  max-height: 75vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.pa-perks-handle {
+  width: 40px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+
+.pa-perks-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.08;
+  pointer-events: none;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+}
+
+.pa-perks-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pa-perks-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #16a34a;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.pa-perks-sub {
+  font-size: 13px;
+  color: #64748B;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pa-perks-receipt {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.pa-perks-receipt-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1E293B;
+  margin-bottom: 10px;
+}
+
+.pa-perks-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 13px;
+  color: #1E293B;
+}
+
+.pa-perks-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #1E293B;
+}
+
+.pa-perks-pickup {
+  background: #f0fdf4;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pa-perks-pickup-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #16a34a;
+  margin-bottom: 4px;
+}
+
+.pa-perks-pickup p {
+  font-size: 12px;
+  color: #1E293B;
+}
+
+.pa-perks-close {
+  width: 100%;
+  padding: 12px;
+  background: #1a9e8f;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Fix pa-wrapper to be relative */
+.pa-wrapper {
+  position: relative;
+}

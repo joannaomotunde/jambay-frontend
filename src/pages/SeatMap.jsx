@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './SeatMap.css'
 
@@ -18,9 +18,17 @@ function SeatMap() {
   const seat = location.state?.seat || null
 
   const [seats, setSeats] = useState(generateSeats())
+  const [seatTimers, setSeatTimers] = useState({})
 
   const selectedSeats = seats.filter(s => s.status === 'selected')
   const totalAmount = selectedSeats.length * TICKET_RATE
+
+  // Cleanup all timers on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(seatTimers).forEach(timer => clearTimeout(timer))
+    }
+  }, [seatTimers])
 
   const removeLastSeat = () => {
     if (selectedSeats.length === 0) return
@@ -31,11 +39,22 @@ function SeatMap() {
   }
 
   const toggleSeat = (id) => {
-    setSeats(prev => prev.map(s => {
-      if (s.id !== id) return s
-      if (s.status === 'booked') return s
-      if (s.status === 'selected') return { ...s, status: 'empty' }
-      return { ...s, status: 'selected' }
+    setSeats(prev => prev.map(seat => {
+      if (seat.id !== id) return seat
+      if (seat.status === 'booked') return seat
+      if (seat.status === 'selected') {
+        if (seatTimers[id]) clearTimeout(seatTimers[id])
+        setSeatTimers(prev => { const t = {...prev}; delete t[id]; return t })
+        return { ...seat, status: 'empty' }
+      }
+      const timer = setTimeout(() => {
+        setSeats(prev => prev.map(s =>
+          s.id === id ? { ...s, status: 'empty' } : s
+        ))
+        setSeatTimers(prev => { const t = {...prev}; delete t[id]; return t })
+      }, 5 * 60 * 1000)
+      setSeatTimers(prev => ({ ...prev, [id]: timer }))
+      return { ...seat, status: 'selected' }
     }))
   }
 
@@ -160,6 +179,13 @@ function SeatMap() {
           <strong className="summary-value">${totalAmount}</strong>
         </div>
       </div>
+
+      {/* Timer Warning — above Next button */}
+      {selectedSeats.length > 0 && (
+        <p style={{ textAlign: 'center', color: '#DC2626', fontSize: 13, fontWeight: 600 }}>
+          ⏱ Selected seats will be released in 5 minutes if not confirmed
+        </p>
+      )}
 
       {/* Next Button */}
       <button

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
@@ -9,6 +9,18 @@ const Attendance = () => {
   const navigate = useNavigate()
   const [event, setEvent] = useState('Live Concert Festival')
   const [date, setDate] = useState('March 30, 2026')
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+  const refreshData = () => {
+    setLastRefresh(new Date().toLocaleTimeString())
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshData()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   const stats = [
     { label: 'Attendees', value: 920, icon: '👥', color: '#4ECDC4' },
@@ -43,10 +55,9 @@ const Attendance = () => {
       <div className="at-wrapper">
 
         {/* Header */}
-{/* Header */}
-<div className="att-header">
-  <img src={frame19} alt="Jambay Attendance" className="att-header-img" />
-</div>
+        <div className="att-header">
+          <img src={frame19} alt="Jambay Attendance" className="att-header-img" />
+        </div>
 
         {/* Filters */}
         <div className="at-filters">
@@ -75,56 +86,56 @@ const Attendance = () => {
           ))}
         </div>
 
-       {/* Check-in Chart */}
-<div className="at-panel">
-  <p className="at-panel-title">Check-in Overview</p>
-  <ResponsiveContainer width="100%" height={220}>
-    <ComposedChart data={checkinData}>
-      <XAxis dataKey="time" tick={{ fontSize: 10 }} />
-      <YAxis tick={{ fontSize: 10 }} />
-      <Tooltip />
-      <Bar dataKey="checkedIn" fill="#4ECDC4" name="Checked In" radius={[4,4,0,0]} />
-      <Line type="monotone" dataKey="checkedIn" stroke="#4ECDC4" strokeWidth={2} dot={{ fill: '#4ECDC4', r: 4 }} name="Checked In Line" />
-      <Line type="monotone" dataKey="notCheckedIn" stroke="#DC2626" strokeWidth={2} dot={{ fill: '#DC2626', r: 4 }} name="Not Checked In" />
-    </ComposedChart>
-  </ResponsiveContainer>
+        {/* Check-in Chart */}
+        <div className="at-panel">
+          <p className="at-panel-title">Check-in Overview</p>
+          <ResponsiveContainer width="100%" height={220}>
+            <ComposedChart data={checkinData}>
+              <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+              <YAxis tick={{ fontSize: 10 }} />
+              <Tooltip />
+              <Bar dataKey="checkedIn" fill="#4ECDC4" name="Checked In" radius={[4,4,0,0]} />
+              <Line type="monotone" dataKey="checkedIn" stroke="#4ECDC4" strokeWidth={2} dot={{ fill: '#4ECDC4', r: 4 }} name="Checked In Line" />
+              <Line type="monotone" dataKey="notCheckedIn" stroke="#DC2626" strokeWidth={2} dot={{ fill: '#DC2626', r: 4 }} name="Not Checked In" />
+            </ComposedChart>
+          </ResponsiveContainer>
 
-  {/* Legend */}
-  <div className="at-legend">
-    <div className="at-legend-item">
-      <div className="at-legend-box" style={{ background: '#4ECDC4' }} />
-      <p>Checked In</p>
-    </div>
-    <div className="at-legend-item">
-      <div className="at-legend-box" style={{ background: '#DC2626' }} />
-      <p>Not Checked In</p>
-    </div>
-  </div>
-</div>
+          {/* Legend */}
+          <div className="at-legend">
+            <div className="at-legend-item">
+              <div className="at-legend-box" style={{ background: '#4ECDC4' }} />
+              <p>Checked In</p>
+            </div>
+            <div className="at-legend-item">
+              <div className="at-legend-box" style={{ background: '#DC2626' }} />
+              <p>Not Checked In</p>
+            </div>
+          </div>
+        </div>
 
-       {/* Search & Filter Row */}
-<div className="at-search-row">
-  <select className="at-select-sm">
-    <option>All Status</option>
-    <option>Checked In</option>
-    <option>Not Checked In</option>
-  </select>
-  <select className="at-select-sm">
-    <option>All Ticket Types</option>
-    <option>VIP</option>
-    <option>Regular</option>
-  </select>
-  <div className="at-search">
-    <input type="text" placeholder="Search..." className="at-search-input" />
-  </div>
-  <button className="at-qr-btn">
-  <div className="at-qr-inner">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1a9e8f">
-      <path d="M3 3h7v7H3V3zm1 1v5h5V4H4zm1 1h3v3H5V5zM14 3h7v7h-7V3zm1 1v5h5V4h-5zm1 1h3v3h-3V5zM3 14h7v7H3v-7zm1 1v5h5v-5H4zm1 1h3v3H5v-3zM14 14h2v2h-2v-2zm3 0h2v2h-2v-2zm-3 3h2v2h-2v-2zm3 0h2v2h-2v-2z"/>
-    </svg>
-  </div>
-</button>
-</div>
+        {/* Search & Filter Row */}
+        <div className="at-search-row">
+          <select className="at-select-sm">
+            <option>All Status</option>
+            <option>Checked In</option>
+            <option>Not Checked In</option>
+          </select>
+          <select className="at-select-sm">
+            <option>All Ticket Types</option>
+            <option>VIP</option>
+            <option>Regular</option>
+          </select>
+          <div className="at-search">
+            <input type="text" placeholder="Search..." className="at-search-input" />
+          </div>
+          <button className="at-qr-btn">
+            <div className="at-qr-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#1a9e8f">
+                <path d="M3 3h7v7H3V3zm1 1v5h5V4H4zm1 1h3v3H5V5zM14 3h7v7h-7V3zm1 1v5h5V4h-5zm1 1h3v3h-3V5zM3 14h7v7H3v-7zm1 1v5h5v-5H4zm1 1h3v3H5v-3zM14 14h2v2h-2v-2zm3 0h2v2h-2v-2zm-3 3h2v2h-2v-2zm3 0h2v2h-2v-2z"/>
+              </svg>
+            </div>
+          </button>
+        </div>
 
         {/* Attendee List */}
         <div className="at-panel">
@@ -165,12 +176,12 @@ const Attendance = () => {
             <button className="at-page-btn">›</button>
           </div>
           <div className="at-fraud-btn-wrapper">
-  <button className="at-fraud-btn" onClick={() => navigate('/fraud-alert')}>
-    View Fraud Alerts
-  </button>
-</div>
+            <button className="at-fraud-btn" onClick={() => navigate('/fraud-alert')}>
+              View Fraud Alerts
+            </button>
+          </div>
         </div>
-     
+
         {/* Bottom Navigation */}
         <div className="op-bottom-nav">
           <button className="op-nav-btn" onClick={() => navigate('/operator')}>
@@ -178,9 +189,9 @@ const Attendance = () => {
             <p>Dashboard</p>
           </button>
           <button className="op-nav-btn" onClick={() => navigate('/operator')}>
-  <div className="op-nav-icon"><MdEvent size={22} /></div>
-  <p>Events</p>
-</button>
+            <div className="op-nav-icon"><MdEvent size={22} /></div>
+            <p>Events</p>
+          </button>
           <button className="op-nav-btn" onClick={() => navigate('/orders')}>
             <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
             <p>Orders</p>
@@ -192,8 +203,9 @@ const Attendance = () => {
           <button className="db-nav-btn active">
             <div className="db-nav-icon-circle"><MdAnalytics size={22} /></div>
             <p>Monitoring</p>
-           </button>
+          </button>
         </div>
+
       </div>
     </div>
   )

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
 import { PieChart, Pie, Cell } from 'recharts'
@@ -14,6 +15,18 @@ const COLORS = ['#4ECDC4', '#F7C948', '#1a9e8f']
 
 const CustomerBehaviour = () => {
   const navigate = useNavigate()
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+  const refreshData = () => {
+    setLastRefresh(new Date().toLocaleTimeString())
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshData()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="auth-container">

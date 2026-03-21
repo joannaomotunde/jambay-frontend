@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import './SalesAnalytics.css'
@@ -9,6 +9,19 @@ const SalesAnalytics = () => {
   const [dataRange, setDataRange] = useState('This Quarter Q1 2026')
   const [region, setRegion] = useState('All Regions')
   const [ticketCategory, setTicketCategory] = useState('All Categories')
+
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+const refreshData = () => {
+  setLastRefresh(new Date().toLocaleTimeString())
+}
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    refreshData()
+  }, 5000)
+  return () => clearInterval(interval)
+}, [])
 
   const stats = {
     totalRevenue: '$4,120,750',
@@ -78,7 +91,9 @@ const SalesAnalytics = () => {
         </div>
 
         {/* Refresh Button */}
-        <button className="auth-button">Refresh</button>
+        <button className="auth-button" onClick={refreshData}>
+  Refresh
+</button>
 
         {/* Stat Cards */}
         <div className="sa-stats-row">

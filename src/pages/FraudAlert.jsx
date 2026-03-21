@@ -1,10 +1,24 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
 import { MdSmartToy, MdLanguage, MdCreditCard, MdAccountCircle, MdWarning, MdLock } from 'react-icons/md'
 import './FraudAlert.css'
 import secureBtn from '../assets/images/Rectangle 342 (2).png'
+
 const FraudAlert = () => {
   const navigate = useNavigate()
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+  const refreshData = () => {
+    setLastRefresh(new Date().toLocaleTimeString())
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshData()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   const indicators = [
     { icon: <MdSmartToy size={28} />, label: 'Bot Detection:', status: 'CRITICAL', color: '#DC2626' },
@@ -46,17 +60,13 @@ const FraudAlert = () => {
         {/* Action Section */}
         <div className="fa-action-section">
           <p className="fa-action-title">IMMEDIATE ACTION{'\n'}RECOMMENDED</p>
-         <div className="fa-action-btn-wrapper">
-  <img
-    src={secureBtn}
-    alt="Take Secure Action Now"
-    className="fa-secure-btn"
-  />
-  <div className="fa-action-btn-content">
-    <MdLock size={18} color="white" />
-    <p>TAKE SECURE ACTION NOW</p>
-  </div>
-</div>
+          <div className="fa-action-btn-wrapper">
+            <img src={secureBtn} alt="Take Secure Action Now" className="fa-secure-btn" />
+            <div className="fa-action-btn-content">
+              <MdLock size={18} color="white" />
+              <p>TAKE SECURE ACTION NOW</p>
+            </div>
+          </div>
           <p className="fa-action-hint">Tap for details on flagged accounts & fraud types</p>
         </div>
 
@@ -67,9 +77,9 @@ const FraudAlert = () => {
             <p>Dashboard</p>
           </button>
           <button className="op-nav-btn" onClick={() => navigate('/operator')}>
-  <div className="op-nav-icon"><MdEvent size={22} /></div>
-  <p>Events</p>
-</button>
+            <div className="op-nav-icon"><MdEvent size={22} /></div>
+            <p>Events</p>
+          </button>
           <button className="op-nav-btn" onClick={() => navigate('/orders')}>
             <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
             <p>Orders</p>
@@ -81,7 +91,7 @@ const FraudAlert = () => {
           <button className="db-nav-btn active">
             <div className="db-nav-icon-circle"><MdAnalytics size={22} /></div>
             <p>Monitoring</p>
-           </button>
+          </button>
         </div>
 
       </div>

@@ -75,6 +75,8 @@ function App() {
         <Route path="/attendance" element={
           <ProtectedRoute allowedRoles={['admin']}><Attendance /></ProtectedRoute>
         } />
+         <Route path="/customer-behaviour" element={
+          <ProtectedRoute allowedRoles={['admin']}><CustomerBehaviour /></ProtectedRoute>} />
 
         {/* Other Protected Routes */}
         <Route path="/search" element={
@@ -105,7 +107,7 @@ function App() {
           <ProtectedRoute><PaymentSuccess /></ProtectedRoute>
         } />
         <Route path="/seat-map" element={<ProtectedRoute><SeatMap /></ProtectedRoute>} />
-        <Route path="/customer-behaviour" element={<ProtectedRoute><CustomerBehaviour /></ProtectedRoute>} />
+       
       </Routes>
     </BrowserRouter>
   );
