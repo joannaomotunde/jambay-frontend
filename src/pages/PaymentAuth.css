@@ -32,12 +32,7 @@
   color: #1E293B;
 }
 
-.pa-event-date {
-  font-size: 11px;
-  color: #64748B;
-  margin-top: 4px;
-}
-
+.pa-event-date,
 .pa-event-venue {
   font-size: 11px;
   color: #64748B;
@@ -74,12 +69,6 @@
   cursor: pointer;
 }
 
-.pa-accordion-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .pa-accordion-label {
   font-size: 14px;
   font-weight: 600;
@@ -97,281 +86,99 @@
   padding-top: 10px;
 }
 
-/* PAYMENT SECTION */
-.pa-payment-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.pa-payment-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-}
-
-.pa-secure-card {
-  background: white;
+/* ===== PERKS CARD (NEW - IMPORTANT) ===== */
+.pa-perks-card {
+  background: #ffffff;
   border-radius: 16px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 20px,
-    rgba(0,0,0,0.02) 20px,
-    rgba(0,0,0,0.02) 40px
-  );
-}
-
-.pa-secure-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.pa-secure-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: #1E293B;
-}
-
-.pa-security-btn {
-  background: linear-gradient(135deg, #F7C948, #e6b800);
-  border: none;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #1E293B;
-  cursor: pointer;
-}
-
-/* CARD LOGOS */
-.pa-card-logos {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.pa-card-logo {
-  background: #f1f5f9;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: bold;
-  color: #1E293B;
-}
-
-/* INPUTS */
-.pa-input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  font-size: 13px;
-  color: #1E293B;
-  outline: none;
-  font-family: 'Segoe UI', sans-serif;
-  box-sizing: border-box;
-}
-
-.pa-input:focus {
-  border-color: #4ECDC4;
-}
-
-.pa-input-row {
-  display: flex;
-  gap: 10px;
-}
-
-.pa-input-half {
-  flex: 1;
-}
-
-.pa-otp-label {
-  font-size: 11px;
-  color: #64748B;
-  text-align: center;
-}
-
-.pa-otp-input {
-  text-align: center;
-  letter-spacing: 4px;
-  font-weight: bold;
-}
-
-/* BUTTONS */
-.pa-pay-btn {
-  background: #16a34a;
-  color: white;
-  border: none;
-  border-radius: 999px;
   padding: 14px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-}
-
-.pa-confirm-btn {
-  background: #16a34a;
-  color: white;
-  border: none;
-  border-radius: 999px;
-  padding: 14px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-}
-
-.pa-cancel-btn {
-  background: #DC2626;
-  color: white;
-  border: none;
-  border-radius: 999px;
-  padding: 14px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-}
-/* PERKS OVERLAY */
-.pa-perks-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: 100;
-  display: flex;
-  align-items: flex-end;
-}
-
-.pa-perks-sheet {
-  background: white;
-  border-radius: 24px 24px 0 0;
-  padding: 20px 20px 40px 20px;
-  width: 100%;
-  max-height: 75vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-.pa-perks-handle {
-  width: 40px;
-  height: 4px;
-  background: #e2e8f0;
-  border-radius: 2px;
-  margin: 0 auto 16px;
-}
-
-.pa-perks-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.08;
-  pointer-events: none;
-  border-radius: 24px 24px 0 0;
-  overflow: hidden;
-}
-
-.pa-perks-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .pa-perks-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #16a34a;
-  text-align: center;
-  margin-bottom: 4px;
-}
-
-.pa-perks-sub {
-  font-size: 13px;
-  color: #64748B;
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.pa-perks-receipt {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 14px;
-}
-
-.pa-perks-receipt-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: #1E293B;
+  font-size: 15px;
+  font-weight: 600;
   margin-bottom: 10px;
+  color: #1E293B;
 }
 
 .pa-perks-item {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid #e2e8f0;
   font-size: 13px;
+  margin-bottom: 6px;
   color: #1E293B;
+}
+
+.pa-empty {
+  font-size: 13px;
+  color: #64748B;
 }
 
 .pa-perks-total {
   display: flex;
   justify-content: space-between;
+  font-weight: 600;
   margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
   color: #1E293B;
 }
 
 .pa-perks-pickup {
-  background: #f0fdf4;
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #334155;
 }
 
-.pa-perks-pickup-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: #16a34a;
+.pa-pickup-title {
+  font-weight: 600;
   margin-bottom: 4px;
 }
 
-.pa-perks-pickup p {
-  font-size: 12px;
-  color: #1E293B;
+/* PAYMENT SECTION (NOW JUST BUTTON AREA) */
+.pa-payment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.pa-perks-close {
+.pa-payment-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1E293B; /* FIXED: was white */
+}
+
+/* BUTTON GROUP */
+.pa-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* BUTTONS */
+.pa-pay-btn {
   width: 100%;
-  padding: 12px;
-  background: #1a9e8f;
+  padding: 14px;
+  background: #16a34a;
   color: white;
   border: none;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: bold;
+  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* Fix pa-wrapper to be relative */
-.pa-wrapper {
-  position: relative;
+.pa-cancel-btn {
+  width: 100%;
+  padding: 14px;
+  background: red;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
 }

@@ -172,7 +172,7 @@ function EventsBrowse() {
 
         {error && <div className="eb-error"><p>{error}</p></div>}
 
-        {/* Upcoming Events — always uses imported images, passes API event on click */}
+        {/* Upcoming Events */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Upcoming Events</h3>
@@ -180,11 +180,11 @@ function EventsBrowse() {
           </div>
           {loading ? <LoadingRow /> : (
             <div className="eb-scroll-row">
-              {upcomingFallback.map(e => (
+              {upcomingFallback.map((e, i) => (
                 <div
                   key={e.id}
                   className="eb-card"
-                  onClick={() => navigate('/ticket-detail', { state: { event: events[e.id - 1] } })}
+                  onClick={() => navigate('/event-details', { state: { event: events[i] } })}
                   style={{ cursor: 'pointer' }}
                 >
                   <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
@@ -195,7 +195,7 @@ function EventsBrowse() {
           )}
         </div>
 
-        {/* Just for you — always uses imported images, passes API event on click */}
+        {/* Just for you */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Just for you</h3>
@@ -203,11 +203,11 @@ function EventsBrowse() {
           </div>
           {loading ? <LoadingRow /> : (
             <div className="eb-scroll-row">
-              {justForYouFallback.map(e => (
+              {justForYouFallback.map((e, i) => (
                 <div
                   key={e.id}
                   className="eb-card"
-                  onClick={() => navigate('/ticket-detail', { state: { event: events[e.id - 1] } })}
+                  onClick={() => navigate('/event-details', { state: { event: events[i] } })}
                   style={{ cursor: 'pointer' }}
                 >
                   <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
@@ -218,7 +218,7 @@ function EventsBrowse() {
           )}
         </div>
 
-        {/* Trending Events — always uses imported images, passes API event on click */}
+        {/* Trending Events */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Trending events</h3>
@@ -226,11 +226,11 @@ function EventsBrowse() {
           </div>
           {loading ? <LoadingRow /> : (
             <div className="eb-scroll-row">
-              {trendingFallback.map(e => (
+              {trendingFallback.map((e, i) => (
                 <div
                   key={e.id}
                   className="eb-card"
-                  onClick={() => navigate('/ticket-detail', { state: { event: events[e.id - 1] } })}
+                  onClick={() => navigate('/event-details', { state: { event: events[i] } })}
                   style={{ cursor: 'pointer' }}
                 >
                   <img src={e.img} alt={e.title} className="eb-card-img" style={{ objectFit: 'cover' }} />
@@ -241,7 +241,7 @@ function EventsBrowse() {
           )}
         </div>
 
-        {/* Trending Searches — static */}
+        {/* Trending Searches */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Trending searches</h3>
@@ -257,7 +257,7 @@ function EventsBrowse() {
           </div>
         </div>
 
-        {/* Popular Near You — static */}
+        {/* Popular Near You */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Popular near you</h3>
@@ -287,7 +287,7 @@ function EventsBrowse() {
           <img src={lagos} alt="Lagos" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} />
         </div>
 
-        {/* Concerts — static */}
+        {/* Concerts */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Concerts</h3>
@@ -303,7 +303,7 @@ function EventsBrowse() {
           </div>
         </div>
 
-        {/* Sports — static */}
+        {/* Sports */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Sports</h3>
@@ -319,7 +319,7 @@ function EventsBrowse() {
           </div>
         </div>
 
-        {/* Arts, Theatre & Comedy — static */}
+        {/* Arts, Theatre & Comedy */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Arts, theatre & comedy</h3>
@@ -335,7 +335,7 @@ function EventsBrowse() {
           </div>
         </div>
 
-        {/* Sponsored — static */}
+        {/* Sponsored */}
         <div className="eb-section">
           <div className="eb-section-header">
             <h3 className="eb-section-title">Sponsored</h3>
