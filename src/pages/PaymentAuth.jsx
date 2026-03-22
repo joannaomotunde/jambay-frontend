@@ -3,17 +3,20 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
 import './PaymentAuth.css'
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://jambay-backend.onrender.com/api'
+
 function PaymentAuth() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Get state from TicketDetail / SeatMap / Concessions
+  // Get state from previous pages
   const event = location.state?.event || null
   const selectedSeats = location.state?.selectedSeats || []
   const totalAmount = location.state?.totalAmount || 0
   const loyaltyChecked = location.state?.loyaltyChecked || false
   const concessions = location.state?.concessions || []
 
+  // Seat info
   const seatNumbersStr = selectedSeats.map(s => s.id).join(',')
   const seatSection = selectedSeats[0]?.section || 'Section 115'
   const seatRow = selectedSeats[0]?.row || 'Row 15'
@@ -25,28 +28,34 @@ function PaymentAuth() {
   })
   const [loading, setLoading] = useState(false)
 
-  const toggle = (key) => {
-    setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
-  }
+  const toggle = (key) => setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
 
-  // Handle Pay Now button with Flutterwave API
   const handlePayNow = async () => {
-    try {
-      setLoading(true)
-      const token = localStorage.getItem('accessToken')
+    if (!event?._id) {
+      alert('Event not found. Please try again.')
+      return
+    }
 
+    if (selectedSeats.length === 0) {
+      alert('No seats selected.')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const token = localStorage.getItem('accessToken')
       const seatIds = selectedSeats.map(s => s.id)
       const ticketCategoryId = selectedSeats[0]?.ticketCategoryId || ''
       const items = concessions.map(i => ({ product: i.id, qty: i.qty }))
 
-      const response = await fetch('http://localhost:3000/api/v1/tickets/checkout', {
+      const response = await fetch(`${BASE_URL}/v1/tickets/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          eventId: event.id,
+          eventId: event._id, // FIXED: Use _id from backend
           ticketCategoryId,
           seatIds,
           items
@@ -54,9 +63,11 @@ function PaymentAuth() {
       })
 
       const data = await response.json()
+
       if (data.paymentLink) {
-        window.location.href = data.paymentLink // redirect to Flutterwave hosted payment page
+        window.location.href = data.paymentLink
       } else {
+        console.error('Checkout failed:', data)
         alert('Payment link not generated. Please try again.')
       }
     } catch (err) {
@@ -67,11 +78,15 @@ function PaymentAuth() {
     }
   }
 
+  const LoadingRow = () => (
+    <p>Processing…</p>
+  )
+
   return (
     <div className="auth-container">
       <div className="pa-wrapper">
 
-        {/* EVENT SUMMARY */}
+        {/* Event Summary */}
         <div className="pa-event-card">
           <div className="pa-event-img" />
           <div className="pa-event-info">
@@ -85,9 +100,7 @@ function PaymentAuth() {
           </div>
         </div>
 
-        {/* ACCORDIONS */}
-
-        {/* Seats */}
+        {/* Seats Accordion */}
         <div className="pa-accordion">
           <button className="pa-accordion-header" onClick={() => toggle('seats')}>
             <p>Your Seats</p>
@@ -100,7 +113,7 @@ function PaymentAuth() {
           )}
         </div>
 
-        {/* PERKS (Concessions) */}
+        {/* Concessions Accordion */}
         <div className="pa-accordion">
           <button className="pa-accordion-header" onClick={() => toggle('perks')}>
             <p>Perks (Concessions)</p>
@@ -139,7 +152,7 @@ function PaymentAuth() {
           )}
         </div>
 
-        {/* LOYALTY */}
+        {/* Loyalty Accordion */}
         {loyaltyChecked && (
           <div className="pa-accordion">
             <button className="pa-accordion-header" onClick={() => toggle('loyalty')}>
@@ -154,14 +167,14 @@ function PaymentAuth() {
           </div>
         )}
 
-        {/* ACTION BUTTONS */}
+        {/* Action Buttons */}
         <div className="pa-actions">
           <button
             className="pa-pay-btn"
             onClick={handlePayNow}
             disabled={loading}
           >
-            {loading ? 'Processing…' : 'Pay Now'}
+            {loading ? <LoadingRow /> : 'Pay Now'}
           </button>
           <button
             className="pa-cancel-btn"
