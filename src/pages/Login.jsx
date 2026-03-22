@@ -41,12 +41,15 @@ function Login() {
 
     try {
       const data = await loginUser(formData);
+      console.log("Login response:", data);
       login(data.user, data.token);
 
       if (data.user?.role === "admin") navigate("/operator");
       else navigate("/dashboard");
     } catch (err) {
-      setServerError(err.response?.data?.message || "Login failed, please try again");
+      setServerError(
+        err.response?.data?.message || "Login failed, please try again",
+      );
     } finally {
       setLoading(false);
     }
@@ -97,11 +100,7 @@ function Login() {
         </a>
       </div>
 
-      <button
-        className="auth-button"
-        onClick={handleSubmit}
-        disabled={loading}
-      >
+      <button className="auth-button" onClick={handleSubmit} disabled={loading}>
         {loading ? "Logging in..." : "Log In"}
       </button>
 
