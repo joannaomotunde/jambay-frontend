@@ -1,66 +1,58 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { verifyOTP, verifyResetOTP } from "../services/auth";
+import ScreenLayout from "../components/ScreenLayout";
 import "../App.css";
 
 function VerifyOTP() {
-  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(180)
-  const [canResend, setCanResend] = useState(false)
-  const inputRefs = useRef([])
+  const [timer, setTimer] = useState(180);
+  const [canResend, setCanResend] = useState(false);
+  const inputRefs = useRef([]);
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
   const isPasswordReset = location.state?.isPasswordReset;
 
-  if (!email) {
-    return <Navigate to="/register" replace />;
-  }
+  if (!email) return <Navigate to="/register" replace />;
 
   useEffect(() => {
     if (timer === 0) { setCanResend(true); return }
     const interval = setInterval(() => setTimer(t => t - 1), 1000)
     return () => clearInterval(interval)
-  }, [timer])
+  }, [timer]);
 
   const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, '0')
-    const s = (seconds % 60).toString().padStart(2, '0')
-    return `${m}:${s}`
-  }
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
 
   const handleOtpChange = (value, index) => {
-    if (!/^\d*$/.test(value)) return
-    const newOtp = [...otp]
-    newOtp[index] = value
-    setOtp(newOtp)
-    setError('')
-    if (value && index < 5) {
-      inputRefs.current[index + 1].focus()
-    }
-  }
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    setError('');
+    if (value && index < 5) inputRefs.current[index + 1].focus();
+  };
 
   const handleKeyDown = (e, index) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      inputRefs.current[index - 1].focus()
-    }
-  }
+    if (e.key === 'Backspace' && !otp[index] && index > 0) inputRefs.current[index - 1].focus();
+  };
 
   const handleResend = () => {
-    setTimer(180)
-    setCanResend(false)
-    setOtp(['', '', '', '', '', ''])
-    setError('')
-  }
+    setTimer(180);
+    setCanResend(false);
+    setOtp(['', '', '', '', '', '']);
+    setError('');
+  };
 
   const handleSubmit = async () => {
-    const otpString = otp.join('')
-    if (otpString.length < 6) {
-      setError("Please enter the complete OTP");
-      return;
-    }
+    const otpString = otp.join('');
+    if (otpString.length < 6) { setError("Please enter the complete OTP"); return; }
     try {
       setLoading(true);
       if (isPasswordReset) {
@@ -72,23 +64,18 @@ function VerifyOTP() {
       }
     } catch (err) {
       setError(err.response?.data?.message || "Invalid OTP, please try again");
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-form-wrapper">
+    <ScreenLayout
+      title="Code Verification"
+      subtitle={`Enter OTP sent to ${email}. If you don't see it, please check your spam folder.`}
+      backTo="/login"
+    >
+      {error && <p className="field-error">{error}</p>}
 
-        <button className="back-button" onClick={() => navigate(-1)}>‹</button>
-
-        <h2 className="auth-title">Code Verification</h2>
-        <p className="auth-subtitle">
-          Enter OTP (One time password) sent to <strong>{email}</strong>
-          If you don't see it, please check your spam folder.
-        </p>
-
+      <div className="otp-section" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
         <div className="otp-boxes">
           {otp.map((digit, index) => (
             <input
@@ -103,25 +90,18 @@ function VerifyOTP() {
             />
           ))}
         </div>
-
         <p className="otp-timer">{formatTime(timer)}</p>
+      </div>
 
-        {error && <p className="field-error">{error}</p>}
-
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <button className="auth-button" onClick={handleSubmit} disabled={loading}>
           {loading ? "Verifying..." : "Verify Code"}
         </button>
-
-        <button
-          className="resend-button"
-          onClick={handleResend}
-          disabled={!canResend}
-        >
+        <button className="resend-button" onClick={handleResend} disabled={!canResend}>
           Resend Code
         </button>
-
       </div>
-    </div>
+    </ScreenLayout>
   );
 }
 

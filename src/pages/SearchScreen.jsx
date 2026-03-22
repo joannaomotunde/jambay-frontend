@@ -5,6 +5,16 @@ import { HiAdjustments } from 'react-icons/hi'
 import './SearchScreen.css'
 import './Dashboard.css'
 
+// Our Top Picks
+import trendingEvents from '../assets/images/Trending events.png'
+import ticketsOnSale from '../assets/images/Tickets on sale.png'
+import lostBoys from '../assets/images/Lost boys.png'
+
+// Last Minute Plans
+import eigth from '../assets/images/Eigth.jpeg'
+import baDeals from '../assets/images/BA Deals.jpeg'
+import nflDeals from '../assets/images/NFL Deals.jpeg'
+
 function SearchScreen() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
@@ -13,15 +23,15 @@ function SearchScreen() {
   const filters = ['Quantity', 'Perks', 'Price excl. fees', 'Seat']
 
   const topPicks = [
-    { id: 1, title: 'Aladdin' },
-    { id: 2, title: 'Tickets on Sale' },
-    { id: 3, title: 'Lost Boys' },
+    { id: 1, title: 'Trending Events', img: trendingEvents },
+    { id: 2, title: 'Tickets on Sale', img: ticketsOnSale },
+    { id: 3, title: 'Lost Boys', img: lostBoys },
   ]
 
   const lastMinute = [
-    { id: 1, title: 'Bruno Mars' },
-    { id: 2, title: 'NBA' },
-    { id: 3, title: 'NFL' },
+    { id: 1, title: 'Bruno Mars', img: eigth },
+    { id: 2, title: 'NBA', img: baDeals },
+    { id: 3, title: 'NFL', img: nflDeals },
   ]
 
   return (
@@ -80,7 +90,7 @@ function SearchScreen() {
           <div className="ss-scroll-row">
             {topPicks.map(e => (
               <div key={e.id} className="ss-card">
-                <div className="ss-card-img" />
+                <img src={e.img} alt={e.title} className="ss-card-img" />
               </div>
             ))}
           </div>
@@ -98,7 +108,7 @@ function SearchScreen() {
           <div className="ss-scroll-row">
             {lastMinute.map(e => (
               <div key={e.id} className="ss-card">
-                <div className="ss-card-img" />
+                <img src={e.img} alt={e.title} className="ss-card-img" />
               </div>
             ))}
           </div>
@@ -119,10 +129,10 @@ function SearchScreen() {
             <p>Search</p>
           </button>
           <button className="db-nav-btn" onClick={() => navigate('/profile')}>
-  <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
-  <p>Profile</p>
-</button>
-          <button className="db-nav-btn">
+            <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
+            <p>Profile</p>
+          </button>
+          <button className="db-nav-btn" onClick={() => navigate('/settings')}>
             <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
             <p>Settings</p>
           </button>

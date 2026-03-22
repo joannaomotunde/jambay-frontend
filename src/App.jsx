@@ -26,12 +26,15 @@ import TicketDetail from './pages/TicketDetail'
 import TicketBooking from './pages/TicketBooking'
 import PaymentAuth from './pages/PaymentAuth'
 import PaymentSuccess from './pages/PaymentSuccess'
+import SeatMap from './pages/SeatMap'
+import CustomerBehaviour from './pages/CustomerBehaviour'
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Onboarding />} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
@@ -39,6 +42,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/403" element={<NotAuthorized />} />
 
+        {/* User Dashboard Routes */}
         <Route path="/dashboard" element={
           <ProtectedRoute><Dashboard /></ProtectedRoute>
         } />
@@ -57,45 +61,53 @@ function App() {
         <Route path="/loyalty" element={
           <ProtectedRoute><Loyalty /></ProtectedRoute>
         } />
+
+        {/* Operator Dashboard Routes */}
         <Route path="/operator" element={
           <ProtectedRoute allowedRoles={['admin']}><OperatorDashboard /></ProtectedRoute>
         } />
         <Route path="/analytics" element={
-          <ProtectedRoute><SalesAnalytics /></ProtectedRoute>
+          <ProtectedRoute allowedRoles={['admin']}><SalesAnalytics /></ProtectedRoute>
         } />
         <Route path="/fraud-alert" element={
-          <ProtectedRoute><FraudAlert /></ProtectedRoute>
+          <ProtectedRoute allowedRoles={['admin']}><FraudAlert /></ProtectedRoute>
         } />
         <Route path="/attendance" element={
-          <ProtectedRoute><Attendance /></ProtectedRoute>
+          <ProtectedRoute allowedRoles={['admin']}><Attendance /></ProtectedRoute>
         } />
+         <Route path="/customer-behaviour" element={
+          <ProtectedRoute allowedRoles={['admin']}><CustomerBehaviour /></ProtectedRoute>} />
+
+        {/* Other Protected Routes */}
         <Route path="/search" element={
-  <ProtectedRoute><SearchScreen /></ProtectedRoute>
-} />
-<Route path="/profile/edit" element={
-  <ProtectedRoute><EditProfile /></ProtectedRoute>
-} />
-<Route path="/settings" element={
-  <ProtectedRoute><Settings /></ProtectedRoute>
-} />
-<Route path="/seat-booking" element={
-  <ProtectedRoute><SeatBooking /></ProtectedRoute>
-} />
-<Route path="/event-details" element={
-  <ProtectedRoute><EventDetails /></ProtectedRoute>
-} />
-<Route path="/ticket-detail" element={
-  <ProtectedRoute><TicketDetail /></ProtectedRoute>
-} />
-<Route path="/ticket-booking" element={
-  <ProtectedRoute><TicketBooking /></ProtectedRoute>
-} />
-<Route path="/payment-auth" element={
-  <ProtectedRoute><PaymentAuth /></ProtectedRoute>
-} />
-<Route path="/payment-success" element={
-  <ProtectedRoute><PaymentSuccess /></ProtectedRoute>
-} />
+          <ProtectedRoute><SearchScreen /></ProtectedRoute>
+        } />
+        <Route path="/profile/edit" element={
+          <ProtectedRoute><EditProfile /></ProtectedRoute>
+        } />
+        <Route path="/settings" element={
+          <ProtectedRoute><Settings /></ProtectedRoute>
+        } />
+        <Route path="/seat-booking" element={
+          <ProtectedRoute><SeatBooking /></ProtectedRoute>
+        } />
+        <Route path="/event-details" element={
+          <ProtectedRoute><EventDetails /></ProtectedRoute>
+        } />
+        <Route path="/ticket-detail" element={
+          <ProtectedRoute><TicketDetail /></ProtectedRoute>
+        } />
+        <Route path="/ticket-booking" element={
+          <ProtectedRoute><TicketBooking /></ProtectedRoute>
+        } />
+        <Route path="/payment-auth" element={
+          <ProtectedRoute><PaymentAuth /></ProtectedRoute>
+        } />
+        <Route path="/payment-success" element={
+          <ProtectedRoute><PaymentSuccess /></ProtectedRoute>
+        } />
+        <Route path="/seat-map" element={<ProtectedRoute><SeatMap /></ProtectedRoute>} />
+       
       </Routes>
     </BrowserRouter>
   );

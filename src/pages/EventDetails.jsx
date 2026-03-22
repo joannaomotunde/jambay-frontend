@@ -1,78 +1,89 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-import { MdChevronLeft, MdShare, MdKeyboardArrowRight } from 'react-icons/md'
-import './EventDetails.css'
-import bostonImg from '../assets/images/boston.png'
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  MdHome,
+  MdEvent,
+  MdSearch,
+  MdPerson,
+  MdSettings,
+} from "react-icons/md";
+import { MdChevronLeft, MdShare, MdKeyboardArrowRight } from "react-icons/md";
+import "./EventDetails.css";
 
-const BASE_URL = 'https://jambay-backend.onrender.com'
+const BASE_URL = "https://jambay-backend.onrender.com";
 
 function EventDetails() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const event = location.state?.event || null
+  const navigate = useNavigate();
+  const location = useLocation();
+  const event = location.state?.event || null;
 
-  const [activeTab, setActiveTab] = useState('Events')
-  const [events, setEvents] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState("Events");
+  const [allEvents, setAllEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const tabs = ['Events', 'Parking', 'Premium']
+  const tabs = ["Events", "Parking", "Premium"];
 
   useEffect(() => {
+    if (!event) {
+      navigate("/dashboard");
+      return;
+    }
+
     const fetchEvents = async () => {
       try {
-        const token = localStorage.getItem('token')
-        const response = await fetch(`${BASE_URL}/api/v1/events/all_events`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        })
-        const data = await response.json()
-        setEvents(data.events || [])
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${BASE_URL}/api/v1/events/all_events`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        setAllEvents(data.events || []);
       } catch (err) {
-        console.error('Error fetching events:', err)
+        console.error("Error fetching events:", err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchEvents()
-  }, [])
+    };
 
-  // Fallback static events
-  const staticEvents = [
-    { date: '26', day: 'Thu', tag: 'ROAD OPENER', title: 'vs Utah Jazz', price: '$15', location: 'Salt Lake City, UT' },
-    { date: '28', day: 'Sat', tag: 'AWAY', title: 'vs Indiana Pacers', price: '$20', location: 'Indianapolis, IN' },
-    { date: '30', day: 'Mon', tag: 'HOME OPENER', title: 'vs Golden State Warriors', price: '$25', location: 'New York, NY' },
-  ]
+    fetchEvents();
+  }, []);
 
-  const aprilEvents = [
-    { date: '03', day: 'Fri', tag: 'HOME', title: 'vs Indiana Pacers', price: '$20', location: 'New York, NY' },
-    { date: '05', day: 'Sun', tag: 'AWAY', title: 'vs Brooklyn Nets', price: '$13', location: 'Brooklyn, NY' },
-    { date: '07', day: 'Tue', tag: 'HOME', title: 'vs Washington Wizards', price: '$15', location: 'New York, NY' },
-  ]
+  const goToSeatBooking = (selectedEvent) => {
+    navigate("/seat-booking", { state: { event: selectedEvent } });
+  };
 
-  const EventRow = ({ e, isReal }) => (
-    <div
-      className="ed-event-row"
-      onClick={() => navigate('/ticket-detail', { state: { event: isReal ? e : null } })}
-    >
+  const EventRow = ({ e }) => (
+    <div className="ed-event-row" onClick={() => goToSeatBooking(e)}>
       <div className="ed-date-col">
-        <p className="ed-date-num">{isReal ? new Date(e.date).getDate() : e.date}</p>
-        <p className="ed-date-day">{isReal ? new Date(e.date).toLocaleDateString('en', { weekday: 'short' }) : e.day}</p>
+        <p className="ed-date-num">{new Date(e.date).getDate()}</p>
+        <p className="ed-date-day">
+          {new Date(e.date).toLocaleDateString("en", { weekday: "short" })}
+        </p>
       </div>
       <div className="ed-event-card">
-        <p className="ed-event-tag">{isReal ? 'EVENT' : e.tag}</p>
-        <p className="ed-event-title">{isReal ? e.name : e.title}</p>
+        <p className="ed-event-tag">{e.status?.toUpperCase() || "EVENT"}</p>
+        <p className="ed-event-title">{e.name}</p>
         <p className="ed-event-info">
-          {isReal ? `${e.venue} · ${e.startTime}` : `${e.price} · 9:00PM ET · ${e.location}`}
+          {e.venue} · {e.startTime}
         </p>
       </div>
       <MdKeyboardArrowRight size={20} color="#64748B" />
     </div>
-  )
+  );
+
+  // Group events by month
+  const groupedEvents = allEvents.reduce((acc, e) => {
+    const month = new Date(e.date).toLocaleDateString("en", {
+      month: "long",
+      year: "numeric",
+    });
+    if (!acc[month]) acc[month] = [];
+    acc[month].push(e);
+    return acc;
+  }, {});
 
   return (
-    <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
+    <div className="auth-container" style={{ justifyContent: "flex-start" }}>
       <div className="ed-wrapper">
-
         {/* Top Bar */}
         <div className="ed-top-bar">
           <button className="ed-back-btn" onClick={() => navigate(-1)}>
@@ -84,23 +95,32 @@ function EventDetails() {
         </div>
 
         {/* Banner Image */}
-       <div className="ed-banner">
-  <img src={bostonImg} alt="banner" className="ed-banner-img" />
-  <div className="ed-official-badge">
-    <span>🏆</span>
-    <p>Official Ticket Marketplace</p>
-  </div>
+        <div className="ed-banner">
+          {event?.eventImage ? (
+            <img
+              src={event.eventImage}
+              alt={event.name}
+              className="ed-banner-img"
+            />
+          ) : (
+            <div className="ed-banner-img" style={{ background: "#1a1a2e" }} />
+          )}
+          <div className="ed-official-badge">
+            <span>🏆</span>
+            <p>Official Ticket Marketplace</p>
+          </div>
         </div>
 
-        {/* Team Title */}
-        <p className="ed-team-title">{event?.name || 'New York Knicks'}</p>
+        {/* Event Title */}
+        <p className="ed-team-title">{event?.name}</p>
+        <p className="ed-team-subtitle">{event?.venue}</p>
 
         {/* Tabs */}
         <div className="ed-tabs">
-          {tabs.map(tab => (
+          {tabs.map((tab) => (
             <button
               key={tab}
-              className={`ed-tab${activeTab === tab ? ' active' : ''}`}
+              className={`ed-tab${activeTab === tab ? " active" : ""}`}
               onClick={() => setActiveTab(tab)}
             >
               {tab}
@@ -108,61 +128,69 @@ function EventDetails() {
           ))}
         </div>
 
-        {/* Month Filter */}
-        <div className="ed-month-row">
-          <p className="ed-month-title">March 2026</p>
-          <button className="ed-filter-btn">Home & Away ▾</button>
-        </div>
-
-        {/* Event Rows — Real API or static */}
+        {/* Event Rows */}
         {loading ? (
           <div className="ed-loading">Loading events...</div>
-        ) : events.length > 0 ? (
-          events.map(e => <EventRow key={e._id} e={e} isReal={true} />)
+        ) : allEvents.length === 0 ? (
+          <div className="ed-loading">No events available</div>
         ) : (
-          staticEvents.map((e, i) => <EventRow key={i} e={e} isReal={false} />)
-        )}
-
-        {/* April Header */}
-        {(events.length === 0 || !loading) && (
-          <>
-            <p className="ed-month-header">April 2026</p>
-            {aprilEvents.map((e, i) => <EventRow key={i} e={e} isReal={false} />)}
-          </>
+          Object.entries(groupedEvents).map(([month, events]) => (
+            <div key={month}>
+              <div className="ed-month-row">
+                <p className="ed-month-title">{month}</p>
+                <button className="ed-filter-btn">Home & Away ▾</button>
+              </div>
+              {events.map((e) => (
+                <EventRow key={e._id} e={e} />
+              ))}
+            </div>
+          ))
         )}
 
         {/* Confirm Button */}
-        <button className="ed-confirm-btn" onClick={() => navigate('/ticket-detail')}>
+        <button
+          className="ed-confirm-btn"
+          onClick={() => goToSeatBooking(event)}
+        >
           Confirm
         </button>
 
         {/* Bottom Nav */}
         <div className="db-bottom-nav">
-          <button className="db-nav-btn" onClick={() => navigate('/dashboard')}>
-            <div className="db-nav-icon-circle"><MdHome size={22} /></div>
+          <button className="db-nav-btn" onClick={() => navigate("/dashboard")}>
+            <div className="db-nav-icon-circle">
+              <MdHome size={22} />
+            </div>
             <p>Home</p>
           </button>
           <button className="db-nav-btn active">
-            <div className="db-nav-icon-circle"><MdEvent size={22} /></div>
+            <div className="db-nav-icon-circle">
+              <MdEvent size={22} />
+            </div>
             <p>Events</p>
           </button>
-          <button className="db-nav-btn" onClick={() => navigate('/search')}>
-            <div className="db-nav-icon-circle"><MdSearch size={22} /></div>
+          <button className="db-nav-btn" onClick={() => navigate("/search")}>
+            <div className="db-nav-icon-circle">
+              <MdSearch size={22} />
+            </div>
             <p>Search</p>
           </button>
-          <button className="db-nav-btn" onClick={() => navigate('/profile')}>
-            <div className="db-nav-icon-circle"><MdPerson size={22} /></div>
+          <button className="db-nav-btn" onClick={() => navigate("/profile")}>
+            <div className="db-nav-icon-circle">
+              <MdPerson size={22} />
+            </div>
             <p>Profile</p>
           </button>
-          <button className="db-nav-btn" onClick={() => navigate('/settings')}>
-            <div className="db-nav-icon-circle"><MdSettings size={22} /></div>
+          <button className="db-nav-btn" onClick={() => navigate("/settings")}>
+            <div className="db-nav-icon-circle">
+              <MdSettings size={22} />
+            </div>
             <p>Settings</p>
           </button>
         </div>
-
       </div>
     </div>
-  )
+  );
 }
 
-export default EventDetails
+export default EventDetails;

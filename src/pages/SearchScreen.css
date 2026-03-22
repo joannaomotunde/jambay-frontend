@@ -3,7 +3,7 @@
   max-width: 480px;
   display: flex;
   flex-direction: column;
-  padding: 20px 16px 100px 16px;
+  padding: 20px 16px 0 16px;
   box-sizing: border-box;
 }
 
@@ -19,7 +19,7 @@
 .ss-location-text {
   font-size: 16px;
   font-weight: bold;
-  color: white;
+  color: black;
 }
 
 /* SEARCH BAR */
@@ -98,13 +98,13 @@
 .ss-section-title {
   font-size: 15px;
   font-weight: bold;
-  color: white;
+  color: black;
   margin-bottom: 2px;
 }
 
 .ss-section-sub {
   font-size: 11px;
-  color: rgba(255,255,255,0.75);
+  color: black;
 }
 
 .ss-see-all {
@@ -142,4 +142,5 @@
   height: 120px;
   border-radius: 14px;
   background: linear-gradient(135deg, #94A3B8, #CBD5E1);
+  object-fit: cover;
 }

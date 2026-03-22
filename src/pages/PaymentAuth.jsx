@@ -1,171 +1,246 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings, MdLock, MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
-import './PaymentAuth.css'
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import "./PaymentAuth.css";
+
+const BASE_URL = "https://jambay-backend.onrender.com";
 
 function PaymentAuth() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const event = location.state?.event || null;
+  const selectedSeats = location.state?.selectedSeats || [];
+  const totalAmount = location.state?.totalAmount || 0;
+  const loyaltyChecked = location.state?.loyaltyChecked || false;
+  const concessions = location.state?.concessions || [];
+
+  const seatLabelsStr = selectedSeats.map((s) => s.label || s.id).join(", ");
+  const seatSection = selectedSeats[0]?.section || "";
+  const seatRow = selectedSeats[0]?.row ? `Row ${selectedSeats[0].row}` : "";
+  const ticketsTotal = selectedSeats.length
+    ? totalAmount - concessions.reduce((sum, i) => sum + i.price * i.qty, 0)
+    : totalAmount;
 
   const [expanded, setExpanded] = useState({
-    seats: false,
-    perks: false,
-    loyalty: false,
-  })
+    seats: true,
+    perks: true,
+    loyalty: true,
+  });
+  const [loading, setLoading] = useState(false);
 
-  const [form, setForm] = useState({
-    cardholderName: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    cardPin: '',
-    otp: '',
-  })
+  const toggle = (key) =>
+    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
-  const toggle = (key) => setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
+  const handlePayNow = async () => {
+    if (!event?._id) {
+      alert("Session expired. Go back and select your seats again.");
+      navigate("/dashboard");
+      return;
+    }
+    if (selectedSeats.length === 0) {
+      alert("No seats selected. Go back and select your seats.");
+      return;
+    }
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
 
-  const accordions = [
-    { key: 'seats', label: 'Your seats' },
-    { key: 'perks', label: 'Perks' },
-    { key: 'loyalty', label: 'Loyalty Points' },
-  ]
+      // Build payload matching backend spec exactly
+      const payload = {
+        eventId: event._id, // MongoDB _id
+        ticketCategoryId: selectedSeats[0]?.ticketCategoryId || "", // from seat object
+        seatIds: selectedSeats.map((s) => s.id), // real seat _ids
+        items: concessions.map((i) => ({ product: i.id, qty: i.qty })), // product _ids
+      };
+
+      console.log("Checkout payload:", JSON.stringify(payload));
+
+      const response = await fetch(`${BASE_URL}/api/v1/tickets/checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      console.log("Checkout response:", JSON.stringify(data));
+
+      if (!response.ok) {
+        alert(`Checkout failed: ${data.message || response.statusText}`);
+        return;
+      }
+
+      if (data.paymentLink) {
+        window.location.href = data.paymentLink;
+      } else {
+        alert("Payment link not generated. Please try again.");
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      alert(`Payment failed: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="auth-container" style={{ justifyContent: 'flex-start' }}>
+    <div className="auth-container">
       <div className="pa-wrapper">
-
-        {/* Event Summary Card */}
+        {/* EVENT SUMMARY */}
         <div className="pa-event-card">
-          <div className="pa-event-img" />
+          {event?.eventImage && (
+            <img
+              src={event.eventImage}
+              alt={event.name}
+              className="pa-event-img"
+              style={{ objectFit: "cover" }}
+            />
+          )}
+          {!event?.eventImage && <div className="pa-event-img" />}
           <div className="pa-event-info">
-            <p className="pa-event-title">New York Knicks at Utah Jazz</p>
-            <p className="pa-event-date">Thu March 28 at 9:30PM</p>
-            <p className="pa-event-venue">Delta Center,</p>
-            <p className="pa-event-venue">Salt Lake City, Utah, USA</p>
-            <div className="pa-event-seat">
-              <span>🎫</span>
-              <p>Section 115, Row 15</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Accordions */}
-        {accordions.map(item => (
-          <div key={item.key} className="pa-accordion">
-            <button className="pa-accordion-header" onClick={() => toggle(item.key)}>
-              <div className="pa-accordion-left">
-                <span className="pa-accordion-check">✅</span>
-                <p className="pa-accordion-label">{item.label}</p>
-              </div>
-              {expanded[item.key]
-                ? <MdKeyboardArrowUp size={20} color="#64748B" />
-                : <MdKeyboardArrowDown size={20} color="#64748B" />
-              }
-            </button>
-            {expanded[item.key] && (
-              <div className="pa-accordion-body">
-                <p className="pa-accordion-content">Section 115, Row 15 — Seats 4-9</p>
+            <p className="pa-event-title">{event?.name || "Event"}</p>
+            <p className="pa-event-date">
+              {event?.date ? new Date(event.date).toDateString() : ""}
+              {event?.startTime ? ` · ${event.startTime}` : ""}
+            </p>
+            <p className="pa-event-venue">{event?.venue || ""}</p>
+            {(seatSection || seatRow) && (
+              <div className="pa-event-seat">
+                🎫{" "}
+                <span>{[seatSection, seatRow].filter(Boolean).join(", ")}</span>
               </div>
             )}
           </div>
-        ))}
+        </div>
 
-        {/* Payment Section */}
-        <div className="pa-payment-section">
-          <p className="pa-payment-title">Payment</p>
-          <MdLock size={20} color="#1E293B" style={{ alignSelf: 'center' }} />
-
-          <div className="pa-secure-card">
-            <div className="pa-secure-header">
-              <p className="pa-secure-title">Secure Credit Card Payment</p>
-              <button className="pa-security-btn">🔒 Security Information</button>
-            </div>
-
-            {/* Card Logos */}
-            <div className="pa-card-logos">
-              <span className="pa-card-logo">AMEX</span>
-              <span className="pa-card-logo">MC</span>
-              <span className="pa-card-logo">VISA</span>
-              <span className="pa-card-logo">DISC</span>
-            </div>
-
-            {/* Form */}
-            <input
-              className="pa-input"
-              type="text"
-              name="cardholderName"
-              placeholder="Cardholder Name"
-              value={form.cardholderName}
-              onChange={handleChange}
-            />
-            <input
-              className="pa-input"
-              type="text"
-              name="cardNumber"
-              placeholder="Card Number"
-              value={form.cardNumber}
-              onChange={handleChange}
-              maxLength={19}
-            />
-            <div className="pa-input-row">
-              <input
-                className="pa-input pa-input-half"
-                type="text"
-                name="expiryDate"
-                placeholder="Expiry Date"
-                value={form.expiryDate}
-                onChange={handleChange}
-              />
-              <input
-                className="pa-input pa-input-half"
-                type="password"
-                name="cvv"
-                placeholder="CVV2"
-                value={form.cvv}
-                onChange={handleChange}
-                maxLength={4}
-              />
-            </div>
-            <input
-              className="pa-input"
-              type="password"
-              name="cardPin"
-              placeholder="Card Pin"
-              value={form.cardPin}
-              onChange={handleChange}
-              maxLength={4}
-            />
-
-            {/* Pay Now */}
-            <button className="pa-pay-btn">
-              Pay Now
-            </button>
-
-            {/* OTP */}
-            <p className="pa-otp-label">Enter One Time Passcode sent to the number attached to this card</p>
-            <input
-              className="pa-input pa-otp-input"
-              type="text"
-              name="otp"
-              placeholder="OTP"
-              value={form.otp}
-              onChange={handleChange}
-              maxLength={6}
-            />
-
-            {/* Confirm / Cancel */}
-            <button className="pa-confirm-btn" onClick={() => navigate('/payment-success')}>
-              Confirm
-            </button>
-            <button className="pa-cancel-btn" onClick={() => navigate(-1)}>
-              Cancel
-            </button>
+        {/* ORDER TOTAL */}
+        <div className="pa-accordion">
+          <div className="pa-accordion-header" style={{ cursor: "default" }}>
+            <p>Order Total</p>
+            <p style={{ fontWeight: 700, color: "#22c55e" }}>
+              ₦{Number(totalAmount).toLocaleString()}
+            </p>
           </div>
+        </div>
+
+        {/* SEATS */}
+        <div className="pa-accordion">
+          <button
+            className="pa-accordion-header"
+            onClick={() => toggle("seats")}
+          >
+            <p>Your Seats ({selectedSeats.length})</p>
+            {expanded.seats ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+          </button>
+          {expanded.seats && (
+            <div className="pa-accordion-body">
+              <p>
+                {seatSection} {seatRow}
+              </p>
+              <p style={{ color: "#94a3b8", fontSize: 13 }}>
+                Seat numbers: {seatLabelsStr || "N/A"}
+              </p>
+              <p style={{ color: "#94a3b8", fontSize: 13, marginTop: 4 }}>
+                Subtotal: ₦{Number(ticketsTotal).toLocaleString()}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* CONCESSIONS */}
+        <div className="pa-accordion">
+          <button
+            className="pa-accordion-header"
+            onClick={() => toggle("perks")}
+          >
+            <p>Concessions</p>
+            {expanded.perks ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+          </button>
+          {expanded.perks && (
+            <div className="pa-accordion-body">
+              <div className="pa-perks-card">
+                <h3 className="pa-perks-title">🧾 Order Summary</h3>
+                {concessions.length > 0 ? (
+                  <>
+                    {concessions.map((item, i) => (
+                      <div key={i} className="pa-perks-item">
+                        <p>
+                          {item.name} × {item.qty}
+                        </p>
+                        <p>₦{(item.price * item.qty).toLocaleString()}</p>
+                      </div>
+                    ))}
+                    <div className="pa-perks-total">
+                      <p>Subtotal</p>
+                      <p>
+                        ₦
+                        {concessions
+                          .reduce((sum, i) => sum + i.price * i.qty, 0)
+                          .toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="pa-perks-pickup">
+                      <p className="pa-pickup-title">Pickup Details</p>
+                      <p>📍 Concessions Stand C - Gate 5</p>
+                      <p>⏱ 1–5 mins after payment</p>
+                      <p>📱 Show QR code at pickup</p>
+                    </div>
+                  </>
+                ) : (
+                  <p className="pa-empty">No concessions added</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* LOYALTY */}
+        {loyaltyChecked && (
+          <div className="pa-accordion">
+            <button
+              className="pa-accordion-header"
+              onClick={() => toggle("loyalty")}
+            >
+              <p>Loyalty Points</p>
+              {expanded.loyalty ? (
+                <MdKeyboardArrowUp />
+              ) : (
+                <MdKeyboardArrowDown />
+              )}
+            </button>
+            {expanded.loyalty && (
+              <div className="pa-accordion-body">
+                <p>
+                  🎉 You will earn {Math.floor(totalAmount / 2)} loyalty points
+                  from this purchase
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ACTION BUTTONS */}
+        <div className="pa-actions">
+          <button
+            className="pa-pay-btn"
+            onClick={handlePayNow}
+            disabled={loading}
+          >
+            {loading
+              ? "Processing…"
+              : `Pay ₦${Number(totalAmount).toLocaleString()}`}
+          </button>
+          <button className="pa-cancel-btn" onClick={() => navigate(-1)}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default PaymentAuth
+export default PaymentAuth;

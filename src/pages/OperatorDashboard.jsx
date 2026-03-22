@@ -1,23 +1,32 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import './OperatorDashboard.css'
-import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
+import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import mjImg from '../assets/images/Rectangle 312.png'
 import titaniqueImg from '../assets/images/Rectangle 313.png'
 import aladdinImg from '../assets/images/Rectangle 160.png'
 import group1 from '../assets/images/Group 1.png'
-import group2 from '../assets/images/Group 2.png'
-import group3 from '../assets/images/Group 3.png'
-import group4 from '../assets/images/Group 4.png'
 
 const OperatorDashboard = () => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [activeNav, setActiveNav] = useState('dashboard')
   const [activeTab, setActiveTab] = useState('Card')
-  const [showEventsMenu, setShowEventsMenu] = useState(false)
+
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+const refreshData = () => {
+  setLastRefresh(new Date().toLocaleTimeString())
+}
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    refreshData()
+  }, 5000)
+  return () => clearInterval(interval)
+}, [])
 
   const stats = {
     totalTicketSales: 30000,
@@ -63,26 +72,30 @@ const OperatorDashboard = () => {
     <div className="auth-container">
       <div className="op-wrapper">
 
-       {/* Header */}
-<div className="op-header">
-  <div className="op-header-bg">
-    <img src={group1} alt="header" className="op-header-img" />
-    <div className="op-header-overlay">
-      <button className="op-menu-btn">≡</button>
-      <h1 className="op-title">JAMBAY</h1>
-      <button className="op-profile-btn">👤</button>
-    </div>
-  </div>
-</div>
+        {/* Header */}
+        <div className="op-header">
+          <div className="op-header-bg">
+            <img src={group1} alt="header" className="op-header-img" />
+            <div className="op-header-overlay">
+              <button className="op-menu-btn">≡</button>
+              <h1 className="op-title">JAMBAY</h1>
+              <button className="op-profile-btn">👤</button>
+            </div>
+          </div>
+        </div>
 
         {/* Welcome */}
         <div className="op-welcome">
           <h2>Welcome back {user?.name}!</h2>
         </div>
-
+        
         {/* Stat Cards */}
         <div className="op-stats-row">
-          <div className="op-stat-card">
+          <div
+            className="op-stat-card"
+            onClick={() => navigate('/sales-analytics')}
+            style={{ cursor: 'pointer' }}
+          >
             <p className="op-stat-label">Total Ticket Sales</p>
             <div className="op-stat-bottom">
               <p className="op-stat-value">{stats.totalTicketSales.toLocaleString()}</p>
@@ -99,7 +112,11 @@ const OperatorDashboard = () => {
         </div>
 
         {/* Revenue Card */}
-        <div className="op-revenue-card">
+        <div
+          className="op-revenue-card"
+          onClick={() => navigate('/analytics')}
+          style={{ cursor: 'pointer' }}
+        >
           <p className="op-stat-label">Revenue</p>
           <div className="op-stat-bottom">
             <p className="op-revenue-value">{stats.revenue}</p>
@@ -113,18 +130,9 @@ const OperatorDashboard = () => {
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={salesData}>
               <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-              <YAxis
-                tick={{ fontSize: 10 }}
-                tickFormatter={v => `$${v / 1000}k`}
-              />
+              <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `$${v / 1000}k`} />
               <Tooltip formatter={v => `$${v.toLocaleString()}`} />
-              <Line
-                type="monotone"
-                dataKey="sales"
-                stroke="#4ECDC4"
-                strokeWidth={2}
-                dot={{ fill: '#4ECDC4', r: 4 }}
-              />
+              <Line type="monotone" dataKey="sales" stroke="#4ECDC4" strokeWidth={2} dot={{ fill: '#4ECDC4', r: 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -134,16 +142,8 @@ const OperatorDashboard = () => {
           <div className="op-panel-header">
             <p className="op-panel-title">Live Event Overview</p>
             <div className="op-toggle">
-              <button
-                className={`op-toggle-btn ${activeTab === 'Card' ? 'active' : ''}`}
-                onClick={() => setActiveTab('Card')}>
-                Card
-              </button>
-              <button
-                className={`op-toggle-btn ${activeTab === 'Status' ? 'active' : ''}`}
-                onClick={() => setActiveTab('Status')}>
-                Status
-              </button>
+              <button className={`op-toggle-btn ${activeTab === 'Card' ? 'active' : ''}`} onClick={() => setActiveTab('Card')}>Card</button>
+              <button className={`op-toggle-btn ${activeTab === 'Status' ? 'active' : ''}`} onClick={() => setActiveTab('Status')}>Status</button>
             </div>
           </div>
           <div className="op-event-cols">
@@ -157,10 +157,7 @@ const OperatorDashboard = () => {
               <div className="op-event-status">
                 <p className="op-event-sold">{event.sold}% Sold {event.count}</p>
                 <div className="op-progress-bar">
-                  <div
-                    className="op-progress-fill"
-                    style={{ width: `${event.sold}%`, background: event.barColor }}
-                  />
+                  <div className="op-progress-fill" style={{ width: `${event.sold}%`, background: event.barColor }} />
                 </div>
               </div>
             </div>
@@ -196,49 +193,33 @@ const OperatorDashboard = () => {
 
         {/* Bottom Navigation */}
         <div className="op-bottom-nav">
-          <button className={`op-nav-btn ${activeNav === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setActiveNav('dashboard')}>
+          <button className={`op-nav-btn ${activeNav === 'dashboard' ? 'active' : ''}`} onClick={() => { setActiveNav('dashboard'); navigate('/operator') }}>
             <div className="op-nav-icon"><MdDashboard size={22} /></div>
             <p>Dashboard</p>
           </button>
 
-          <div style={{ position: 'relative' }}>
-            {showEventsMenu && (
-              <div className="op-events-popup">
-                <button className="op-popup-item" onClick={() => { navigate('/attendance'); setShowEventsMenu(false) }}>
-                  📊 Attendance
-                </button>
-                <button className="op-popup-item" onClick={() => { navigate('/fraud-alert'); setShowEventsMenu(false) }}>
-                  🚨 Fraud Alert
-                </button>
-              </div>
-            )}
-            <button className={`op-nav-btn ${activeNav === 'events' ? 'active' : ''}`}
-              onClick={() => { setActiveNav('events'); setShowEventsMenu(!showEventsMenu) }}>
-              <div className="op-nav-icon"><MdEvent size={22} /></div>
-              <p>Events</p>
-            </button>
-          </div>
+          {/* Events button disabled for now */}
+          <button className="op-nav-btn" disabled>
+            <div className="op-nav-icon"><MdEvent size={22} /></div>
+            <p>Events</p>
+          </button>
 
-          <button className={`op-nav-btn ${activeNav === 'orders' ? 'active' : ''}`}
-            onClick={() => setActiveNav('orders')}>
+          <button className={`op-nav-btn ${activeNav === 'orders' ? 'active' : ''}`} onClick={() => { setActiveNav('orders'); navigate('/orders') }}>
             <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
             <p>Orders</p>
           </button>
 
-          <button className={`op-nav-btn ${activeNav === 'analytics' ? 'active' : ''}`}
-            onClick={() => { setActiveNav('analytics'); navigate('/analytics') }}>
+          <button className={`op-nav-btn ${activeNav === 'analytics' ? 'active' : ''}`}onClick={() => { setActiveNav('analytics'); navigate('/customer-behaviour') }}>
             <div className="op-nav-icon"><MdBarChart size={22} /></div>
             <p>Analytics</p>
           </button>
 
-          <button className={`op-nav-btn ${activeNav === 'settings' ? 'active' : ''}`}
-            onClick={() => { setActiveNav('settings'); handleLogout() }}>
-            <div className="op-nav-icon"><MdSettings size={22} /></div>
-            <p>Settings</p>
+          {/* Monitoring leads to Attendance */}
+          <button className={`op-nav-btn ${activeNav === 'monitoring' ? 'active' : ''}`} onClick={() => { setActiveNav('monitoring'); navigate('/attendance') }}>
+            <div className="op-nav-icon"><MdAnalytics size={22} /></div>
+            <p>Monitoring</p>
           </button>
         </div>
-
       </div>
     </div>
   )

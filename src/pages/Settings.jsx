@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings } from 'react-icons/md'
-import { MdChevronRight } from 'react-icons/md'
+import { MdHome, MdEvent, MdSearch, MdPerson, MdSettings, MdChevronRight } from 'react-icons/md'
 import './Settings.css'
 import './Dashboard.css'
 

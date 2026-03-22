@@ -6,6 +6,7 @@
   padding: 20px 16px 100px 16px;
   box-sizing: border-box;
   gap: 12px;
+  position: relative;
 }
 
 /* TOP BAR */
@@ -237,7 +238,7 @@
 
 /* POPUP */
 .td-popup-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -245,14 +246,12 @@
   background: rgba(0,0,0,0.5);
   display: flex;
   align-items: flex-end;
-  justify-content: center;
   z-index: 100;
 }
 
 .td-popup {
   background: white;
   width: 100%;
-  max-width: 480px;
   border-radius: 24px 24px 0 0;
   padding: 20px 24px 40px 24px;
   display: flex;

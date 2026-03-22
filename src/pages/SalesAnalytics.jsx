@@ -1,14 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import './SalesAnalytics.css'
-import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdSettings } from 'react-icons/md'
+import { MdDashboard, MdEvent, MdShoppingCart, MdBarChart, MdAnalytics } from 'react-icons/md'
 
 const SalesAnalytics = () => {
   const navigate = useNavigate()
   const [dataRange, setDataRange] = useState('This Quarter Q1 2026')
   const [region, setRegion] = useState('All Regions')
   const [ticketCategory, setTicketCategory] = useState('All Categories')
+
+  const [lastRefresh, setLastRefresh] = useState(new Date().toLocaleTimeString())
+
+const refreshData = () => {
+  setLastRefresh(new Date().toLocaleTimeString())
+}
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    refreshData()
+  }, 5000)
+  return () => clearInterval(interval)
+}, [])
 
   const stats = {
     totalRevenue: '$4,120,750',
@@ -78,7 +91,9 @@ const SalesAnalytics = () => {
         </div>
 
         {/* Refresh Button */}
-        <button className="auth-button">Refresh</button>
+        <button className="auth-button" onClick={refreshData}>
+  Refresh
+</button>
 
         {/* Stat Cards */}
         <div className="sa-stats-row">
@@ -165,9 +180,7 @@ const SalesAnalytics = () => {
                     <td>{sale.event}</td>
                     <td>{sale.seat}</td>
                     <td>{sale.amount}</td>
-                    <td className={sale.status === 'Paid' ? 'status-paid' : 'status-pending'}>
-                      {sale.status}
-                    </td>
+                    <td className={sale.status === 'Paid' ? 'status-paid' : 'status-pending'}>{sale.status}</td>
                     <td>{sale.type}</td>
                   </tr>
                 ))}
@@ -175,29 +188,30 @@ const SalesAnalytics = () => {
             </table>
           </div>
         </div>
-{/* Bottom Navigation */}
-<div className="op-bottom-nav">
-  <button className="op-nav-btn" onClick={() => navigate('/operator')}>
-    <div className="op-nav-icon"><MdDashboard size={22} /></div>
-    <p>Dashboard</p>
-  </button>
-  <button className="op-nav-btn" onClick={() => navigate('/events')}>
-    <div className="op-nav-icon"><MdEvent size={22} /></div>
-    <p>Events</p>
-  </button>
-  <button className="op-nav-btn" onClick={() => navigate('/orders')}>
-    <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
-    <p>Orders</p>
-  </button>
-  <button className="op-nav-btn active">
-    <div className="op-nav-icon"><MdBarChart size={22} /></div>
-    <p>Analytics</p>
-  </button>
-  <button className="op-nav-btn" onClick={() => navigate('/login')}>
-    <div className="op-nav-icon"><MdSettings size={22} /></div>
-    <p>Settings</p>
-  </button>
-</div>
+
+        {/* Bottom Navigation */}
+        <div className="op-bottom-nav">
+          <button className="op-nav-btn active" onClick={() => navigate('/operator')}>
+            <div className="op-nav-icon"><MdDashboard size={22} /></div>
+            <p>Dashboard</p>
+          </button>
+          <button className="op-nav-btn">
+            <div className="op-nav-icon"><MdEvent size={22} /></div>
+            <p>Events</p>
+          </button>
+          <button className="op-nav-btn">
+            <div className="op-nav-icon"><MdShoppingCart size={22} /></div>
+            <p>Orders</p>
+          </button>
+          <button className="op-nav-btn">
+            <div className="op-nav-icon"><MdBarChart size={22} /></div>
+            <p>Analytics</p>
+          </button>
+         <button className="db-nav-btn">
+            <div className="db-nav-icon-circle"><MdAnalytics size={22} /></div>
+             <p>Monitoring</p>
+         </button>
+        </div>
       </div>
     </div>
   )

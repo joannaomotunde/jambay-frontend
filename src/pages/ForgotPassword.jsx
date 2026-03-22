@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { requestOTP } from '../services/auth'
+import ScreenLayout from '../components/ScreenLayout'
 import '../App.css'
 
 function ForgotPassword() {
@@ -12,11 +13,8 @@ function ForgotPassword() {
 
   const validate = () => {
     const newErrors = {}
-    if (!email) {
-      newErrors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email format is invalid'
-    }
+    if (!email) newErrors.email = 'Email is required'
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email format is invalid'
     return newErrors
   }
 
@@ -40,40 +38,33 @@ function ForgotPassword() {
   }
 
   return (
-    <div className="auth-container">
-      <div className="auth-form-wrapper">
+    <ScreenLayout>
+      <h2 className="auth-title">Forgot Password</h2>
+      <p className="auth-subtitle">
+        Provide the email address linked with your account to reset your password.
+      </p>
 
-        {/* Back button */}
-        <button className="back-button" onClick={() => navigate('/login')}>‹</button>
+      {serverError && <p className="server-error">{serverError}</p>}
 
-        <h2 className="auth-title">Forget Password</h2>
-        <p className="auth-subtitle">
-          Provide the email address linked with your account to reset your password.
-        </p>
+      <label className="input-label">Email Address</label>
+      <input
+        className="auth-input"
+        type="email"
+        placeholder="john123@gmail.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <p className="input-helper">Please enter your registered email</p>
+      {errors.email && <p className="field-error">{errors.email}</p>}
 
-        {serverError && <p className="server-error">{serverError}</p>}
+      <button className="auth-button" onClick={handleSubmit} disabled={loading}>
+        {loading ? 'Sending...' : 'Request Password Reset Link'}
+      </button>
 
-        <label className="input-label">Email Address</label>
-        <input
-          className="auth-input"
-          type="email"
-          placeholder="john123@gmail.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <p className="input-helper">Please enter your registered email</p>
-        {errors.email && <p className="field-error">{errors.email}</p>}
-
-        <button className="auth-button" onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Sending...' : 'Request Password Reset Link'}
-        </button>
-
-        <button className="cancel-button" onClick={() => navigate('/login')}>
-          Cancel
-        </button>
-
-      </div>
-    </div>
+      <button className="cancel-button" onClick={() => navigate('/login')}>
+        Cancel
+      </button>
+    </ScreenLayout>
   )
 }
 
