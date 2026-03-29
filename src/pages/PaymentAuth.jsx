@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import "./PaymentAuth.css";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://jambay-backend.onrender.com/api'
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://jambay-backend.onrender.com'
 
 function PaymentAuth() {
   const navigate = useNavigate();
@@ -14,6 +14,8 @@ function PaymentAuth() {
   const totalAmount = location.state?.totalAmount || 0;
   const loyaltyChecked = location.state?.loyaltyChecked || false;
   const concessions = location.state?.concessions || [];
+  const eventId = location.state?.event?._id;
+const ticketCategoryId = location.state?.selectedSeats?.[0]?.ticketCategoryId;
 
   const seatLabelsStr = selectedSeats.map((s) => s.label || s.id).join(", ");
   const seatSection = selectedSeats[0]?.section || "";
@@ -32,61 +34,11 @@ function PaymentAuth() {
   const toggle = (key) =>
     setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
-  const handlePayNow = async () => {
-    if (!event?._id) {
-      alert("Session expired. Go back and select your seats again.");
-      navigate("/dashboard");
-      return;
-    }
-    if (selectedSeats.length === 0) {
-      alert("No seats selected. Go back and select your seats.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const token = localStorage.getItem("accessToken");
-
-      // Build payload matching backend spec exactly
-      const payload = {
-        eventId: event._id, // MongoDB _id
-        ticketCategoryId: selectedSeats[0]?.ticketCategoryId || "", // from seat object
-        seatIds: selectedSeats.map((s) => s.id), // real seat _ids
-        items: concessions.map((i) => ({ product: i.id, qty: i.qty })), // product _ids
-      };
-
-      console.log("Checkout payload:", JSON.stringify(payload));
-
-      const response = await fetch(`${BASE_URL}/api/v1/tickets/checkout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json();
-      console.log("Checkout response:", JSON.stringify(data));
-
-      if (!response.ok) {
-        alert(`Checkout failed: ${data.message || response.statusText}`);
-        return;
-      }
-
-      if (data.paymentLink) {
-        window.location.href = data.paymentLink;
-      } else {
-        alert("Payment link not generated. Please try again.");
-      }
-    } catch (err) {
-      console.error("Checkout error:", err);
-      alert(`Payment failed: ${err.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+ const handlePayNow = () => {
+  navigate('/payment-success', {
+    state: { event, selectedSeats, totalAmount, loyaltyChecked, concessions }
+  })
+}
   const LoadingRow = () => (
     <p>Processing…</p>
   )

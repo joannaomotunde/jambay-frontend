@@ -9,7 +9,9 @@ function PaymentSuccess() {
   // Get data from PaymentAuth / checkout
   const event = location.state?.event || null
   const totalAmount = location.state?.totalAmount || 0
-  const transactionId = location.state?.transactionId || 'XXXXX'
+  const transactionId =
+  location.state?.transactionId ||
+  `TX-${Math.random().toString(36).substring(2, 10).toUpperCase()}`
   const concessions = location.state?.concessions || []
   const cardUsed = location.state?.cardUsed || 'VISA'
 
@@ -43,28 +45,33 @@ function PaymentSuccess() {
         <div className="ps-event-card">
           <div className="ps-event-img" />
           <div className="ps-event-details">
-            <p className="ps-amount">${totalAmount.toFixed(2)}</p>
-            <p className="ps-transaction">Transaction ID: {transactionId}</p>
+            <div style={{ width: "100%", marginTop: 6 }}>
+  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#64748B" }}>
+    <span>Tickets</span>
+    <span>₦{Number(Math.max(totalAmount - concessionsTotal, 0)).toLocaleString()}</span>
+  </div>
+
+  {concessions.length > 0 && (
+    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#64748B", marginTop: 4 }}>
+      <span>Concessions</span>
+      <span>₦{concessionsTotal.toLocaleString()}</span>
+    </div>
+  )}
+</div>
+            <p className="ps-amount">
+  ₦{Number(totalAmount).toLocaleString()}
+</p>
+
+<p style={{ fontSize: 11, color: "#94A3B8" }}>
+  Paid successfully
+</p>
+
+<p className="ps-transaction">
+  Ref: {transactionId}
+</p>
             <button className="ps-view-btn">View Details</button>
           </div>
         </div>
-
-        {/* Concessions Summary */}
-        {concessions.length > 0 && (
-          <div className="ps-concessions-card">
-            <h3>🧾 Concessions Summary</h3>
-            {concessions.map((item, idx) => (
-              <div key={idx} className="ps-concession-item">
-                <p>{item.name} × {item.qty}</p>
-                <p>₦{(item.price * item.qty).toLocaleString()}</p>
-              </div>
-            ))}
-            <div className="ps-concessions-total">
-              <p>Total</p>
-              <p>₦{concessionsTotal.toLocaleString()}</p>
-            </div>
-          </div>
-        )}
 
         {/* Action Buttons */}
         <div className="ps-action-row">
